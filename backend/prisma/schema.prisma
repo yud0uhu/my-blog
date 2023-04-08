@@ -1,0 +1,28 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator pothos {
+  provider = "prisma-pothos-types"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Post {
+  authorId  String? @db.ObjectId
+  content   String?
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  published Boolean @default(false)
+  title     String?
+  author    User?   @relation(fields: [authorId], references: [id])
+}
+
+model User {
+  email String  @unique
+  id    String  @id @default(auto()) @map("_id") @db.ObjectId
+  name  String?
+  posts Post[]
+}
