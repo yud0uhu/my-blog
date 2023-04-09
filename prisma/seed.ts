@@ -4,26 +4,26 @@ const prisma = new PrismaClient();
 
 const userData: Prisma.UserCreateInput[] = [
   {
-    name: "Alice",
+    name: "ありす",
     email: "alice@prisma.io",
     posts: {
       create: [
         {
-          title: "Join the Prisma Slack",
-          content: "https://slack.prisma.io",
+          title: "美味しいご飯を食べるために知っておくべきこと",
+          content: "https://example.com/blog/umami-rice",
           published: true,
         },
       ],
     },
   },
   {
-    name: "Nilu",
+    name: "にーる",
     email: "nilu@prisma.io",
     posts: {
       create: [
         {
-          title: "Follow Prisma on Twitter",
-          content: "https://www.twitter.com/prisma",
+          title: "ご飯がおいしい季節になりました",
+          content: "https://example.com/blog/delicious-rice-season",
           published: true,
           viewCount: 42,
         },
@@ -31,19 +31,19 @@ const userData: Prisma.UserCreateInput[] = [
     },
   },
   {
-    name: "Mahmoud",
+    name: "まーむーど",
     email: "mahmoud@prisma.io",
     posts: {
       create: [
         {
-          title: "Ask a question about Prisma on GitHub",
-          content: "https://www.github.com/prisma/prisma/discussions",
+          title: "最高のご飯屋さんを探しています",
+          content: "https://example.com/blog/best-rice-restaurant",
           published: true,
           viewCount: 128,
         },
         {
-          title: "Prisma on YouTube",
-          content: "https://pris.ly/youtube",
+          title: "ご飯とお茶のペアリングについて",
+          content: "https://example.com/blog/rice-tea-pairing",
         },
       ],
     },
