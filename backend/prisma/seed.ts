@@ -25,6 +25,7 @@ const userData: Prisma.UserCreateInput[] = [
           title: "Follow Prisma on Twitter",
           content: "https://www.twitter.com/prisma",
           published: true,
+          viewCount: 42,
         },
       ],
     },
@@ -38,6 +39,7 @@ const userData: Prisma.UserCreateInput[] = [
           title: "Ask a question about Prisma on GitHub",
           content: "https://www.github.com/prisma/prisma/discussions",
           published: true,
+          viewCount: 128,
         },
         {
           title: "Prisma on YouTube",
