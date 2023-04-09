@@ -26,7 +26,6 @@ model Post {
   published Boolean @default(false)
   title     String
   author    User?   @relation(fields: [authorId], references: [id])
-
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   viewCount Int      @default(0)
