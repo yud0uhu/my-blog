@@ -39,8 +39,8 @@ const DeleteMutation = gql`
 const Post: React.FC<{ data: { post: PostProps } }> = (props) => {
   const id = useRouter().query.id;
 
-  //   const [publish] = useMutation(PublishMutation);
-  //   const [deletePost] = useMutation(DeleteMutation);
+  const [publish] = useMutation(PublishMutation);
+  const [deletePost] = useMutation(DeleteMutation);
 
   let title = props.data.post.title;
   if (!props.data.post.published) {
@@ -56,7 +56,7 @@ const Post: React.FC<{ data: { post: PostProps } }> = (props) => {
         <h2>{title}</h2>
         <p>By {authorName}</p>
         <p>{props.data.post.content}</p>
-        {/* {!props.data.post.published && (
+        {!props.data.post.published && (
           <button
             onClick={async (e) => {
               await publish({
@@ -81,7 +81,7 @@ const Post: React.FC<{ data: { post: PostProps } }> = (props) => {
           }}
         >
           Delete
-        </button> */}
+        </button>
       </div>
       <style jsx>{`
         .page {
