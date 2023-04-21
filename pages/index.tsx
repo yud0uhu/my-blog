@@ -31,19 +31,13 @@ const Blog: React.FC<{ data: { feed: PostProps[] } }> = (props) => {
 
         .items-container {
           display: flex;
-          flex-wrap: wrap;
-          flex-grow: 1;
-          flex-basis: 0;
+          justify-content: center;
         }
 
         .items-container > * {
-          width: calc(100% / 3 - 30px);
+          width: 300px;
           margin-right: 30px;
           margin-bottom: 30px;
-        }
-
-        .items-container > *:last-child {
-          margin-right: 0;
         }
       `}</style>
     </Layout>
