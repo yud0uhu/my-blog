@@ -7,7 +7,6 @@ const Blog: React.FC<{ data: { feed: PostProps[] } }> = (props) => {
   return (
     <Layout>
       <div className="page">
-        <h1>My Blog</h1>
         <main>
           <div className="items-container">
             {props.data.feed.map((post) => (
@@ -22,20 +21,24 @@ const Blog: React.FC<{ data: { feed: PostProps[] } }> = (props) => {
         .post {
           background: white;
           transition: box-shadow 0.1s ease-in;
-          border-radius: 10px;
+          border-radius: 20px;
         }
 
         .post:hover {
-          box-shadow: 1px 1px 3px #aaa;
+          box-shadow: 0px -300px 300px 0px rgba(240, 235, 235, 0.8) inset;
         }
 
         .items-container {
           display: flex;
-          justify-content: center;
+          flex-wrap: wrap;
+          z-index: 99;
+          margin-top: 30px;
         }
 
         .items-container > * {
+          word-break: break-word;
           width: 300px;
+          height: 300px;
           margin-right: 30px;
           margin-bottom: 30px;
         }

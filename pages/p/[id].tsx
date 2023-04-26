@@ -5,6 +5,7 @@ import { useMutation } from "@apollo/client";
 import client from "../../lib/apollo-client";
 import { PostProps } from "../../components/post";
 import { GetServerSideProps } from "next";
+import ReactMarkdown from "react-markdown";
 
 const PublishMutation = gql`
   mutation PublishMutation($id: ID!) {
@@ -55,7 +56,7 @@ const Post: React.FC<{ data: { post: PostProps } }> = (props) => {
       <div>
         <h2>{title}</h2>
         <p>By {authorName}</p>
-        <p>{props.data.post.content}</p>
+        <ReactMarkdown children={props.data.post.content} />
         {!props.data.post.published && (
           <button
             onClick={async (e) => {
@@ -70,18 +71,6 @@ const Post: React.FC<{ data: { post: PostProps } }> = (props) => {
             Publish
           </button>
         )}
-        <button
-          onClick={async (e) => {
-            await deletePost({
-              variables: {
-                id,
-              },
-            });
-            Router.push("/");
-          }}
-        >
-          Delete
-        </button>
       </div>
       <style jsx>{`
         .page {

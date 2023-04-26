@@ -6,6 +6,9 @@ type Props = {
 const Layout: React.FC<Props> = (props) => (
   <div>
     {/* <Header /> */}
+
+    <div className="header" />
+
     <div className="layout">{props.children}</div>
     <style jsx global>{`
       html {
@@ -25,7 +28,10 @@ const Layout: React.FC<Props> = (props) => (
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
           Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
           "Segoe UI Symbol";
-        background: rgb(240, 235, 235);
+        /* background-color: rgb(240, 235, 235); */
+        /* background-image: url(https://beiz.jp/images_M/japanese-paper/japanese-paper_00193.jpg); */
+        background-color: rgba(240, 235, 235, 0.8);
+        background-blend-mode: lighten;
       }
 
       input,
@@ -41,7 +47,20 @@ const Layout: React.FC<Props> = (props) => (
       .layout {
         padding: 0 2rem;
         display: flex;
-        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        margin-top: 70px;
+      }
+      .header {
+        background-color: white;
+        box-shadow: 0 10px 20px rgb(240, 235, 235);
+        width: 100%;
+        height: 60px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 999;
       }
     `}</style>
   </div>
