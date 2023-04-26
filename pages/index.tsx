@@ -56,10 +56,10 @@ export async function getServerSideProps() {
           title
           content
           published
-          author {
-            id
-            name
-          }
+          # author {
+          #   id
+          #   name
+          # }
         }
       }
     `,
