@@ -23,14 +23,6 @@ const CreateDraftMutation = gql`
   }
 `;
 
-const PublishedMutation = gql`
-  mutation PublishedMutation($id: String) {
-    createPublished(id: $id) {
-      id
-      published
-    }
-  }
-`;
 function Draft() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -44,7 +36,6 @@ function Draft() {
   };
 
   const [createDraft] = useMutation(CreateDraftMutation);
-  const [createPublished] = useMutation(PublishedMutation);
 
   return (
     <Layout>
@@ -62,8 +53,7 @@ function Draft() {
             });
             // TODO: 下書き保存できるようにする
             // Router.push("/drafts");
-            Router.push("/");
-            // createPublished();
+            await Router.push("/");
           }}
         >
           <input disabled={!content || !title} type="submit" value="保存する" />

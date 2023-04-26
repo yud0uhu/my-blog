@@ -14,10 +14,10 @@ const PublishMutation = gql`
       title
       content
       published
-      author {
-        id
-        name
-      }
+      # author {
+      #   id
+      #   name
+      # }
     }
   }
 `;
@@ -29,10 +29,10 @@ const DeleteMutation = gql`
       title
       content
       published
-      author {
-        id
-        name
-      }
+      # author {
+      #   id
+      #   name
+      # }
     }
   }
 `;
@@ -48,9 +48,9 @@ const Post: React.FC<{ data: { post: PostProps } }> = (props) => {
     title = `${title} (Draft)`;
   }
 
-  const authorName = props.data.post.author
-    ? props.data.post.author.name
-    : "Unknown author";
+  // const authorName = props.data.post.author
+  //   ? props.data.post.author.name
+  //   : "Unknown author";
   return (
     <Layout>
       <div>
@@ -100,7 +100,7 @@ const Post: React.FC<{ data: { post: PostProps } }> = (props) => {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   console.log("hoge");
   const id = String(
-    // ユーザーidをクエリパラメータから受け取る
+    // 記事idをクエリパラメータから受け取る
     Array.isArray(context.params?.id)
       ? context.params?.id[0]
       : context.params?.id
@@ -113,10 +113,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
           title
           content
           published
-          author {
-            id
-            name
-          }
+          # author {
+          #   id
+          #   name
+          # }
         }
       }
     `,
