@@ -24,7 +24,7 @@ builder.mutationType({});
 builder.prismaObject("User", {
   fields: (t) => ({
     id: t.exposeID("id"),
-    email: t.exposeString("email"),
+    // email: t.exposeString("email"),
     name: t.exposeString("name", { nullable: true }),
     posts: t.relation("posts"),
   }),
@@ -107,13 +107,13 @@ builder.mutationField("signupUser", (t) =>
     type: "User",
     args: {
       name: t.arg.string({ required: false }),
-      email: t.arg.string({ required: true }),
+      // email: t.arg.string({ required: true }),
     },
     resolve: async (query, _parent, args, _info) =>
       prisma.user.create({
         ...query,
         data: {
-          email: args.email,
+          // email: args.email,
           name: args.name,
         },
       }),
@@ -161,7 +161,7 @@ builder.mutationField("createDraft", (t) =>
     args: {
       title: t.arg.string({ required: true }),
       content: t.arg.string(),
-      authorEmail: t.arg.string({ required: true }),
+      // authorEmail: t.arg.string({ required: true }),
     },
     resolve: async (query, _parent, args, _info) =>
       prisma.post.create({
@@ -170,7 +170,7 @@ builder.mutationField("createDraft", (t) =>
           title: args.title,
           content: args.content,
           author: {
-            connect: { email: args.authorEmail },
+            // connect: { email: args.authorEmail },
           },
         },
       }),

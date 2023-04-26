@@ -13,7 +13,7 @@ datasource db {
 
 // モデルの定義
 model User {
-  email String  @unique
+  // email String  @unique
   id    String  @id @default(auto()) @map("_id") @db.ObjectId
   name  String?
   posts Post[]

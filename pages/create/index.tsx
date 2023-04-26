@@ -8,18 +8,20 @@ import { text_to_token } from "../../markdown-parser/pkg";
 const CreateDraftMutation = gql`
   mutation CreateDraftMutation(
     $title: String!
-    $content: String
-    $authorEmail: String!
+    $content: String # $authorEmail: String!
   ) {
-    createDraft(title: $title, content: $content, authorEmail: $authorEmail) {
+    createDraft(
+      title: $title
+      content: $content #   authorEmail: $authorEmail
+    ) {
       id
       title
       content
       published
-      author {
-        id
-        name
-      }
+      #   author {
+      #     id
+      #     name
+      #   }
     }
   }
 `;
@@ -28,7 +30,7 @@ function Draft() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [markdownContent, setMarkdownContent] = useState("");
-  const [authorEmail, setAuthorEmail] = useState("");
+  //   const [authorEmail, setAuthorEmail] = useState("");
 
   const convertContent = (content: string) => {
     console.log(content);
@@ -49,25 +51,22 @@ function Draft() {
               variables: {
                 title,
                 content,
-                authorEmail,
+                // authorEmail,
               },
             });
             Router.push("/drafts");
           }}
         >
-          <h1>Create Draft</h1>
+          <input disabled={!content || !title} type="submit" value="Create" />
+          <a className="back" href="#" onClick={() => Router.push("/")}>
+            ←
+          </a>
           <input
             autoFocus
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Title"
-            type="text"
+            type="title"
             value={title}
-          />
-          <input
-            onChange={(e) => setAuthorEmail(e.target.value)}
-            placeholder="Author (email adress)"
-            type="text"
-            value={authorEmail}
           />
           <textarea
             cols={50}
@@ -77,19 +76,12 @@ function Draft() {
             value={content}
           />
           <h1>Preview</h1>
+
           <div
             dangerouslySetInnerHTML={{
               __html: markdownContent,
             }}
           />
-          <input
-            disabled={!content || !title || !authorEmail}
-            type="submit"
-            value="Create"
-          />
-          <a className="back" href="#" onClick={() => Router.push("/")}>
-            or Cancel
-          </a>
         </form>
       </div>
       <style jsx>{`
