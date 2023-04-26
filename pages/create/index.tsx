@@ -4,6 +4,7 @@ import Router from "next/router";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
 import { text_to_token } from "../../markdown-parser/pkg";
+import { validate } from "graphql";
 
 const CreateDraftMutation = gql`
   mutation CreateDraftMutation(
@@ -18,14 +19,18 @@ const CreateDraftMutation = gql`
       title
       content
       published
-      #   author {
-      #     id
-      #     name
-      #   }
     }
   }
 `;
 
+const PublishedMutation = gql`
+  mutation PublishedMutation($id: String) {
+    createPublished(id: $id) {
+      id
+      published
+    }
+  }
+`;
 function Draft() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -39,6 +44,7 @@ function Draft() {
   };
 
   const [createDraft] = useMutation(CreateDraftMutation);
+  const [createPublished] = useMutation(PublishedMutation);
 
   return (
     <Layout>
@@ -54,10 +60,13 @@ function Draft() {
                 // authorEmail,
               },
             });
-            Router.push("/drafts");
+            // TODO: 下書き保存できるようにする
+            // Router.push("/drafts");
+            Router.push("/");
+            // createPublished();
           }}
         >
-          <input disabled={!content || !title} type="submit" value="Create" />
+          <input disabled={!content || !title} type="submit" value="保存する" />
           <a className="back" href="#" onClick={() => Router.push("/")}>
             ←
           </a>
@@ -78,6 +87,7 @@ function Draft() {
           <h1>Preview</h1>
 
           <div
+            contentEditable
             dangerouslySetInnerHTML={{
               __html: markdownContent,
             }}
@@ -91,6 +101,20 @@ function Draft() {
           display: flex;
           justify-content: center;
           align-items: center;
+        }
+
+        input[type="title"] {
+          width: 100%;
+          padding: 1.5rem;
+          margin: 0.5rem 0;
+          background: #0000;
+          transition: 0.25s ease-in-out;
+          border: none;
+          font-size: 1.4rem;
+          font: bold;
+        }
+        input[type="title"]:focus {
+          outline: #0000;
         }
 
         input[type="text"],

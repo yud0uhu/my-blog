@@ -55,7 +55,7 @@ const Post: React.FC<{ data: { post: PostProps } }> = (props) => {
     <Layout>
       <div>
         <h2>{title}</h2>
-        <p>By {authorName}</p>
+        {/* <p>By {authorName}</p> */}
         <ReactMarkdown children={props.data.post.content} />
         {!props.data.post.published && (
           <button
