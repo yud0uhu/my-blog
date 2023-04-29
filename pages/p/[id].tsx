@@ -44,7 +44,7 @@ const Post: React.FC<{ data: { post: PostProps } }> = (props) => {
     <Layout>
       <div>
         <h2>{title}</h2>
-        <ReactMarkdown children={props.data.post.content} />
+        <ReactMarkdown>{props.data.post.content}</ReactMarkdown>
         {!props.data.post.published && (
           <button
             onClick={async (e) => {
