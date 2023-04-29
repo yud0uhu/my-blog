@@ -45,7 +45,7 @@ function Draft() {
             Router.push("/drafts");
           }}
         >
-          <input disabled={!content || !title} type="submit" value="保存する" />
+          <button disabled={!content || !title}>保存する</button>
           <a className="back" href="#" onClick={() => Router.push("/")}>
             ←
           </a>
@@ -112,7 +112,7 @@ function Draft() {
           height: 400px;
           resize: none;
         }
-        input[type="submit"] {
+        button {
           height: 35px;
           width: 96px;
           position: fixed;
@@ -122,7 +122,7 @@ function Draft() {
           z-index: 999;
           border: 0;
           border-radius: 10px;
-          background-color: rgb(232, 200, 200);
+          background-color: rgb(245, 178, 178);
           box-shadow: 0 10px 20px rgb(240, 235, 235, 0.3);
           border: 0.125rem solid #0000;
           font-weight: bold;
