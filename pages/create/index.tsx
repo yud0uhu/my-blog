@@ -4,17 +4,10 @@ import Router from "next/router";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
 import { text_to_token } from "../../markdown-parser/pkg";
-import { validate } from "graphql";
 
 const CreateDraftMutation = gql`
-  mutation CreateDraftMutation(
-    $title: String!
-    $content: String # $authorEmail: String!
-  ) {
-    createDraft(
-      title: $title
-      content: $content #   authorEmail: $authorEmail
-    ) {
+  mutation CreateDraftMutation($title: String!, $content: String) {
+    createDraft(title: $title, content: $content) {
       id
       title
       content
@@ -27,7 +20,6 @@ function Draft() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [markdownContent, setMarkdownContent] = useState("");
-  //   const [authorEmail, setAuthorEmail] = useState("");
 
   const convertContent = (content: string) => {
     console.log(content);
@@ -48,12 +40,9 @@ function Draft() {
               variables: {
                 title,
                 content,
-                // authorEmail,
               },
             });
-            // TODO: 下書き保存できるようにする
-            // Router.push("/drafts");
-            await Router.push("/");
+            Router.push("/drafts");
           }}
         >
           <input disabled={!content || !title} type="submit" value="保存する" />
@@ -86,7 +75,6 @@ function Draft() {
       </div>
       <style jsx>{`
         .page {
-          background: white;
           padding: 3rem;
           display: flex;
           justify-content: center;
@@ -101,7 +89,7 @@ function Draft() {
           transition: 0.25s ease-in-out;
           border: none;
           font-size: 1.4rem;
-          font: bold;
+          font-weight: bold;
         }
         input[type="title"]:focus {
           outline: #0000;
@@ -134,10 +122,11 @@ function Draft() {
           z-index: 999;
           border: 0;
           border-radius: 10px;
-          background-color: rgb(240, 235, 235);
+          background-color: rgb(232, 200, 200);
           box-shadow: 0 10px 20px rgb(240, 235, 235, 0.3);
           border: 0.125rem solid #0000;
-          font: bold;
+          font-weight: bold;
+          color: white;
         }
 
         .back {

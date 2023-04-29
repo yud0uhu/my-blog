@@ -4,9 +4,9 @@ import Router from "next/router";
 export type PostProps = {
   id: number;
   title: string;
-  author: {
-    name: string;
-  };
+  // author: {
+  //   name: string;
+  // };
   content: string;
   published: boolean;
 };

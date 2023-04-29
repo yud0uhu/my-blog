@@ -1,19 +1,19 @@
-import Layout from "../components/layout";
+import Layout from "../../components/layout";
 import gql from "graphql-tag";
-import client from "../lib/apollo-client";
-import Post, { PostProps } from "../components/post";
-import Router from "next/router";
+import client from "../../lib/apollo-client";
+import Post, { PostProps } from "../../components/post";
 
-const Blog: React.FC<{ data: { feed: PostProps[] } }> = (props) => {
+const Drafts: React.FC<{ data: { drafts: PostProps[] } }> = (props) => {
   return (
     <Layout>
       <div className="page">
         <main>
-          <button onClick={() => Router.push("/create")}>投稿する</button>
+          <h1>記事の管理</h1>
           <div className="items-container">
-            {props.data.feed.map((post) => (
+            {props.data.drafts.map((post) => (
               <div key={post.id} className="post">
                 <Post post={post} />
+                <div>{post.published ? "公開中" : "非公開"}</div>
               </div>
             ))}
           </div>
@@ -50,33 +50,16 @@ const Blog: React.FC<{ data: { feed: PostProps[] } }> = (props) => {
           margin-right: 30px;
           margin-bottom: 30px;
         }
-
-        button {
-          height: 35px;
-          width: 96px;
-          position: fixed;
-          top: 0;
-          right: 0;
-          margin: 10px 10px;
-          z-index: 999;
-          border: 0;
-          border-radius: 10px;
-          background-color: rgb(232, 200, 200);
-          box-shadow: 0 10px 20px rgb(240, 235, 235, 0.3);
-          border: 0.125rem solid #0000;
-          color: white;
-          font-weight: bold;
-        }
       `}</style>
     </Layout>
   );
 };
 
-export async function getServerSideProps() {
+export const getServerSideProps = async () => {
   const { data } = await client.query({
     query: gql`
-      query FeedQuery {
-        feed {
+      query DraftsQuery {
+        drafts {
           id
           title
           content
@@ -91,6 +74,6 @@ export async function getServerSideProps() {
       data,
     },
   };
-}
+};
 
-export default Blog;
+export default Drafts;

@@ -14,10 +14,6 @@ const PublishMutation = gql`
       title
       content
       published
-      # author {
-      #   id
-      #   name
-      # }
     }
   }
 `;
@@ -29,10 +25,6 @@ const DeleteMutation = gql`
       title
       content
       published
-      # author {
-      #   id
-      #   name
-      # }
     }
   }
 `;
@@ -45,17 +37,13 @@ const Post: React.FC<{ data: { post: PostProps } }> = (props) => {
 
   let title = props.data.post.title;
   if (!props.data.post.published) {
-    title = `${title} (Draft)`;
+    title = `編集中...${title}`;
   }
 
-  // const authorName = props.data.post.author
-  //   ? props.data.post.author.name
-  //   : "Unknown author";
   return (
     <Layout>
       <div>
         <h2>{title}</h2>
-        {/* <p>By {authorName}</p> */}
         <ReactMarkdown children={props.data.post.content} />
         {!props.data.post.published && (
           <button
@@ -68,14 +56,16 @@ const Post: React.FC<{ data: { post: PostProps } }> = (props) => {
               Router.push("/");
             }}
           >
-            Publish
+            公開する
           </button>
         )}
       </div>
       <style jsx>{`
         .page {
-          background: white;
-          padding: 2rem;
+          padding: 3rem;
+          display: flex;
+          justify-content: center;
+          align-items: center;
         }
 
         .actions {
@@ -83,7 +73,7 @@ const Post: React.FC<{ data: { post: PostProps } }> = (props) => {
         }
 
         button {
-          background: #ececec;
+          background: white;
           border: 0;
           border-radius: 0.125rem;
           padding: 1rem 2rem;
@@ -113,10 +103,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
           title
           content
           published
-          # author {
-          #   id
-          #   name
-          # }
         }
       }
     `,
