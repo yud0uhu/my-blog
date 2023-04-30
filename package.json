@@ -35,6 +35,6 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "wasm": "wasm-pack build ./markdown-parser --target web"
+    "wasm": "cd markdown-parser && wasm-pack build . --target web"
   }
 }
