@@ -3,7 +3,12 @@ import Layout from "../../components/layout";
 import Router from "next/router";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
-import { text_to_token } from "../../markdown-parser/pkg";
+import init, { text_to_token } from "../../markdown-parser/pkg";
+
+(async () => {
+  // wasmをロード
+  await init();
+})();
 
 const CreateDraftMutation = gql`
   mutation CreateDraftMutation($title: String!, $content: String) {
