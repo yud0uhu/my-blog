@@ -18,7 +18,7 @@
     "@apollo/client": "^3.7.13",
     "@pothos/core": "^3.29.0",
     "@pothos/plugin-prisma": "3.47.2",
-    "@prisma/client": "4.13.0",
+    "@prisma/client": "^4.13.0",
     "graphql": "^16.6.0",
     "graphql-scalars": "1.21.3",
     "graphql-yoga": "3.8.0",
@@ -35,6 +35,6 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "wasm": "cd markdown-parser && wasm-pack build . --target web"
+    "build:wasm": "cd markdown-parser && wasm-pack build . --target web"
   }
 }
