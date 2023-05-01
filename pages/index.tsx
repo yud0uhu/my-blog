@@ -77,11 +77,10 @@ export async function getServerSideProps() {
   const { data } = await client.query({
     query: gql`
       query FeedQuery {
-        post {
+        post(where: { published: { _eq: true } }) {
           id
           title
           content
-          published
         }
       }
     `,
