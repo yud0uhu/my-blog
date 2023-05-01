@@ -3,14 +3,14 @@ import gql from "graphql-tag";
 import client from "../../lib/apollo-client";
 import Post, { PostProps } from "../../components/post";
 
-const Drafts: React.FC<{ data: { drafts: PostProps[] } }> = (props) => {
+const Drafts: React.FC<{ data: { post: PostProps[] } }> = (props) => {
   return (
     <Layout>
       <div className="page">
         <main>
           <h1>記事の管理</h1>
           <div className="items-container">
-            {props.data.drafts.map((post) => (
+            {props.data.post.map((post) => (
               <div key={post.id} className="post">
                 <Post post={post} />
                 <div>{post.published ? "公開中" : "非公開"}</div>
@@ -59,11 +59,9 @@ export const getServerSideProps = async () => {
   const { data } = await client.query({
     query: gql`
       query DraftsQuery {
-        drafts {
-          id
-          title
+        post(where: { published: { _eq: false } }) {
           content
-          published
+          id
         }
       }
     `,

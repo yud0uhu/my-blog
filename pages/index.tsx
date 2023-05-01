@@ -4,14 +4,15 @@ import client from "../lib/apollo-client";
 import Post, { PostProps } from "../components/post";
 import Router from "next/router";
 
-const Blog: React.FC<{ data: { feed: PostProps[] } }> = (props) => {
+const Blog: React.FC<{ data: { post: PostProps[] } }> = (props) => {
   return (
     <Layout>
       <div className="page">
         <main>
           <button onClick={() => Router.push("/create")}>投稿する</button>
+
           <div className="items-container">
-            {props.data.feed.map((post) => (
+            {props.data.post.map((post) => (
               <div key={post.id} className="post">
                 <Post post={post} />
               </div>
@@ -76,7 +77,7 @@ export async function getServerSideProps() {
   const { data } = await client.query({
     query: gql`
       query FeedQuery {
-        feed {
+        post {
           id
           title
           content

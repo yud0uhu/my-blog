@@ -29,14 +29,14 @@ const DeleteMutation = gql`
   }
 `;
 
-const Post: React.FC<{ data: { post: PostProps } }> = (props) => {
+const Post: React.FC<{ data: { post_by_pk: PostProps } }> = (props) => {
   const id = useRouter().query.id;
 
   const [publish] = useMutation(PublishMutation);
   const [deletePost] = useMutation(DeleteMutation);
 
-  let title = props.data.post.title;
-  if (!props.data.post.published) {
+  let title = props.data.post_by_pk.title;
+  if (!props.data.post_by_pk.published) {
     title = `編集中...${title}`;
   }
 
@@ -44,8 +44,8 @@ const Post: React.FC<{ data: { post: PostProps } }> = (props) => {
     <Layout>
       <div>
         <h2>{title}</h2>
-        <ReactMarkdown>{props.data.post.content}</ReactMarkdown>
-        {!props.data.post.published && (
+        <ReactMarkdown>{props.data.post_by_pk.content}</ReactMarkdown>
+        {!props.data.post_by_pk.published && (
           <button
             onClick={async (e) => {
               await publish({
@@ -97,8 +97,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   );
   const { data } = await client.query({
     query: gql`
-      query PostQuery($id: ID!) {
-        post(id: $id) {
+      query PostQuery($id: Int!) {
+        post_by_pk(id: $id) {
           id
           title
           content

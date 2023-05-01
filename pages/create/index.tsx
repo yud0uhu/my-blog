@@ -11,12 +11,12 @@ import init, { text_to_token } from "../../markdown-parser/pkg";
 })();
 
 const CreateDraftMutation = gql`
-  mutation CreateDraftMutation($title: String!, $content: String) {
-    createDraft(title: $title, content: $content) {
-      id
-      title
+  mutation CreateDraftMutation($id: Int!, $title: String!, $content: String) {
+    insert_post_one(
+      object: { id: $id, title: $title, content: $content, published: false }
+    ) {
       content
-      published
+      title
     }
   }
 `;
