@@ -5,11 +5,6 @@ import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
 import init, { text_to_token } from "../../markdown-parser/pkg";
 
-(async () => {
-  // wasmをロード
-  await init();
-})();
-
 const CreateDraftMutation = gql`
   mutation CreateDraftMutation($title: String!, $content: String) {
     createDraft(title: $title, content: $content) {
@@ -25,6 +20,14 @@ function Draft() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [markdownContent, setMarkdownContent] = useState("");
+
+  // init関数は、コンポーネントのマウント時ではなく、外部のebAssemblyモジュールを非同期でロードするため、useEffectフックを使用する
+  useEffect(() => {
+    const loadWasm = async () => {
+      await init();
+    };
+    loadWasm();
+  }, []);
 
   const convertContent = (content: string) => {
     console.log(content);
