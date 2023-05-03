@@ -62,6 +62,7 @@ export const getServerSideProps = async () => {
         post(where: { published: { _eq: false } }) {
           content
           id
+          title
         }
       }
     `,

@@ -2,7 +2,7 @@ import React, { use, useEffect, useState } from "react";
 import Layout from "../../components/layout";
 import Router from "next/router";
 import gql from "graphql-tag";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import init, { text_to_token } from "../../markdown-parser/pkg";
 
 (async () => {
@@ -11,12 +11,14 @@ import init, { text_to_token } from "../../markdown-parser/pkg";
 })();
 
 const CreateDraftMutation = gql`
-  mutation CreateDraftMutation($id: Int!, $title: String!, $content: String) {
-    insert_post_one(
-      object: { id: $id, title: $title, content: $content, published: false }
+  mutation CreateDraftMutation($title: String, $content: String) {
+    insert_post(
+      objects: { content: $content, title: $title, published: false }
     ) {
-      content
-      title
+      returning {
+        title
+        content
+      }
     }
   }
 `;
@@ -32,7 +34,14 @@ function Draft() {
     setMarkdownContent(text_to_token(content));
   };
 
-  const [createDraft] = useMutation(CreateDraftMutation);
+  const [createDraft, { loading, error }] = useMutation(CreateDraftMutation, {
+    onError() {
+      console.log(error);
+    },
+    onCompleted() {
+      console.log("Comp!!");
+    },
+  });
 
   return (
     <Layout>
@@ -40,6 +49,7 @@ function Draft() {
         <form
           onSubmit={async (e) => {
             e.preventDefault();
+            console.log("push");
 
             await createDraft({
               variables: {
@@ -50,7 +60,9 @@ function Draft() {
             Router.push("/drafts");
           }}
         >
-          <button disabled={!content || !title}>保存する</button>
+          <button type="submit" disabled={!content || !title}>
+            保存する
+          </button>
           <a className="back" href="#" onClick={() => Router.push("/")}>
             ←
           </a>

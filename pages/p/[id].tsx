@@ -8,8 +8,8 @@ import { GetServerSideProps } from "next";
 import ReactMarkdown from "react-markdown";
 
 const PublishMutation = gql`
-  mutation PublishMutation($id: ID!) {
-    publish(id: $id) {
+  mutation PublishMutation($id: Int!) {
+    update_post_by_pk(pk_columns: { id: $id }, _set: { published: true }) {
       id
       title
       content
@@ -32,7 +32,11 @@ const DeleteMutation = gql`
 const Post: React.FC<{ data: { post_by_pk: PostProps } }> = (props) => {
   const id = useRouter().query.id;
 
-  const [publish] = useMutation(PublishMutation);
+  const [publish] = useMutation(PublishMutation, {
+    refetchQueries: ["Posts"],
+    awaitRefetchQueries: true,
+  });
+
   const [deletePost] = useMutation(DeleteMutation);
 
   let title = props.data.post_by_pk.title;
