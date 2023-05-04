@@ -2,6 +2,7 @@ import Layout from "../../components/layout";
 import gql from "graphql-tag";
 import client from "../../lib/apollo-client";
 import Post, { PostProps } from "../../components/post";
+import { DraftsQueryDocument } from "../../gql/graphql";
 
 const Drafts: React.FC<{ data: { post: PostProps[] } }> = (props) => {
   return (
@@ -57,15 +58,7 @@ const Drafts: React.FC<{ data: { post: PostProps[] } }> = (props) => {
 
 export const getServerSideProps = async () => {
   const { data } = await client.query({
-    query: gql`
-      query DraftsQuery {
-        post(where: { published: { _eq: false } }) {
-          content
-          id
-          title
-        }
-      }
-    `,
+    query: DraftsQueryDocument,
   });
 
   return {

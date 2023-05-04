@@ -6,6 +6,12 @@ import client from "../../lib/apollo-client";
 import { PostProps } from "../../components/post";
 import { GetServerSideProps } from "next";
 import ReactMarkdown from "react-markdown";
+import {
+  FeedQueryDocument,
+  PostQueryDocument,
+  PublishMutationDocument,
+} from "../../gql/graphql";
+import { useState } from "react";
 
 const PublishMutation = gql`
   mutation PublishMutation($id: Int!) {
@@ -18,26 +24,28 @@ const PublishMutation = gql`
   }
 `;
 
-const DeleteMutation = gql`
-  mutation DeleteMutation($id: ID!) {
-    deletePost(id: $id) {
-      id
-      title
-      content
-      published
-    }
-  }
-`;
+// const DeleteMutation = gql`
+//   mutation DeleteMutation($id: ID!) {
+//     deletePost(id: $id) {
+//       id
+//       title
+//       content
+//       published
+//     }
+//   }
+// `;
 
 const Post: React.FC<{ data: { post_by_pk: PostProps } }> = (props) => {
-  const id = useRouter().query.id;
+  const id = Number(useRouter().query.id);
 
-  const [publish] = useMutation(PublishMutation, {
-    refetchQueries: ["Posts"],
-    awaitRefetchQueries: true,
+  const [publish, { loading }] = useMutation(PublishMutationDocument, {
+    refetchQueries: [FeedQueryDocument],
   });
+  if (loading) {
+    <>loading...</>;
+  }
 
-  const [deletePost] = useMutation(DeleteMutation);
+  // const [deletePost] = useMutation(DeleteMutation);
 
   let title = props.data.post_by_pk.title;
   if (!props.data.post_by_pk.published) {
@@ -48,13 +56,15 @@ const Post: React.FC<{ data: { post_by_pk: PostProps } }> = (props) => {
     <Layout>
       <div>
         <h2>{title}</h2>
+
         <ReactMarkdown>{props.data.post_by_pk.content}</ReactMarkdown>
         {!props.data.post_by_pk.published && (
           <button
-            onClick={async (e) => {
-              await publish({
+            onClick={(e) => {
+              e.preventDefault();
+              publish({
                 variables: {
-                  id,
+                  id: Number(id),
                 },
               });
               Router.push("/");
@@ -93,23 +103,14 @@ const Post: React.FC<{ data: { post_by_pk: PostProps } }> = (props) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   console.log("hoge");
-  const id = String(
+  const id = Number(
     // 記事idをクエリパラメータから受け取る
     Array.isArray(context.params?.id)
       ? context.params?.id[0]
       : context.params?.id
   );
   const { data } = await client.query({
-    query: gql`
-      query PostQuery($id: Int!) {
-        post_by_pk(id: $id) {
-          id
-          title
-          content
-          published
-        }
-      }
-    `,
+    query: PostQueryDocument,
     variables: { id },
   });
 

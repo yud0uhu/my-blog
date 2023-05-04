@@ -1,29 +1,21 @@
-import React, { use, useEffect, useState } from "react";
+import React, { FC, use, useEffect, useState } from "react";
 import Layout from "../../components/layout";
 import Router from "next/router";
 import gql from "graphql-tag";
 import { useMutation, useQuery } from "@apollo/client";
 import init, { text_to_token } from "../../markdown-parser/pkg";
+import {
+  CreateDraftMutationDocument,
+  DraftsQueryDocument,
+  FeedQueryDocument,
+} from "../../gql/graphql";
 
 (async () => {
   // wasmをロード
   await init();
 })();
 
-const CreateDraftMutation = gql`
-  mutation CreateDraftMutation($title: String, $content: String) {
-    insert_post(
-      objects: { content: $content, title: $title, published: false }
-    ) {
-      returning {
-        title
-        content
-      }
-    }
-  }
-`;
-
-function Draft() {
+const Draft: FC = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [markdownContent, setMarkdownContent] = useState("");
@@ -34,32 +26,33 @@ function Draft() {
     setMarkdownContent(text_to_token(content));
   };
 
-  const [createDraft, { loading, error }] = useMutation(CreateDraftMutation, {
-    onError() {
-      console.log(error);
-    },
-    onCompleted() {
-      console.log("Comp!!");
-    },
-  });
+  const [createDraft, { loading, error }] = useMutation(
+    CreateDraftMutationDocument,
+    {
+      refetchQueries: [DraftsQueryDocument],
 
+      onCompleted: () => {
+        Router.push("/drafts");
+      },
+    }
+  );
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    createDraft({
+      variables: {
+        title: title,
+        content: content,
+      },
+    });
+    // Router.push("/drafts");
+  };
+  if (loading) return <p>Submitting...</p>;
+  if (error) return <p>Submission error! {error.message}</p>;
   return (
     <Layout>
       <div>
-        <form
-          onSubmit={async (e) => {
-            e.preventDefault();
-            console.log("push");
-
-            await createDraft({
-              variables: {
-                title,
-                content,
-              },
-            });
-            Router.push("/drafts");
-          }}
-        >
+        <form onSubmit={handleSubmit}>
           <button type="submit" disabled={!content || !title}>
             保存する
           </button>
@@ -80,15 +73,15 @@ function Draft() {
             rows={8}
             value={content}
           />
-          <h1>Preview</h1>
-
-          <div
-            contentEditable
-            dangerouslySetInnerHTML={{
-              __html: markdownContent,
-            }}
-          />
         </form>
+        <h1>Preview</h1>
+
+        <div
+          contentEditable
+          dangerouslySetInnerHTML={{
+            __html: markdownContent,
+          }}
+        />
       </div>
       <style jsx>{`
         .page {
@@ -158,6 +151,6 @@ function Draft() {
       `}</style>
     </Layout>
   );
-}
+};
 
 export default Draft;
