@@ -7,22 +7,21 @@ generator pothos {
 }
 
 datasource db {
-  provider = "mongodb"
-  url      = env("MONGO_DATABASE_URL")
+  provider = "postgresql"
+  url      = env("POSTGRESQL_DATABASE_URL")
 }
 
 // モデルの定義
 model User {
-  // email String  @unique
-  id    String  @id @default(auto()) @map("_id") @db.ObjectId
+  id    String  @id @db.Uuid
   name  String?
   posts Post[]
 }
 
 model Post {
-  authorId  String?  @db.ObjectId
+  authorId  String?  @db.Uuid
   content   String?
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  id        String   @id @db.Uuid
   published Boolean  @default(false)
   title     String
   author    User?    @relation(fields: [authorId], references: [id])
