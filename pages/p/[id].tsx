@@ -1,11 +1,20 @@
 import Layout from "../../components/layout";
 import Router, { useRouter } from "next/router";
 import gql from "graphql-tag";
-import { useMutation } from "@apollo/client";
-import client from "../../lib/apollo-client";
+import { useMutation, useQuery } from "@apollo/client";
 import { PostProps } from "../../components/post";
-import { GetServerSideProps } from "next";
 import ReactMarkdown from "react-markdown";
+
+const PostQuery = gql`
+  query PostQuery($id: ID!) {
+    post(id: $id) {
+      id
+      title
+      content
+      published
+    }
+  }
+`;
 
 const PublishMutation = gql`
   mutation PublishMutation($id: ID!) {
@@ -29,14 +38,21 @@ const DeleteMutation = gql`
   }
 `;
 
-const Post: React.FC<{ data: { post: PostProps } }> = (props) => {
+const Post: React.FC<{ data: { post: PostProps } }> = () => {
+  // 記事idをクエリパラメータから受け取る
   const id = useRouter().query.id;
+  const { data, loading, error } = useQuery(PostQuery, {
+    variables: { id },
+  });
 
   const [publish] = useMutation(PublishMutation);
   const [deletePost] = useMutation(DeleteMutation);
 
-  let title = props.data.post.title;
-  if (!props.data.post.published) {
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Oh no... {error.message}</p>;
+
+  let title = data.post.title;
+  if (!data.post.published) {
     title = `編集中...${title}`;
   }
 
@@ -44,8 +60,8 @@ const Post: React.FC<{ data: { post: PostProps } }> = (props) => {
     <Layout>
       <div>
         <h2>{title}</h2>
-        <ReactMarkdown>{props.data.post.content}</ReactMarkdown>
-        {!props.data.post.published && (
+        <ReactMarkdown>{data.post.content}</ReactMarkdown>
+        {!data.post.published && (
           <button
             onClick={async (e) => {
               await publish({
@@ -85,35 +101,6 @@ const Post: React.FC<{ data: { post: PostProps } }> = (props) => {
       `}</style>
     </Layout>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  console.log("hoge");
-  const id = Number(
-    // 記事idをクエリパラメータから受け取る
-    Array.isArray(context.params?.id)
-      ? context.params?.id[0]
-      : context.params?.id
-  );
-  const { data } = await client.query({
-    query: gql`
-      query PostQuery($id: ID!) {
-        post(id: $id) {
-          id
-          title
-          content
-          published
-        }
-      }
-    `,
-    variables: { id },
-  });
-
-  return {
-    props: {
-      data,
-    },
-  };
 };
 
 export default Post;

@@ -1,16 +1,20 @@
 import Layout from "../../components/layout";
 import gql from "graphql-tag";
-import client from "../../lib/apollo-client";
 import Post, { PostProps } from "../../components/post";
+import { useQuery } from "@apollo/client";
 
-const Drafts: React.FC<{ data: { drafts: PostProps[] } }> = (props) => {
+const Drafts: React.FC<{ data: { drafts: PostProps[] } }> = () => {
+  const { data, loading, error } = useQuery(DraftsQuery);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Oh no... {error.message}</p>;
   return (
     <Layout>
       <div className="page">
         <main>
           <h1>記事の管理</h1>
           <div className="items-container">
-            {props.data.drafts.map((post) => (
+            {data.drafts.map((post: PostProps) => (
               <div key={post.id} className="post">
                 <Post post={post} />
                 <div>{post.published ? "公開中" : "非公開"}</div>
@@ -55,25 +59,15 @@ const Drafts: React.FC<{ data: { drafts: PostProps[] } }> = (props) => {
   );
 };
 
-export const getServerSideProps = async () => {
-  const { data } = await client.query({
-    query: gql`
-      query DraftsQuery {
-        drafts {
-          id
-          title
-          content
-          published
-        }
-      }
-    `,
-  });
-
-  return {
-    props: {
-      data,
-    },
-  };
-};
+const DraftsQuery = gql`
+  query DraftsQuery {
+    drafts {
+      id
+      title
+      content
+      published
+    }
+  }
+`;
 
 export default Drafts;

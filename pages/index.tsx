@@ -1,19 +1,24 @@
 import Layout from "../components/layout";
 import gql from "graphql-tag";
-import client from "../lib/apollo-client";
 import Post, { PostProps } from "../components/post";
 import Router from "next/router";
+import { useQuery } from "@apollo/client";
 
-const Blog: React.FC<{ data: { feed: PostProps[] } }> = (props) => {
+const Blog: React.FC<{ data: { feed: PostProps[] } }> = () => {
+  const { data, loading, error } = useQuery(FeedQuery);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Oh no... {error.message}</p>;
+
   return (
     <Layout>
       <div className="page">
         <main>
           <button onClick={() => Router.push("/create")}>投稿する</button>
           <div className="items-container">
-            {props.data.feed.map((post) => (
+            {data.feed.map((post: PostProps) => (
               <div key={post.id} className="post">
-                <Post post={post} />
+                {post.published ? <Post post={post} /> : null}
               </div>
             ))}
           </div>
@@ -72,25 +77,14 @@ const Blog: React.FC<{ data: { feed: PostProps[] } }> = (props) => {
   );
 };
 
-export async function getServerSideProps() {
-  const { data } = await client.query({
-    query: gql`
-      query FeedQuery {
-        feed {
-          id
-          title
-          content
-          published
-        }
-      }
-    `,
-  });
-
-  return {
-    props: {
-      data,
-    },
-  };
-}
-
+const FeedQuery = gql`
+  query FeedQuery {
+    feed {
+      id
+      title
+      content
+      published
+    }
+  }
+`;
 export default Blog;
