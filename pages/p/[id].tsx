@@ -89,7 +89,7 @@ const Post: React.FC<{ data: { post: PostProps } }> = (props) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   console.log("hoge");
-  const id = String(
+  const id = Number(
     // 記事idをクエリパラメータから受け取る
     Array.isArray(context.params?.id)
       ? context.params?.id[0]
