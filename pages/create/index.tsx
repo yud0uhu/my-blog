@@ -8,7 +8,6 @@ import init, { text_to_token } from "../../markdown-parser/pkg";
 const CreateDraftMutation = gql`
   mutation CreateDraftMutation($title: String!, $content: String) {
     createDraft(title: $title, content: $content) {
-      id
       title
       content
       published

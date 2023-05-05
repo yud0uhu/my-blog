@@ -61,7 +61,7 @@ builder.queryField("post", (t) =>
       prisma.post.findUnique({
         ...query,
         where: {
-          id: String(args.id),
+          id: Number(args.id),
         },
       }),
   })
@@ -111,7 +111,7 @@ builder.mutationField("deletePost", (t) =>
       prisma.post.delete({
         ...query,
         where: {
-          id: String(args.id),
+          id: Number(args.id),
         },
       }),
   })
@@ -127,7 +127,7 @@ builder.mutationField("publish", (t) =>
       prisma.post.update({
         ...query,
         where: {
-          id: String(args.id),
+          id: Number(args.id),
         },
         data: {
           published: true,
@@ -142,14 +142,14 @@ builder.mutationField("createDraft", (t) =>
     args: {
       title: t.arg.string({ required: true }),
       content: t.arg.string(),
-      id: t.arg.string({ required: true }),
+      // id: t.arg.string({ required: true }),
       // authorEmail: t.arg.string({ required: true }),
     },
     resolve: async (query, _parent, args, _info) =>
       prisma.post.create({
         ...query,
         data: {
-          id: args.id,
+          // id: args.id,
           title: args.title,
           content: args.content,
           author: {
