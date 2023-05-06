@@ -87,4 +87,5 @@ const FeedQuery = gql`
     }
   }
 `;
+
 export default Blog;
