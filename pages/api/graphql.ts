@@ -37,14 +37,6 @@ builder.prismaObject("Post", {
     published: t.exposeBoolean("published"),
     author: t.relation("author"),
     tags: t.relation("tags"),
-  }),
-});
-
-builder.prismaObject("Tag", {
-  fields: (t) => ({
-    id: t.exposeInt("id"),
-    label: t.exposeString("label"),
-    posts: t.relation("posts"),
     createdAt: t.string({
       resolve: (parent) => {
         const createdAtDate = new Date(parent.createdAt).toLocaleString();
@@ -57,6 +49,14 @@ builder.prismaObject("Tag", {
         return createdAtDate.toString();
       },
     }),
+  }),
+});
+
+builder.prismaObject("Tag", {
+  fields: (t) => ({
+    id: t.exposeInt("id"),
+    label: t.exposeString("label"),
+    posts: t.relation("posts"),
   }),
 });
 
