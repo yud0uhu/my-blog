@@ -7,7 +7,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 import prisma from "../../lib/prisma";
 
-import { VercelRequest, VercelResponse } from "@vercel/node";
+import { NextApiRequest, NextApiResponse } from "next";
 
 const builder = new SchemaBuilder<{
   PrismaTypes: PrismaTypes;
@@ -165,8 +165,8 @@ builder.mutationField("createDraft", (t) =>
 const schema = builder.toSchema();
 
 export default createYoga<{
-  req: VercelRequest;
-  res: VercelResponse;
+  request: NextApiRequest;
+  response: NextApiResponse;
 }>({
   schema,
   graphqlEndpoint: "/api/graphql",
