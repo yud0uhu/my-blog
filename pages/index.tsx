@@ -84,6 +84,7 @@ const FeedQuery = gql`
       title
       content
       published
+      createdAt
     }
   }
 `;

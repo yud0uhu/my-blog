@@ -9,6 +9,7 @@ export type PostProps = {
   // };
   content: string;
   published: boolean;
+  createdAt: string;
 };
 
 const Post: React.FC<{ post: PostProps }> = ({ post }) => {
@@ -16,6 +17,7 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
   return (
     <div onClick={() => Router.push("/p/[id]", `/p/${post.id}`)}>
       <h2>{post.title}</h2>
+      <small>{post.createdAt.toString()}</small>
       {/* <small>By {authorName}</small> */}
       <style jsx>{`
         div {
