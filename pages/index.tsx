@@ -3,24 +3,40 @@ import gql from "graphql-tag";
 import Post, { PostProps } from "../components/post";
 import Router from "next/router";
 import { useQuery } from "@apollo/client";
+import { useState } from "react";
 
 const Blog: React.FC<{ data: { feed: PostProps[] } }> = () => {
   const { data, loading, error } = useQuery(FeedQuery);
 
+  const [searchString, setSearchString] = useState("");
+  const searchResult = useQuery(filterPosts, {
+    variables: { searchString },
+  });
+  const filterPost = searchResult.data;
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Oh no... {error.message}</p>;
+
+  console.log(filterPost);
 
   return (
     <Layout>
       <div className="page">
         <main>
+          <input
+            type="text"
+            className="search"
+            placeholder=""
+            onChange={(e) => setSearchString(e.target.value)}
+          />
           <button onClick={() => Router.push("/create")}>投稿する</button>
           <div className="items-container">
-            {data.feed.map((post: PostProps) => (
-              <div key={post.id} className="post">
-                {post.published ? <Post post={post} /> : null}
-              </div>
-            ))}
+            {filterPost &&
+              filterPost.filterPosts.map((post: PostProps) => (
+                <div key={post.id} className="post">
+                  <Post post={post} />
+                </div>
+              ))}
           </div>
         </main>
       </div>
@@ -56,6 +72,19 @@ const Blog: React.FC<{ data: { feed: PostProps[] } }> = () => {
           margin-bottom: 30px;
         }
 
+        .search {
+          height: 32px;
+          width: 457px;
+          position: fixed;
+          top: 10px;
+          margin: auto 0;
+          font-weight: bold;
+          background-color: rgba(240, 235, 235, 0.8);
+          z-index: 999;
+          border: none;
+          padding: 12px;
+        }
+
         button {
           height: 35px;
           width: 96px;
@@ -66,7 +95,7 @@ const Blog: React.FC<{ data: { feed: PostProps[] } }> = () => {
           z-index: 999;
           border: 0;
           border-radius: 10px;
-          background-color: rgb(245, 178, 178);
+          background-color: rgb(255, 85, 85);
           box-shadow: 0 10px 20px rgb(240, 235, 235, 0.3);
           border: 0.125rem solid #0000;
           color: white;
@@ -88,4 +117,17 @@ const FeedQuery = gql`
     }
   }
 `;
+
+const filterPosts = gql`
+  query filterPosts($searchString: String!) {
+    filterPosts(searchString: $searchString, published: true) {
+      id
+      title
+      content
+      published
+      createdAt
+    }
+  }
+`;
+
 export default Blog;

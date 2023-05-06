@@ -129,7 +129,7 @@ function Draft() {
           z-index: 999;
           border: 0;
           border-radius: 10px;
-          background-color: rgb(245, 178, 178);
+          background-color: rgb(255, 85, 85);
           box-shadow: 0 10px 20px rgb(240, 235, 235, 0.3);
           border: 0.125rem solid #0000;
           font-weight: bold;
