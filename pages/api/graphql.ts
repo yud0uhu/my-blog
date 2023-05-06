@@ -24,7 +24,6 @@ builder.mutationType({});
 builder.prismaObject("User", {
   fields: (t) => ({
     id: t.exposeID("id"),
-    // email: t.exposeString("email"),
     name: t.exposeString("name", { nullable: true }),
     posts: t.relation("posts"),
   }),
@@ -37,6 +36,15 @@ builder.prismaObject("Post", {
     content: t.exposeString("content", { nullable: true }),
     published: t.exposeBoolean("published"),
     author: t.relation("author"),
+    tags: t.relation("tags"),
+  }),
+});
+
+builder.prismaObject("Tag", {
+  fields: (t) => ({
+    id: t.exposeInt("id"),
+    label: t.exposeString("label"),
+    posts: t.relation("posts"),
   }),
 });
 
@@ -91,6 +99,7 @@ builder.queryField("filterPosts", (t) =>
             OR: [
               { title: { contains: args.searchString } },
               { content: { contains: args.searchString } },
+              { label: { contains: args.searchString } },
             ],
           }
         : {};
@@ -137,30 +146,33 @@ builder.mutationField("publish", (t) =>
   })
 );
 
+builder.queryField("tags", (t) =>
+  t.prismaField({
+    type: ["Tag"],
+    resolve: async (query, _parent, _args, _info) =>
+      prisma.tag.findMany({
+        ...query,
+      }),
+  })
+);
+
 builder.mutationField("createDraft", (t) =>
   t.prismaField({
     type: "Post",
     args: {
       title: t.arg.string({ required: true }),
       content: t.arg.string(),
-      // id: t.arg.string({ required: true }),
-      // authorEmail: t.arg.string({ required: true }),
+      label: t.arg.string(),
     },
     resolve: async (query, _parent, args, _info) =>
       prisma.post.create({
         ...query,
         data: {
-          // id: args.id,
           title: args.title,
-          content: args.content,
-          author: {
-            // connect: { email: args.authorEmail },
-          },
         },
       }),
   })
 );
-
 const schema = builder.toSchema();
 
 export default createYoga<{

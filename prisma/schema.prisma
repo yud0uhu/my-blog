@@ -13,7 +13,7 @@ datasource db {
 
 // モデルの定義
 model User {
-  id    Int @id @default(autoincrement())
+  id    Int     @id @default(autoincrement())
   name  String?
   posts Post[]
 }
@@ -21,11 +21,19 @@ model User {
 model Post {
   authorId  Int?
   content   String?
-  id        Int @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   published Boolean  @default(false)
   title     String
   author    User?    @relation(fields: [authorId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   viewCount Int      @default(0)
+  tags      Tag?     @relation(references: [id], fields: [tagId])
+  tagId     Int?
+}
+
+model Tag {
+  id    Int    @id @default(autoincrement())
+  label String
+  posts Post[]
 }
