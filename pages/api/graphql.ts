@@ -1,11 +1,11 @@
 import { createYoga } from "graphql-yoga";
 import SchemaBuilder from "@pothos/core";
-import PrismaPlugin from "@pothos/plugin-prisma";
 
 import type PrismaTypes from "@pothos/plugin-prisma/generated";
 import type { NextApiRequest, NextApiResponse } from "next";
-
 import prisma from "../../lib/prisma";
+
+import PrismaPlugin from "@pothos/plugin-prisma";
 
 const builder = new SchemaBuilder<{
   PrismaTypes: PrismaTypes;
@@ -23,7 +23,6 @@ builder.mutationType({});
 builder.prismaObject("User", {
   fields: (t) => ({
     id: t.exposeID("id"),
-    // email: t.exposeString("email"),
     name: t.exposeString("name", { nullable: true }),
     posts: t.relation("posts"),
   }),
@@ -36,6 +35,18 @@ builder.prismaObject("Post", {
     content: t.exposeString("content", { nullable: true }),
     published: t.exposeBoolean("published"),
     author: t.relation("author"),
+    createdAt: t.string({
+      resolve: (parent) => {
+        const createdAtDate = new Date(parent.createdAt).toLocaleString();
+        // const createdAt =
+        //   Math.abs(createdAtDate.getUTCFullYear()).toString() +
+        //   "-" +
+        //   Math.abs(createdAtDate.getUTCMonth()).toString() +
+        //   "-" +
+        //   Math.abs(createdAtDate.getUTCDay()).toString();
+        return createdAtDate.toString();
+      },
+    }),
   }),
 });
 
@@ -106,13 +117,11 @@ builder.mutationField("signupUser", (t) =>
     type: "User",
     args: {
       name: t.arg.string({ required: false }),
-      // email: t.arg.string({ required: true }),
     },
     resolve: async (query, _parent, args, _info) =>
       prisma.user.create({
         ...query,
         data: {
-          // email: args.email,
           name: args.name,
         },
       }),
@@ -160,7 +169,6 @@ builder.mutationField("createDraft", (t) =>
     args: {
       title: t.arg.string({ required: true }),
       content: t.arg.string(),
-      // authorEmail: t.arg.string({ required: true }),
     },
     resolve: async (query, _parent, args, _info) =>
       prisma.post.create({
@@ -168,9 +176,6 @@ builder.mutationField("createDraft", (t) =>
         data: {
           title: args.title,
           content: args.content,
-          author: {
-            // connect: { email: args.authorEmail },
-          },
         },
       }),
   })

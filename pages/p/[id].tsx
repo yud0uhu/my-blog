@@ -12,6 +12,7 @@ const PostQuery = gql`
       title
       content
       published
+      createdAt
     }
   }
 `;
@@ -60,6 +61,7 @@ const Post: React.FC<{ data: { post: PostProps } }> = () => {
     <Layout>
       <div>
         <h2>{title}</h2>
+        <small>{data.post.createdAt}</small>
         <ReactMarkdown>{data.post.content}</ReactMarkdown>
         {!data.post.published && (
           <button
