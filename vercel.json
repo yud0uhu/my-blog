@@ -1,3 +1,13 @@
 {
-  "buildCommand": "bash vercel-build.sh"
+  "buildCommand": "bash vercel-build.sh",
+  "builds": [
+    {
+      "src": "api/*.js",
+      "use": "@vercel/node",
+      "config": {
+        "NODE_VERSION": "14.17.0",
+        "PRISMA_GENERATE_BEFORE_BUILD": "true"
+      }
+    }
+  ]
 }
