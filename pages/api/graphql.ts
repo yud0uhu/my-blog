@@ -3,7 +3,6 @@ import SchemaBuilder from "@pothos/core";
 import PrismaPlugin from "@pothos/plugin-prisma";
 
 import type PrismaTypes from "@pothos/plugin-prisma/generated";
-import type { NextApiRequest, NextApiResponse } from "next";
 
 import prisma from "../../lib/prisma";
 
