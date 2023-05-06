@@ -34,7 +34,7 @@
   },
   "scripts": {
     "build": "run-s build:wasm build:prisma build:next",
-    "build:prisma": "prisma db push && prisma generate",
+    "build:prisma": "prisma generate",
     "build:next": "next build",
     "dev": "next dev",
     "start": "next start",
