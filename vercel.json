@@ -1,4 +1,4 @@
 {
-  "buildCommand": "bash vercel-build.sh",
-  "rewrites": [{ "source": "/api/(.*)", "destination": "/api" }]
+  "src": "vercel-build.sh",
+  "use": "@vercel/build-utils"
 }
