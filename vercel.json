@@ -1,13 +1,4 @@
 {
   "buildCommand": "bash vercel-build.sh",
-  "functions": [
-    {
-      "src": "api/*.ts",
-      "use": "@vercel/node",
-      "config": {
-        "NODE_VERSION": "19.7.0",
-        "PRISMA_GENERATE_BEFORE_BUILD": "true"
-      }
-    }
-  ]
+  "rewrites": [{ "source": "/api/(.*)", "destination": "/api" }]
 }
