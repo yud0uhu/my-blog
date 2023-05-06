@@ -1,12 +1,12 @@
 import { createYoga } from "graphql-yoga";
 import SchemaBuilder from "@pothos/core";
-import PrismaPlugin from "@pothos/plugin-prisma";
 
 import type PrismaTypes from "@pothos/plugin-prisma/generated";
 
+import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../lib/prisma";
 
-import { NextApiRequest, NextApiResponse } from "next";
+import PrismaPlugin from "@pothos/plugin-prisma";
 
 const builder = new SchemaBuilder<{
   PrismaTypes: PrismaTypes;
@@ -45,6 +45,18 @@ builder.prismaObject("Tag", {
     id: t.exposeInt("id"),
     label: t.exposeString("label"),
     posts: t.relation("posts"),
+    createdAt: t.string({
+      resolve: (parent) => {
+        const createdAtDate = new Date(parent.createdAt).toLocaleString();
+        // const createdAt =
+        //   Math.abs(createdAtDate.getUTCFullYear()).toString() +
+        //   "-" +
+        //   Math.abs(createdAtDate.getUTCMonth()).toString() +
+        //   "-" +
+        //   Math.abs(createdAtDate.getUTCDay()).toString();
+        return createdAtDate.toString();
+      },
+    }),
   }),
 });
 
@@ -111,6 +123,22 @@ builder.queryField("filterPosts", (t) =>
   })
 );
 
+builder.mutationField("signupUser", (t) =>
+  t.prismaField({
+    type: "User",
+    args: {
+      name: t.arg.string({ required: false }),
+    },
+    resolve: async (query, _parent, args, _info) =>
+      prisma.user.create({
+        ...query,
+        data: {
+          name: args.name,
+        },
+      }),
+  })
+);
+
 builder.mutationField("deletePost", (t) =>
   t.prismaField({
     type: "Post",
@@ -169,6 +197,7 @@ builder.mutationField("createDraft", (t) =>
         ...query,
         data: {
           title: args.title,
+          content: args.content,
         },
       }),
   })
