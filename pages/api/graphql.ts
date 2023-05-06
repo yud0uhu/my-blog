@@ -3,10 +3,9 @@ import SchemaBuilder from "@pothos/core";
 import PrismaPlugin from "@pothos/plugin-prisma";
 
 import type PrismaTypes from "@pothos/plugin-prisma/generated";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 import prisma from "../../lib/prisma";
-
-import { NextApiRequest, NextApiResponse } from "next";
 
 const builder = new SchemaBuilder<{
   PrismaTypes: PrismaTypes;
@@ -62,7 +61,7 @@ builder.queryField("post", (t) =>
       prisma.post.findUnique({
         ...query,
         where: {
-          id: Number(args.id),
+          id: String(args.id),
         },
       }),
   })
@@ -102,6 +101,24 @@ builder.queryField("filterPosts", (t) =>
   })
 );
 
+builder.mutationField("signupUser", (t) =>
+  t.prismaField({
+    type: "User",
+    args: {
+      name: t.arg.string({ required: false }),
+      // email: t.arg.string({ required: true }),
+    },
+    resolve: async (query, _parent, args, _info) =>
+      prisma.user.create({
+        ...query,
+        data: {
+          // email: args.email,
+          name: args.name,
+        },
+      }),
+  })
+);
+
 builder.mutationField("deletePost", (t) =>
   t.prismaField({
     type: "Post",
@@ -112,7 +129,7 @@ builder.mutationField("deletePost", (t) =>
       prisma.post.delete({
         ...query,
         where: {
-          id: Number(args.id),
+          id: String(args.id),
         },
       }),
   })
@@ -128,7 +145,7 @@ builder.mutationField("publish", (t) =>
       prisma.post.update({
         ...query,
         where: {
-          id: Number(args.id),
+          id: String(args.id),
         },
         data: {
           published: true,
@@ -143,14 +160,12 @@ builder.mutationField("createDraft", (t) =>
     args: {
       title: t.arg.string({ required: true }),
       content: t.arg.string(),
-      // id: t.arg.string({ required: true }),
       // authorEmail: t.arg.string({ required: true }),
     },
     resolve: async (query, _parent, args, _info) =>
       prisma.post.create({
         ...query,
         data: {
-          // id: args.id,
           title: args.title,
           content: args.content,
           author: {
@@ -164,8 +179,8 @@ builder.mutationField("createDraft", (t) =>
 const schema = builder.toSchema();
 
 export default createYoga<{
-  request: NextApiRequest;
-  response: NextApiResponse;
+  req: NextApiRequest;
+  res: NextApiResponse;
 }>({
   schema,
   graphqlEndpoint: "/api/graphql",
