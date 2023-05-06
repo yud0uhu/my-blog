@@ -89,11 +89,14 @@ builder.queryField("drafts", (t) =>
   })
 );
 
+// キーワード検索用
 builder.queryField("filterPosts", (t) =>
   t.prismaField({
     type: ["Post"],
     args: {
       searchString: t.arg.string({ required: false }),
+      // 公開状態or非公開状態をパラメータの引数に渡して絞り込み
+      published: t.arg.boolean({ required: true }),
     },
     resolve: async (query, _parent, args, _info) => {
       const or = args.searchString
@@ -104,9 +107,11 @@ builder.queryField("filterPosts", (t) =>
             ],
           }
         : {};
+      const published = args.published;
       return prisma.post.findMany({
         ...query,
-        where: { ...or },
+
+        where: { ...or, published },
       });
     },
   })
