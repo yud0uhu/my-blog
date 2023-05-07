@@ -3,26 +3,40 @@ import gql from "graphql-tag";
 import Post, { PostProps } from "../components/post";
 import Router from "next/router";
 import { useQuery } from "@apollo/client";
-import { useState } from "react";
-import client from "../lib/apollo-client";
+import { useEffect, useState } from "react";
+import { FaSearch } from "react-icons/fa";
 
 const Blog: React.FC<{ data: { feed: PostProps[] } }> = (props) => {
-  const [searchString, setSearchString] = useState("");
+  const [text, setText] = useState("");
+  const [searchString, setSearchString] = useState<string | null>("");
 
-  const { data } = useQuery(filterPosts, {
+  const { loading, error, data } = useQuery(filterPosts, {
     variables: { searchString },
+    pollInterval: 500,
   });
+
+  const onClickAddText = () => {
+    setSearchString(text);
+  };
+
+  if (loading) return null;
+  if (error) return <p>Oh no... {error.message}</p>;
 
   return (
     <Layout>
       <div className="page">
         <main>
-          <input
-            type="text"
-            className="search"
-            placeholder=""
-            onChange={(e) => setSearchString(e.target.value)}
-          />
+          <form className="search-box">
+            <input
+              type="text"
+              className="search-input"
+              placeholder=""
+              onChange={(e) => setText(e.target.value)}
+            ></input>
+            <button className="search-button" onClick={onClickAddText}>
+              <FaSearch />
+            </button>
+          </form>
           <button onClick={() => Router.push("/create")}>投稿する</button>
           <div className="items-container">
             {data &&
@@ -66,7 +80,12 @@ const Blog: React.FC<{ data: { feed: PostProps[] } }> = (props) => {
           margin-bottom: 30px;
         }
 
-        .search {
+        .search-box {
+          display: flex;
+          width: 457px;
+        }
+
+        .search-input {
           height: 32px;
           width: 457px;
           position: fixed;
@@ -77,6 +96,18 @@ const Blog: React.FC<{ data: { feed: PostProps[] } }> = (props) => {
           z-index: 999;
           border: none;
           padding: 12px;
+        }
+
+        .search-button {
+          height: 32px;
+          width: 50px;
+          top: 10px;
+          right: 940px;
+          margin: auto 0;
+          font-weight: bold;
+          background-color: rgb(255, 85, 85);
+          z-index: 999;
+          border: none;
         }
 
         button {
