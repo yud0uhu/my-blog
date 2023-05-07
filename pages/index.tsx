@@ -4,20 +4,14 @@ import Post, { PostProps } from "../components/post";
 import Router from "next/router";
 import { useQuery } from "@apollo/client";
 import { useState } from "react";
+import client from "../lib/apollo-client";
 
-const Blog: React.FC<{ data: { feed: PostProps[] } }> = () => {
-  const { data, loading, error } = useQuery(FeedQuery);
-
+const Blog: React.FC<{ data: { feed: PostProps[] } }> = (props) => {
   const [searchString, setSearchString] = useState("");
-  const searchResult = useQuery(filterPosts, {
+
+  const { data } = useQuery(filterPosts, {
     variables: { searchString },
   });
-  const filterPost = searchResult.data;
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Oh no... {error.message}</p>;
-
-  console.log(filterPost);
 
   return (
     <Layout>
@@ -31,8 +25,8 @@ const Blog: React.FC<{ data: { feed: PostProps[] } }> = () => {
           />
           <button onClick={() => Router.push("/create")}>投稿する</button>
           <div className="items-container">
-            {filterPost &&
-              filterPost.filterPosts.map((post: PostProps) => (
+            {data &&
+              data.filterPosts.map((post: PostProps) => (
                 <div key={post.id} className="post">
                   <Post post={post} />
                 </div>
