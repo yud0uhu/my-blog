@@ -17,7 +17,7 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
   return (
     <div onClick={() => Router.push("/p/[id]", `/p/${post.id}`)}>
       <h2>{post.title}</h2>
-      <small>{post.createdAt.toString()}</small>
+      <small>{post.createdAt}</small>
       {/* <small>By {authorName}</small> */}
       <style jsx>{`
         div {
