@@ -2,6 +2,7 @@ import Layout from "../../components/layout";
 import gql from "graphql-tag";
 import Post, { PostProps } from "../../components/post";
 import { useQuery } from "@apollo/client";
+import Router from "next/router";
 
 const Drafts: React.FC<{ data: { drafts: PostProps[] } }> = () => {
   const { data, loading, error } = useQuery(DraftsQuery);
@@ -12,6 +13,9 @@ const Drafts: React.FC<{ data: { drafts: PostProps[] } }> = () => {
     <Layout>
       <div className="page">
         <main>
+          <a className="back" href="#" onClick={() => Router.push("/")}>
+            ←
+          </a>
           <h1>記事の管理</h1>
           <div className="items-container">
             {data.drafts.map((post: PostProps) => (
@@ -53,6 +57,16 @@ const Drafts: React.FC<{ data: { drafts: PostProps[] } }> = () => {
           height: 300px;
           margin-right: 30px;
           margin-bottom: 30px;
+        }
+
+        .back {
+          position: fixed;
+          top: 20px;
+          left: 30px;
+          z-index: 999;
+          border: 0;
+          margin-left: 1rem;
+          color: black;
         }
       `}</style>
     </Layout>

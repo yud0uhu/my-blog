@@ -60,6 +60,9 @@ const Post: React.FC<{ data: { post: PostProps } }> = () => {
   return (
     <Layout>
       <div>
+        <a className="back" href="#" onClick={() => Router.push("/")}>
+          ←
+        </a>
         <h2>{title}</h2>
         <small>{data.post.createdAt}</small>
         <ReactMarkdown>{data.post.content}</ReactMarkdown>
@@ -99,6 +102,16 @@ const Post: React.FC<{ data: { post: PostProps } }> = () => {
 
         button + button {
           margin-left: 1rem;
+        }
+
+        .back {
+          position: fixed;
+          top: 20px;
+          left: 30px;
+          z-index: 999;
+          border: 0;
+          margin-left: 1rem;
+          color: black;
         }
       `}</style>
     </Layout>
