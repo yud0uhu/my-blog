@@ -1,13 +1,11 @@
-// import Header from "./Header";
+import Header from "../header";
 
 type Props = {
   children: React.ReactNode;
 };
 const Layout: React.FC<Props> = (props) => (
   <div>
-    {/* <Header /> */}
-
-    <div className="header" />
+    <Header />
 
     <div className="layout">{props.children}</div>
     <style jsx global>{`
@@ -50,17 +48,6 @@ const Layout: React.FC<Props> = (props) => (
         justify-content: center;
         align-items: center;
         margin-top: 70px;
-      }
-      .header {
-        background-color: white;
-        box-shadow: 0 10px 20px rgb(240, 235, 235);
-        width: 100%;
-        height: 60px;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 999;
       }
     `}</style>
   </div>
