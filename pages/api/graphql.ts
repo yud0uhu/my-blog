@@ -114,7 +114,7 @@ builder.queryField("filterPosts", (t) =>
             OR: [
               { title: { contains: args.searchString } },
               { content: { contains: args.searchString } },
-              { label: { contains: args.searchString } },
+              // { label: { contains: args.searchString } },
             ],
           }
         : {};
