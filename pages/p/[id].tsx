@@ -2,7 +2,7 @@ import Layout from "../../components/layout";
 import Router, { useRouter } from "next/router";
 import gql from "graphql-tag";
 import { useMutation, useQuery } from "@apollo/client";
-import { PostProps } from "../../components/post";
+import { PostProps } from "../../features/post/components";
 import ReactMarkdown from "react-markdown";
 
 const PostQuery = gql`
