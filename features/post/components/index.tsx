@@ -1,5 +1,6 @@
 import React from "react";
 import Router from "next/router";
+import { PostContainer } from "../styles";
 
 export type PostProps = {
   id: number;
@@ -15,17 +16,13 @@ export type PostProps = {
 const Post: React.FC<{ post: PostProps }> = ({ post }) => {
   // const authorName = post.author ? post.author.name : "Unknown author";
   return (
-    <div onClick={() => Router.push("/p/[id]", `/p/${post.id}`)}>
-      <h2>{post.title}</h2>
-      <small>{post.createdAt}</small>
-      {/* <small>By {authorName}</small> */}
-      <style jsx>{`
-        div {
-          color: inherit;
-          padding: 2rem;
-        }
-      `}</style>
-    </div>
+    <PostContainer>
+      <div onClick={() => Router.push("/p/[id]", `/p/${post.id}`)}>
+        <h2>{post.title}</h2>
+        <small>{post.createdAt}</small>
+        {/* <small>By {authorName}</small> */}
+      </div>
+    </PostContainer>
   );
 };
 
