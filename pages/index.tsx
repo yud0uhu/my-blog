@@ -1,6 +1,5 @@
 import Layout from "../components/layout";
 import gql from "graphql-tag";
-import Post, { PostProps } from "../features/post/components";
 import Router from "next/router";
 import { useQuery } from "@apollo/client";
 import { FormEvent, useEffect, useState } from "react";
@@ -8,6 +7,8 @@ import { FaSearch } from "react-icons/fa";
 import styled from "styled-components";
 import { useForm } from "@mantine/form";
 import { TextInput, Button, Group, Box } from "@mantine/core";
+import { PostProps } from "../features/types";
+import Post from "../features/post/components/Post";
 
 const Blog: React.FC<{ data: { feed: PostProps[] } }> = (props) => {
   const [text, setText] = useState("");

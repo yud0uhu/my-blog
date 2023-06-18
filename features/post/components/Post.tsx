@@ -1,17 +1,7 @@
 import React from "react";
 import Router from "next/router";
-import { PostContainer } from "../styles";
-
-export type PostProps = {
-  id: number;
-  title: string;
-  // author: {
-  //   name: string;
-  // };
-  content: string;
-  published: boolean;
-  createdAt: string;
-};
+import { PostContainer } from "../styles/PostStyles";
+import { PostProps } from "../../types";
 
 const Post: React.FC<{ post: PostProps }> = ({ post }) => {
   // const authorName = post.author ? post.author.name : "Unknown author";
