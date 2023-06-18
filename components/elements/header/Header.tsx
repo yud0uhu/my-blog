@@ -1,4 +1,4 @@
-import { GlobalStyle } from "./styles";
+import { GlobalStyle } from "./styles/HeaderStyles";
 
 const Header: React.FC = () => {
   return (

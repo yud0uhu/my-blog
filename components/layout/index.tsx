@@ -1,5 +1,5 @@
-import Header from "../header";
 import { createStyles, getBreakpointValue, rem, em } from "@mantine/core";
+import Header from "../elements/header/Header";
 
 const useStyles = createStyles((theme) => ({
   container: {
@@ -27,7 +27,6 @@ const Layout: React.FC<Props> = (props) => {
   return (
     <div className={classes.container}>
       <Header />
-
       <div className="layout">{props.children}</div>
       <style jsx global>{`
         html {
