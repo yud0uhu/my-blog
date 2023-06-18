@@ -3,7 +3,7 @@ import styled, { createGlobalStyle } from "styled-components";
 export const GlobalStyle = createGlobalStyle`
 .header {
   background-color: white;
-  box-shadow: 0 10px 20px rgb(240, 235, 235);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   width: 100%;
   height: 60px;
   position: fixed;

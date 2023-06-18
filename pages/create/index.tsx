@@ -3,7 +3,7 @@ import Layout from "../../components/layout";
 import Router from "next/router";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
-import init, { text_to_token } from "../../markdown-parser/pkg";
+import init, { text_to_token } from "../../markdown-parser/pkg/markdown_parser";
 import Create from "../../features/create/components/Create";
 
 // const CreateDraftMutation = gql`
