@@ -1,5 +1,6 @@
 import Router from "next/router";
-import Post, { PostProps } from "../../post/components";
+import Post from "../../post/components/Post";
+import { PostProps } from "../../types";
 import {
   BackLink,
   ItemsContainer,

@@ -1,8 +1,9 @@
 import Layout from "../../components/layout";
 import gql from "graphql-tag";
-import { PostProps } from "../../features/post/components";
 import { useQuery } from "@apollo/client";
-import Drafts from "../../features/drafts/components";
+import { PostProps } from "../../features/types";
+import Drafts from "../../features/drafts/components/Drafts";
+import { DraftsQuery } from "../../features/drafts/query";
 
 const DraftsPage: React.FC<{ data: { drafts: PostProps[] } }> = () => {
   const { data, loading, error } = useQuery(DraftsQuery);
@@ -15,16 +16,5 @@ const DraftsPage: React.FC<{ data: { drafts: PostProps[] } }> = () => {
     </Layout>
   );
 };
-
-const DraftsQuery = gql`
-  query DraftsQuery {
-    drafts {
-      id
-      title
-      content
-      published
-    }
-  }
-`;
 
 export default DraftsPage;
