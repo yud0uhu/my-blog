@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Router from "next/router";
-import gql from "graphql-tag";
 import { text_to_token } from "../../../markdown-parser/pkg/markdown_parser";
 import { useMutation } from "@apollo/client";
 import {
@@ -10,16 +9,7 @@ import {
   TextArea,
   Input,
 } from "../styles/createStyles";
-
-const CreateDraftMutation = gql`
-  mutation CreateDraftMutation($title: String!, $content: String!) {
-    createDraft(title: $title, content: $content) {
-      title
-      content
-      published
-    }
-  }
-`;
+import { CreateDraftMutation } from "../query";
 
 function Create() {
   const [title, setTitle] = useState("");
