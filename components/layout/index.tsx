@@ -16,13 +16,44 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     font-size: 16px;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    background-color: rgb(240, 235, 235);
-    /* background-color: #f6f8fa; */
+    /* background-color: rgb(240, 235, 235); */
+    background-color: #f6f8fa;
     background-blend-mode: lighten;
   }
 
   input, textarea {
     font-size: 16px;
+  }
+`;
+
+export const ButtonContainer = styled.div`
+  position: fixed;
+  top: 0;
+  right: 0;
+  margin: 10px 10px;
+  display: flex;
+  gap: 10px;
+  z-index: 999;
+`;
+
+export const Button = styled.button`
+  padding: 5px 20px;
+  margin: 0 10px;
+  font-size: 16px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  z-index: 999;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgb(240, 235, 235, 0.3);
+  border: 0.125rem solid #0000;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #555;
   }
 `;
 
@@ -89,23 +120,6 @@ const ItemWrapper = styled.div`
     font-weight: bold;
     z-index: 999;
     border: none;
-  }
-
-  button {
-    height: 35px;
-    position: fixed;
-    top: 0;
-    right: 0;
-    margin: 10px 10px;
-    z-index: 999;
-    border: 0;
-    border-radius: 10px;
-    background-color: black;
-    box-shadow: 0 10px 20px rgb(240, 235, 235, 0.3);
-    border: 0.125rem solid #0000;
-    color: white;
-    font-weight: bold;
-    width: 120px;
   }
 `;
 

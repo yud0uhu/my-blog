@@ -1,16 +1,21 @@
-import Layout, { Wrapper } from "../components/layout";
+import Layout, { Button, ButtonContainer } from "../components/layout";
 import gql from "graphql-tag";
 import Router from "next/router";
 import { useQuery } from "@apollo/client";
 import { FormEvent, useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
-import styled from "styled-components";
 import { useForm } from "@mantine/form";
-import { TextInput, Button, Group, Box } from "@mantine/core";
+import { TextInput, Box } from "@mantine/core";
 import { PostProps } from "../features/types";
 import Post from "../features/post/components/Post";
+import { getSession, GetSessionParams, signOut } from "next-auth/react";
+import { Session } from "next-auth";
+import router from "next/router";
 
-const Blog: React.FC<{ data: { feed: PostProps[] } }> = (props) => {
+const Blog: React.FC<{
+  session: Session;
+  data: { filterPosts: PostProps[] };
+}> = (props) => {
   const [text, setText] = useState("");
   const [searchString, setSearchString] = useState<string | null>("");
 
@@ -35,6 +40,11 @@ const Blog: React.FC<{ data: { feed: PostProps[] } }> = (props) => {
     setSearchString(text);
   };
 
+  const handleSignOut = async () => {
+    await signOut();
+    router.push("/");
+  };
+
   if (loading) return null;
   if (error) return <p>Oh no... {error.message}</p>;
 
@@ -42,7 +52,7 @@ const Blog: React.FC<{ data: { feed: PostProps[] } }> = (props) => {
     <Layout>
       <div className="page">
         <main>
-          <Box maw={340} mx="auto">
+          <Box mx="auto">
             <form onSubmit={handleFormSubmit} className="search-box">
               <TextInput
                 mt="sm"
@@ -54,9 +64,14 @@ const Blog: React.FC<{ data: { feed: PostProps[] } }> = (props) => {
                 onChange={(e) => setText(e.target.value)}
               />
             </form>
-            <button className="button" onClick={() => Router.push("/create")}>
-              投稿する
-            </button>
+            <ButtonContainer>
+              <Button className="button" onClick={handleSignOut}>
+                ログアウト
+              </Button>
+              <Button className="button" onClick={() => Router.push("/create")}>
+                投稿する
+              </Button>
+            </ButtonContainer>
           </Box>
           <div className="items-container">
             {data &&
@@ -83,5 +98,22 @@ const filterPosts = gql`
     }
   }
 `;
+
+export const getServerSideProps = async (context: GetSessionParams) => {
+  const session = await getSession(context);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: { session },
+  };
+};
 
 export default Blog;
