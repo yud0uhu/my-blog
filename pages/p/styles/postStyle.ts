@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const StyledPost = styled.div`
+export const StyledPost = styled.div`
   padding: 3rem;
   display: flex;
   justify-content: center;
@@ -32,7 +32,7 @@ const StyledPost = styled.div`
   }
 `;
 
-const StyledTitle = styled.h2<{ unpublished?: boolean }>`
+export const StyledTitle = styled.h2<{ unpublished?: boolean }>`
   ${({ unpublished }) =>
     unpublished &&
     `
@@ -41,7 +41,3 @@ const StyledTitle = styled.h2<{ unpublished?: boolean }>`
     }
   `}
 `;
-
-const postStyled = { StyledPost, StyledTitle };
-
-export default postStyled;

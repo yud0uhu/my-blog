@@ -10,7 +10,7 @@ import {
   useSession,
 } from "next-auth/react";
 import { useRouter } from "next/router";
-import loginStyled from "./styles/loginStyle";
+import { Container, StyledButton } from "./styles";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const providers = await getProviders();
@@ -44,14 +44,14 @@ export default function Login({
   };
 
   return (
-    <loginStyled.Container>
+    <Container>
       {Object.values(providers).map((provider) => (
         <div key={provider.name}>
-          <loginStyled.StyledButton onClick={() => handleSignIn(provider.id)}>
+          <StyledButton onClick={() => handleSignIn(provider.id)}>
             Sign in with {provider.name}
-          </loginStyled.StyledButton>
+          </StyledButton>
         </div>
       ))}
-    </loginStyled.Container>
+    </Container>
   );
 }

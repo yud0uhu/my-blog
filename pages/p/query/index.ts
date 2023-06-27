@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-const PostQuery = gql`
+export const PostQuery = gql`
   query PostQuery($id: ID!) {
     post(id: $id) {
       id
@@ -12,7 +12,7 @@ const PostQuery = gql`
   }
 `;
 
-const PublishMutation = gql`
+export const PublishMutation = gql`
   mutation PublishMutation($id: ID!) {
     publish(id: $id) {
       id
@@ -23,7 +23,7 @@ const PublishMutation = gql`
   }
 `;
 
-const DeleteMutation = gql`
+export const DeleteMutation = gql`
   mutation DeleteMutation($id: ID!) {
     deletePost(id: $id) {
       id
@@ -33,5 +33,3 @@ const DeleteMutation = gql`
     }
   }
 `;
-
-export const pQuery = { PostQuery, PublishMutation, DeleteMutation };

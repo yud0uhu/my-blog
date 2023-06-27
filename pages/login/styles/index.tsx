@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 
-const Container = styled.div`
+export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -9,7 +9,7 @@ const Container = styled.div`
   height: 100vh;
 `;
 
-const Button = styled.button`
+export const Button = styled.button`
   padding: 10px 20px;
   margin: 10px;
   font-size: 16px;
@@ -24,7 +24,7 @@ const Button = styled.button`
   }
 `;
 
-const StyledButton = styled(Button)`
+export const StyledButton = styled(Button)`
   ${(props) =>
     css`
       padding: 10px 20px;
@@ -41,7 +41,3 @@ const StyledButton = styled(Button)`
       }
     `}
 `;
-
-const loginStyled = { Container, Button, StyledButton };
-
-export default loginStyled;

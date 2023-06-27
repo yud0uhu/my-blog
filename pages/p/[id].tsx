@@ -3,17 +3,17 @@ import Router, { useRouter } from "next/router";
 import { useMutation, useQuery } from "@apollo/client";
 import ReactMarkdown from "react-markdown";
 import Layout from "../../components/layout";
-import { pQuery } from "./query";
-import postStyled from "./styles/postStyle";
+import { PostQuery, PublishMutation, DeleteMutation } from "./query";
+import { StyledPost, StyledTitle } from "./styles/postStyle";
 
 const Post = () => {
   const id = useRouter().query.id;
-  const { data, loading, error } = useQuery(pQuery.PostQuery, {
+  const { data, loading, error } = useQuery(PostQuery, {
     variables: { id },
   });
 
-  const [publish] = useMutation(pQuery.PublishMutation);
-  const [deletePost] = useMutation(pQuery.DeleteMutation);
+  const [publish] = useMutation(PublishMutation);
+  const [deletePost] = useMutation(DeleteMutation);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Oh no... {error.message}</p>;
@@ -23,14 +23,12 @@ const Post = () => {
 
   return (
     <Layout>
-      <postStyled.StyledPost>
+      <StyledPost>
         <a className="back" href="#" onClick={() => Router.push("/")}>
           ←
         </a>
         <div>
-          <postStyled.StyledTitle unpublished={unpublished}>
-            {title}
-          </postStyled.StyledTitle>
+          <StyledTitle unpublished={unpublished}>{title}</StyledTitle>
           <small>{data.post.createdAt}</small>
           <ReactMarkdown>{data.post.content}</ReactMarkdown>
           {unpublished && (
@@ -48,7 +46,7 @@ const Post = () => {
             </button>
           )}
         </div>
-      </postStyled.StyledPost>
+      </StyledPost>
     </Layout>
   );
 };
