@@ -1,12 +1,12 @@
 import { createYoga } from "graphql-yoga";
 import SchemaBuilder from "@pothos/core";
-import PrismaPlugin from "@pothos/plugin-prisma";
-import { DateTimeResolver } from "graphql-scalars";
 
 import type PrismaTypes from "@pothos/plugin-prisma/generated";
-import type { NextApiRequest, NextApiResponse } from "next";
 
+import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../lib/prisma";
+
+import PrismaPlugin from "@pothos/plugin-prisma";
 
 const builder = new SchemaBuilder<{
   PrismaTypes: PrismaTypes;
@@ -24,7 +24,6 @@ builder.mutationType({});
 builder.prismaObject("User", {
   fields: (t) => ({
     id: t.exposeID("id"),
-    // email: t.exposeString("email"),
     name: t.exposeString("name", { nullable: true }),
     posts: t.relation("posts"),
   }),
@@ -37,6 +36,27 @@ builder.prismaObject("Post", {
     content: t.exposeString("content", { nullable: true }),
     published: t.exposeBoolean("published"),
     author: t.relation("author"),
+    tags: t.relation("tags"),
+    createdAt: t.string({
+      resolve: (parent) => {
+        const createdAtDate = new Date(parent.createdAt).toLocaleString();
+        // const createdAt =
+        //   Math.abs(createdAtDate.getUTCFullYear()).toString() +
+        //   "-" +
+        //   Math.abs(createdAtDate.getUTCMonth()).toString() +
+        //   "-" +
+        //   Math.abs(createdAtDate.getUTCDay()).toString();
+        return createdAtDate.toString();
+      },
+    }),
+  }),
+});
+
+builder.prismaObject("Tag", {
+  fields: (t) => ({
+    id: t.exposeInt("id"),
+    label: t.exposeString("label"),
+    posts: t.relation("posts"),
   }),
 });
 
@@ -62,7 +82,7 @@ builder.queryField("post", (t) =>
       prisma.post.findUnique({
         ...query,
         where: {
-          id: String(args.id),
+          id: Number(args.id),
         },
       }),
   })
@@ -79,11 +99,14 @@ builder.queryField("drafts", (t) =>
   })
 );
 
+// キーワード検索用
 builder.queryField("filterPosts", (t) =>
   t.prismaField({
     type: ["Post"],
     args: {
       searchString: t.arg.string({ required: false }),
+      // 公開状態or非公開状態をパラメータの引数に渡して絞り込み
+      published: t.arg.boolean({ required: true }),
     },
     resolve: async (query, _parent, args, _info) => {
       const or = args.searchString
@@ -91,12 +114,15 @@ builder.queryField("filterPosts", (t) =>
             OR: [
               { title: { contains: args.searchString } },
               { content: { contains: args.searchString } },
+              // { label: { contains: args.searchString } },
             ],
           }
         : {};
+      const published = args.published;
       return prisma.post.findMany({
         ...query,
-        where: { ...or },
+
+        where: { ...or, published },
       });
     },
   })
@@ -107,13 +133,11 @@ builder.mutationField("signupUser", (t) =>
     type: "User",
     args: {
       name: t.arg.string({ required: false }),
-      // email: t.arg.string({ required: true }),
     },
     resolve: async (query, _parent, args, _info) =>
       prisma.user.create({
         ...query,
         data: {
-          // email: args.email,
           name: args.name,
         },
       }),
@@ -130,7 +154,7 @@ builder.mutationField("deletePost", (t) =>
       prisma.post.delete({
         ...query,
         where: {
-          id: String(args.id),
+          id: Number(args.id),
         },
       }),
   })
@@ -146,11 +170,21 @@ builder.mutationField("publish", (t) =>
       prisma.post.update({
         ...query,
         where: {
-          id: String(args.id),
+          id: Number(args.id),
         },
         data: {
           published: true,
         },
+      }),
+  })
+);
+
+builder.queryField("tags", (t) =>
+  t.prismaField({
+    type: ["Tag"],
+    resolve: async (query, _parent, _args, _info) =>
+      prisma.tag.findMany({
+        ...query,
       }),
   })
 );
@@ -161,7 +195,7 @@ builder.mutationField("createDraft", (t) =>
     args: {
       title: t.arg.string({ required: true }),
       content: t.arg.string(),
-      // authorEmail: t.arg.string({ required: true }),
+      label: t.arg.string(),
     },
     resolve: async (query, _parent, args, _info) =>
       prisma.post.create({
@@ -169,19 +203,15 @@ builder.mutationField("createDraft", (t) =>
         data: {
           title: args.title,
           content: args.content,
-          author: {
-            // connect: { email: args.authorEmail },
-          },
         },
       }),
   })
 );
-
 const schema = builder.toSchema();
 
 export default createYoga<{
-  req: NextApiRequest;
-  res: NextApiResponse;
+  request: NextApiRequest;
+  response: NextApiResponse;
 }>({
   schema,
   graphqlEndpoint: "/api/graphql",
