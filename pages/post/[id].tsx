@@ -3,8 +3,12 @@ import Router, { useRouter } from "next/router";
 import { useMutation, useQuery } from "@apollo/client";
 import ReactMarkdown from "react-markdown";
 import Layout from "../../components/layout";
-import { PostQuery, PublishMutation, DeleteMutation } from "./query";
-import { StyledPost, StyledTitle } from "./styles/postStyle";
+import {
+  PostQuery,
+  PublishMutation,
+  DeleteMutation,
+} from "../../features/post/query";
+import { StyledPost, StyledTitle } from "../../features/post/styles/PostStyles";
 
 const Post = () => {
   const id = useRouter().query.id;
