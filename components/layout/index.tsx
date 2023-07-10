@@ -11,13 +11,20 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: inherit;
   }
 
+  :root {
+    --background-color: #f6f8fa; 
+    --post-background-color: white;
+    --post-text-color: black;
+  }
+
   body {
+    color: var(--post-text-color);
     margin: 0;
     padding: 0;
     font-size: 16px;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     /* background-color: rgb(240, 235, 235); */
-    background-color: #f6f8fa;
+    background-color: var(--background-color); /* CSS変数を参照して背景色を適用 */
     background-blend-mode: lighten;
   }
 
@@ -83,7 +90,7 @@ const ItemWrapper = styled.div`
   }
 
   .post {
-    background: white;
+    background: var(--post-background-color);
     border-radius: 10px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s ease-in-out;
