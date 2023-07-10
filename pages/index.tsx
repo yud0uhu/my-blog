@@ -8,7 +8,13 @@ import { useForm } from "@mantine/form";
 import { TextInput, Box } from "@mantine/core";
 import { PostProps } from "../features/types";
 import Post from "../features/post/components/Post";
-import { getSession, GetSessionParams, signOut } from "next-auth/react";
+import {
+  getSession,
+  GetSessionParams,
+  signIn,
+  signOut,
+  useSession,
+} from "next-auth/react";
 import { Session } from "next-auth";
 import router from "next/router";
 
@@ -16,6 +22,8 @@ const Blog: React.FC<{
   session: Session;
   data: { filterPosts: PostProps[] };
 }> = (props) => {
+  const { data: session } = useSession();
+
   const [text, setText] = useState("");
   const [searchString, setSearchString] = useState<string | null>("");
 
@@ -42,7 +50,10 @@ const Blog: React.FC<{
 
   const handleSignOut = async () => {
     await signOut();
-    router.push("/");
+  };
+
+  const handleSignIn = async () => {
+    await signIn();
   };
 
   if (loading) return null;
@@ -64,14 +75,25 @@ const Blog: React.FC<{
                 onChange={(e) => setText(e.target.value)}
               />
             </form>
-            <ButtonContainer>
-              <Button className="button" onClick={handleSignOut}>
-                ログアウト
-              </Button>
-              <Button className="button" onClick={() => Router.push("/create")}>
-                投稿する
-              </Button>
-            </ButtonContainer>
+            {session ? (
+              <ButtonContainer>
+                <Button className="button" onClick={handleSignOut}>
+                  ログアウト
+                </Button>
+                <Button
+                  className="button"
+                  onClick={() => Router.push("/create")}
+                >
+                  投稿する
+                </Button>
+              </ButtonContainer>
+            ) : (
+              <ButtonContainer>
+                <Button className="button" onClick={handleSignIn}>
+                  ログイン
+                </Button>
+              </ButtonContainer>
+            )}
           </Box>
           <div className="items-container">
             {data &&
@@ -99,21 +121,19 @@ const filterPosts = gql`
   }
 `;
 
-export const getServerSideProps = async (context: GetSessionParams) => {
-  const session = await getSession(context);
+// export const getServerSideProps = async (context: GetSessionParams) => {
+//   if (!session) {
+//     return {
+//       redirect: {
+//         destination: "/login",
+//         permanent: false,
+//       },
+//     };
+//   }
 
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/login",
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: { session },
-  };
-};
+//   return {
+//     props: { session },
+//   };
+// };
 
 export default Blog;

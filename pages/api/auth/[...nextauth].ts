@@ -1,7 +1,7 @@
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 
-export const authOptions = {
+export const authOptions: NextAuthOptions = {
   secret: "4bRXpaP8Vi01ldHky/F1XW7QyXkYtBKcAil2tVBaZg0=",
   // Configure one or more authentication providers
   providers: [
@@ -11,6 +11,8 @@ export const authOptions = {
     }),
     // ...add more providers here
   ],
+  // セッション保存先
+  session: { strategy: "jwt" },
 };
 
 export default NextAuth(authOptions);
