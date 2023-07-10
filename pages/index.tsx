@@ -21,8 +21,6 @@ import {
   useSession,
 } from "next-auth/react";
 import { Session } from "next-auth";
-import router from "next/router";
-import Seo from "../lib/seo";
 
 const Blog: React.FC<{
   session: Session;
@@ -91,14 +89,6 @@ const Blog: React.FC<{
 
   return (
     <>
-      <Seo
-        description={"日日是好日"}
-        imageUrl={`https://${
-          process.env.NEXT_PUBLIC_VERCEL_URL
-        }/api/og?title=${"yud0uhu.dev"}`}
-        title={"yud0uhu.dev"}
-        url={`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/`}
-      />
       <Layout>
         <div className="page">
           <main>
