@@ -17,6 +17,7 @@ import {
 } from "next-auth/react";
 import { Session } from "next-auth";
 import router from "next/router";
+import Seo from "../lib/seo";
 
 const Blog: React.FC<{
   session: Session;
@@ -60,52 +61,62 @@ const Blog: React.FC<{
   if (error) return <p>Oh no... {error.message}</p>;
 
   return (
-    <Layout>
-      <div className="page">
-        <main>
-          <Box mx="auto">
-            <form onSubmit={handleFormSubmit} className="search-box">
-              <TextInput
-                mt="sm"
-                rightSection={<FaSearch type="submit" />}
-                placeholder="キーワードで検索"
-                min={0}
-                max={99}
-                style={{ width: "340px" }}
-                onChange={(e) => setText(e.target.value)}
-              />
-            </form>
-            {session ? (
-              <ButtonContainer>
-                <Button className="button" onClick={handleSignOut}>
-                  ログアウト
-                </Button>
-                <Button
-                  className="button"
-                  onClick={() => Router.push("/create")}
-                >
-                  投稿する
-                </Button>
-              </ButtonContainer>
-            ) : (
-              <ButtonContainer>
-                <Button className="button" onClick={handleSignIn}>
-                  ログイン
-                </Button>
-              </ButtonContainer>
-            )}
-          </Box>
-          <div className="items-container">
-            {data &&
-              data.filterPosts.map((post: PostProps) => (
-                <div key={post.id} className="post">
-                  <Post post={post} />
-                </div>
-              ))}
-          </div>
-        </main>
-      </div>
-    </Layout>
+    <>
+      <Seo
+        description={"日日是好日"}
+        imageUrl={`https://${
+          process.env.NEXT_PUBLIC_VERCEL_URL
+        }/api/og?title=${"yud0uhu.dev"}`}
+        title={"yud0uhu.dev"}
+        url={`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/`}
+      />
+      <Layout>
+        <div className="page">
+          <main>
+            <Box mx="auto">
+              <form onSubmit={handleFormSubmit} className="search-box">
+                <TextInput
+                  mt="sm"
+                  rightSection={<FaSearch type="submit" />}
+                  placeholder="キーワードで検索"
+                  min={0}
+                  max={99}
+                  style={{ width: "340px" }}
+                  onChange={(e) => setText(e.target.value)}
+                />
+              </form>
+              {session ? (
+                <ButtonContainer>
+                  <Button className="button" onClick={handleSignOut}>
+                    ログアウト
+                  </Button>
+                  <Button
+                    className="button"
+                    onClick={() => Router.push("/create")}
+                  >
+                    投稿する
+                  </Button>
+                </ButtonContainer>
+              ) : (
+                <ButtonContainer>
+                  <Button className="button" onClick={handleSignIn}>
+                    ログイン
+                  </Button>
+                </ButtonContainer>
+              )}
+            </Box>
+            <div className="items-container">
+              {data &&
+                data.filterPosts.map((post: PostProps) => (
+                  <div key={post.id} className="post">
+                    <Post post={post} />
+                  </div>
+                ))}
+            </div>
+          </main>
+        </div>
+      </Layout>
+    </>
   );
 };
 
