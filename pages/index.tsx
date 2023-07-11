@@ -142,3 +142,4 @@ const filterPosts = gql`
     }
   }
 `;
+export default Blog;
