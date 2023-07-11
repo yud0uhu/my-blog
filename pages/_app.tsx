@@ -9,21 +9,21 @@ import {
 } from "@mantine/core";
 import { useState } from "react";
 import Seo from "../lib/seo";
+import { NextRequest } from "next/server";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const [colorScheme, setColorScheme] = useState<ColorScheme>("light");
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
   const userName = "yud0uhu";
+  const title = "yud0uhu.work";
 
   return (
     <>
       <Seo
-        description={"日日是好日"}
-        imageUrl={`https://${
-          process.env.NEXT_PUBLIC_VERCEL_URL
-        }/api/og?title=${"yud0uhu.work"}&userName=${userName}`}
-        title={"yud0uhu.work"}
+        description={"0yu @ yud0uhu"}
+        imageUrl={`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/og?title=${title}&userName=${userName}`}
+        title={title}
         url={`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/`}
       />
       <SessionProvider session={session}>

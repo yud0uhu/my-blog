@@ -13,6 +13,7 @@ export default async function handler(req: NextRequest) {
     const title = hasTitle
       ? searchParams.get("title")?.slice(0, 100)
       : "yud0uhu.work";
+    const userName = "yud0uhu";
 
     return new ImageResponse(
       (
@@ -52,6 +53,42 @@ export default async function handler(req: NextRequest) {
             >
               {title}
             </p>
+
+            <div
+              style={{
+                display: "flex",
+                position: "absolute",
+                width: "100%",
+                bottom: 0,
+                paddingLeft: 30,
+                paddingRight: 30,
+                justifyContent: "space-between",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <img
+                  src={`https://github.com/${userName}.png`}
+                  alt=""
+                  width="60"
+                  height="60"
+                  style={{ borderRadius: 60, marginRight: 10 }}
+                />
+                <h2
+                  style={{
+                    fontSize: "40px",
+                    textShadow: "0px 2px 2px rgba(0, 0, 0, 0.3)",
+                    textAlign: "center",
+                  }}
+                >
+                  {userName}
+                </h2>
+              </div>
+            </div>
           </div>
         </div>
       ),
