@@ -12,7 +12,7 @@ export default async function handler(req: NextRequest) {
     const hasTitle = searchParams.has("title");
     const title = hasTitle
       ? searchParams.get("title")?.slice(0, 100)
-      : "yud0uhu.dev";
+      : "yud0uhu.work";
 
     return new ImageResponse(
       (

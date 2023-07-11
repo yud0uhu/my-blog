@@ -8,7 +8,6 @@ import {
   MantineProvider,
 } from "@mantine/core";
 import { useState } from "react";
-import Seo from "../lib/seo";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const [colorScheme, setColorScheme] = useState<ColorScheme>("light");
@@ -17,14 +16,6 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
 
   return (
     <>
-      <Seo
-        description={"日日是好日"}
-        imageUrl={`https://${
-          process.env.NEXT_PUBLIC_VERCEL_URL
-        }/api/og?title=${"yud0uhu.dev"}`}
-        title={"yud0uhu.dev"}
-        url={`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/`}
-      />
       <SessionProvider session={session}>
         <ApolloProvider client={client}>
           <ColorSchemeProvider
