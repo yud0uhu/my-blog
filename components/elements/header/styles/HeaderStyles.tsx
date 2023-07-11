@@ -1,8 +1,11 @@
 import styled, { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
+:root {
+  --header-background-color: white;
+}
 .header {
-  background-color: white;
+  background-color: var(--header-background-color);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   width: 100%;
   height: 60px;

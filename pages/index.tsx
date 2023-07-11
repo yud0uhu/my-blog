@@ -42,13 +42,17 @@ const Blog: React.FC<{
 
   useEffect(() => {
     document.documentElement.style.setProperty(
-      "--post-background-color",
-      colorScheme === "light" ? "white" : "darkcolor"
-    ); // ダークモード時の背景色を指定
+      "--header-background-color",
+      colorScheme === "light" ? "white" : "dark"
+    );
     document.documentElement.style.setProperty(
       "--post-text-color",
       colorScheme === "light" ? "black" : "white"
-    ); // ダークモード時の文字色を指定
+    );
+    document.documentElement.style.setProperty(
+      "--items-background-color",
+      colorScheme === "light" ? "white" : "#0E1117"
+    );
   }, [colorScheme]);
 
   const handleColorSchemeChange = () => {
@@ -56,7 +60,7 @@ const Blog: React.FC<{
     setColorScheme(newColorScheme);
     document.documentElement.style.setProperty(
       "--background-color",
-      newColorScheme === "light" ? "#f6f8fa" : "#1A1B1E"
+      newColorScheme === "light" ? "#f6f8fa" : "#02040A"
     );
   };
 
