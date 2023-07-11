@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Router from "next/router";
 import { text_to_token } from "../../../markdown-parser/pkg/markdown_parser";
 import { useMutation } from "@apollo/client";
@@ -10,6 +10,7 @@ import {
   Input,
 } from "../styles/createStyles";
 import { CreateDraftMutation } from "../query";
+import { FaArrowLeft } from "react-icons/fa";
 
 function Create() {
   const [title, setTitle] = useState("");
@@ -40,7 +41,7 @@ function Create() {
       <form onSubmit={handleSubmit}>
         <Button disabled={!content || !title}>保存する</Button>
         <BackLink href="#" onClick={() => Router.push("/")}>
-          ←
+          <FaArrowLeft />
         </BackLink>
         <Input
           type="title"

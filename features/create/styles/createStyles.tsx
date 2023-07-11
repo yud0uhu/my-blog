@@ -8,6 +8,10 @@ export const Page = styled.div`
 `;
 
 export const Input = styled.input`
+  :root {
+    --input-color: white;
+  }
+  color: var(--input-color);
   width: 100%;
   padding: 1.5rem;
   margin: 0.5rem 0;
@@ -27,7 +31,6 @@ export const TextArea = styled.textarea`
   padding: 1.5rem;
   margin: 0.5rem 0;
   border: 0.125rem solid #0000;
-  /* background: white; */
   border-radius: 20px;
   box-shadow: 0 10px 20px rgba(240, 235, 235, 0.3);
 

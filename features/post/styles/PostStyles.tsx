@@ -34,7 +34,6 @@ export const StyledPost = styled.div`
     z-index: 999;
     border: 0;
     margin-left: 1rem;
-    color: black;
   }
 `;
 

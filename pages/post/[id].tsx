@@ -9,6 +9,7 @@ import {
   DeleteMutation,
 } from "../../features/post/query";
 import { StyledPost, StyledTitle } from "../../features/post/styles/PostStyles";
+import { FaArrowLeft } from "react-icons/fa";
 
 const Post = () => {
   const id = useRouter().query.id;
@@ -30,7 +31,7 @@ const Post = () => {
       <Layout>
         <StyledPost>
           <a className="back" href="#" onClick={() => Router.push("/")}>
-            ←
+            <FaArrowLeft />
           </a>
           <div>
             <StyledTitle unpublished={unpublished}>{title}</StyledTitle>

@@ -1,4 +1,5 @@
 import Router from "next/router";
+import { FaArrowLeft } from "react-icons/fa";
 import Layout from "../../../components/layout";
 import Post from "../../post/components/Post";
 import { PostProps } from "../../types";
@@ -10,7 +11,7 @@ const Drafts: React.FC<{ data: { drafts: PostProps[] } }> = (data) => {
       <Layout>
         <main>
           <BackLink className="back" onClick={() => Router.push("/")}>
-            ←
+            <FaArrowLeft />
           </BackLink>
           <div className="items-container">
             {data.data.drafts.map((post: PostProps) => (

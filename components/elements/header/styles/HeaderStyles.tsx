@@ -15,4 +15,10 @@ export const GlobalStyle = createGlobalStyle`
   right: 0;
   z-index: 999;
 }
+
+.icon {
+  top: 15px;
+  left: 15px;
+  position: fixed;
+}
 `;

@@ -4,7 +4,12 @@ import Router from "next/router";
 import { useQuery } from "@apollo/client";
 import { FormEvent, useEffect, useState } from "react";
 import { FaSearch, FaSun, FaMoon } from "react-icons/fa";
-import { TextInput, Box, ActionIcon } from "@mantine/core";
+import {
+  Box,
+  ActionIcon,
+  useMantineColorScheme,
+  TextInput,
+} from "@mantine/core";
 import { PostProps } from "../features/types";
 import Post from "../features/post/components/Post";
 import { signIn, signOut, useSession } from "next-auth/react";
@@ -14,6 +19,8 @@ const Blog: React.FC<{
   session: Session;
   data: { filterPosts: PostProps[] };
 }> = (props) => {
+  const { colorScheme } = useMantineColorScheme();
+  const dark = colorScheme === "dark";
   const { data: session } = useSession();
 
   const [text, setText] = useState("");
@@ -38,32 +45,6 @@ const Blog: React.FC<{
     await signIn();
   };
 
-  const [colorScheme, setColorScheme] = useState("light");
-
-  useEffect(() => {
-    document.documentElement.style.setProperty(
-      "--header-background-color",
-      colorScheme === "light" ? "white" : "dark"
-    );
-    document.documentElement.style.setProperty(
-      "--post-text-color",
-      colorScheme === "light" ? "black" : "white"
-    );
-    document.documentElement.style.setProperty(
-      "--items-background-color",
-      colorScheme === "light" ? "white" : "#0E1117"
-    );
-  }, [colorScheme]);
-
-  const handleColorSchemeChange = () => {
-    const newColorScheme = colorScheme === "light" ? "dark" : "light";
-    setColorScheme(newColorScheme);
-    document.documentElement.style.setProperty(
-      "--background-color",
-      newColorScheme === "light" ? "#f6f8fa" : "#02040A"
-    );
-  };
-
   if (loading) return null;
   if (error) return <p>Oh no... {error.message}</p>;
 
@@ -76,6 +57,7 @@ const Blog: React.FC<{
               <form onSubmit={handleFormSubmit} className="search-box">
                 <TextInput
                   mt="sm"
+                  color={dark ? "orange" : "blue"}
                   rightSection={<FaSearch type="submit" />}
                   placeholder="キーワードで検索"
                   min={0}
@@ -86,19 +68,6 @@ const Blog: React.FC<{
               </form>
 
               <ButtonContainer>
-                <ActionIcon
-                  variant="outline"
-                  color={colorScheme === "dark" ? "yellow" : "blue"}
-                  onClick={() => handleColorSchemeChange()}
-                  title="Toggle color scheme"
-                >
-                  {colorScheme === "dark" ? (
-                    <FaSun size="1.1rem" />
-                  ) : (
-                    <FaMoon size="1.1rem" />
-                  )}
-                </ActionIcon>
-
                 {session ? (
                   <>
                     <Button className="button" onClick={handleSignOut}>

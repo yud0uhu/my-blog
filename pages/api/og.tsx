@@ -1,4 +1,5 @@
 import { ImageResponse } from "@vercel/og";
+import Image from "next/image";
 import { NextRequest } from "next/server";
 
 export const config = {
@@ -71,7 +72,7 @@ export default async function handler(req: NextRequest) {
                   alignItems: "center",
                 }}
               >
-                <img
+                <Image
                   src={`https://github.com/${userName}.png`}
                   alt=""
                   width="60"
