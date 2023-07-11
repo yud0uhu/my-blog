@@ -1,5 +1,6 @@
 import React from "react";
 import Header from "../elements/header/Header";
+import Footer from "../elements/footer/Footer";
 import styled, { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
@@ -13,8 +14,8 @@ const GlobalStyle = createGlobalStyle`
 
   :root {
     --background-color: #f6f8fa; 
-    --post-background-color: white;
     --post-text-color: black;
+    --items-background-color: white;
   }
 
   body {
@@ -90,7 +91,7 @@ const ItemWrapper = styled.div`
   }
 
   .post {
-    background: var(--post-background-color);
+    background: white;
     border-radius: 10px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s ease-in-out;
@@ -110,6 +111,7 @@ const ItemWrapper = styled.div`
   }
 
   .items-container > * {
+    background-color: var(--items-background-color);
     word-break: break-word;
     width: 300px;
     height: 300px;
@@ -142,6 +144,7 @@ const Layout: React.FC<Props> = (props) => {
       <LayoutWrapper>
         <ItemWrapper>{props.children}</ItemWrapper>
       </LayoutWrapper>
+      <Footer />
     </Container>
   );
 };
