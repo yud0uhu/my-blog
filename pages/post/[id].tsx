@@ -9,6 +9,7 @@ import {
   DeleteMutation,
 } from "../../features/post/query";
 import { StyledPost, StyledTitle } from "../../features/post/styles/PostStyles";
+import Seo from "../../lib/seo";
 
 const Post = () => {
   const id = useRouter().query.id;
@@ -26,32 +27,40 @@ const Post = () => {
   const unpublished = !data.post.published;
 
   return (
-    <Layout>
-      <StyledPost>
-        <a className="back" href="#" onClick={() => Router.push("/")}>
-          ←
-        </a>
-        <div>
-          <StyledTitle unpublished={unpublished}>{title}</StyledTitle>
-          <small>{data.post.createdAt}</small>
-          <ReactMarkdown>{data.post.content}</ReactMarkdown>
-          {unpublished && (
-            <button
-              onClick={async (e) => {
-                await publish({
-                  variables: {
-                    id,
-                  },
-                });
-                Router.push("/");
-              }}
-            >
-              公開する
-            </button>
-          )}
-        </div>
-      </StyledPost>
-    </Layout>
+    <>
+      <Seo
+        description={"日日是好日"}
+        imageUrl={`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/og?title=${title}`}
+        title={title}
+        url={`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/post/${id}`}
+      />
+      <Layout>
+        <StyledPost>
+          <a className="back" href="#" onClick={() => Router.push("/")}>
+            ←
+          </a>
+          <div>
+            <StyledTitle unpublished={unpublished}>{title}</StyledTitle>
+            <small>{data.post.createdAt}</small>
+            <ReactMarkdown>{data.post.content}</ReactMarkdown>
+            {unpublished && (
+              <button
+                onClick={async (e) => {
+                  await publish({
+                    variables: {
+                      id,
+                    },
+                  });
+                  Router.push("/");
+                }}
+              >
+                公開する
+              </button>
+            )}
+          </div>
+        </StyledPost>
+      </Layout>
+    </>
   );
 };
 
