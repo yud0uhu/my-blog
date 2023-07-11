@@ -91,7 +91,7 @@ const ItemWrapper = styled.div`
   }
 
   .post {
-    background: white;
+    /* background: white; */
     border-radius: 10px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s ease-in-out;
