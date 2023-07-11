@@ -4,44 +4,20 @@ import Router from "next/router";
 import { useQuery } from "@apollo/client";
 import { FormEvent, useEffect, useState } from "react";
 import { FaSearch, FaSun, FaMoon } from "react-icons/fa";
-import { useForm } from "@mantine/form";
-import {
-  TextInput,
-  Box,
-  ActionIcon,
-  useMantineColorScheme,
-} from "@mantine/core";
+import { TextInput, Box, ActionIcon } from "@mantine/core";
 import { PostProps } from "../features/types";
 import Post from "../features/post/components/Post";
-import {
-  getSession,
-  GetSessionParams,
-  signIn,
-  signOut,
-  useSession,
-} from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { Session } from "next-auth";
-import Seo from "../lib/seo";
 
 const Blog: React.FC<{
   session: Session;
   data: { filterPosts: PostProps[] };
 }> = (props) => {
-  const userName = "yud0uhu";
   const { data: session } = useSession();
 
   const [text, setText] = useState("");
   const [searchString, setSearchString] = useState<string | null>("");
-
-  const form = useForm({
-    initialValues: { content: "" },
-
-    // functions will be used to validate values at corresponding key
-    validate: {
-      content: (value) =>
-        value.length < 0 ? "検索したいキーワードを入力してください" : null,
-    },
-  });
 
   const { loading, error, data } = useQuery(filterPosts, {
     variables: { searchString },
@@ -61,8 +37,6 @@ const Blog: React.FC<{
   const handleSignIn = async () => {
     await signIn();
   };
-
-  // const { colorScheme, toggleColorScheme } = useMantineColorScheme();
 
   const [colorScheme, setColorScheme] = useState("light");
 
@@ -91,14 +65,6 @@ const Blog: React.FC<{
 
   return (
     <>
-      <Seo
-        description={"日日是好日"}
-        imageUrl={`https://${
-          process.env.NEXT_PUBLIC_VERCEL_URL
-        }/api/og?title=${"yud0uhu.work"}&userName=${userName}`}
-        title={"yud0uhu.work"}
-        url={`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/`}
-      />
       <Layout>
         <div className="page">
           <main>
@@ -176,20 +142,3 @@ const filterPosts = gql`
     }
   }
 `;
-
-// export const getServerSideProps = async (context: GetSessionParams) => {
-//   if (!session) {
-//     return {
-//       redirect: {
-//         destination: "/login",
-//         permanent: false,
-//       },
-//     };
-//   }
-
-//   return {
-//     props: { session },
-//   };
-// };
-
-export default Blog;
