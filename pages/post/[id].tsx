@@ -12,6 +12,7 @@ import { StyledPost, StyledTitle } from "../../features/post/styles/PostStyles";
 import Seo from "../../lib/seo";
 
 const Post = () => {
+  const userName = "yud0uhu";
   const id = useRouter().query.id;
   const { data, loading, error } = useQuery(PostQuery, {
     variables: { id },
@@ -30,7 +31,7 @@ const Post = () => {
     <>
       <Seo
         description={"日日是好日"}
-        imageUrl={`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/og?title=${title}`}
+        imageUrl={`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/og?title=${title}&userName=${userName}&postDate=${data.post.createdAt}`}
         title={title}
         url={`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/post/${id}`}
       />

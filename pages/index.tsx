@@ -27,6 +27,7 @@ const Blog: React.FC<{
   session: Session;
   data: { filterPosts: PostProps[] };
 }> = (props) => {
+  const userName = "yud0uhu";
   const { data: session } = useSession();
 
   const [text, setText] = useState("");
@@ -94,7 +95,7 @@ const Blog: React.FC<{
         description={"日日是好日"}
         imageUrl={`https://${
           process.env.NEXT_PUBLIC_VERCEL_URL
-        }/api/og?title=${"yud0uhu.work"}`}
+        }/api/og?title=${"yud0uhu.work"}&userName=${userName}`}
         title={"yud0uhu.work"}
         url={`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/`}
       />
