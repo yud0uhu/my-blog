@@ -90,10 +90,8 @@ const Header: React.FC = () => {
                 onClick={handleMenuToggle}
               />
               <MenuContainer isOpen={isOpen}>
-                <MenuItem onClick={handleSignOut}>ログアウト</MenuItem>
-                <MenuItem onClick={() => Router.push("/create")}>
-                  投稿する
-                </MenuItem>
+                <p onClick={handleSignOut}>ログアウト</p>
+                <p onClick={() => Router.push("/create")}>投稿する</p>
               </MenuContainer>
             </>
           ) : (
