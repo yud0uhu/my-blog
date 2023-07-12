@@ -9,7 +9,6 @@ import {
 } from "@mantine/core";
 import { useState } from "react";
 import Seo from "../lib/seo";
-import { NextRequest } from "next/server";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const [colorScheme, setColorScheme] = useState<ColorScheme>("light");
@@ -35,6 +34,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
             <MantineProvider
               theme={{ colorScheme }}
               withGlobalStyles
+              withCSSVariables
               withNormalizeCSS
             >
               <Component {...pageProps} />

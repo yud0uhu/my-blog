@@ -1,18 +1,16 @@
-import Layout, { Button, ButtonContainer } from "../components/layout";
+import Layout, {
+  Button,
+  ButtonContainer,
+  StyledTextInput,
+} from "../components/layout";
 import gql from "graphql-tag";
-import Router from "next/router";
 import { useQuery } from "@apollo/client";
 import { FormEvent, useEffect, useState } from "react";
 import { FaSearch, FaSun, FaMoon } from "react-icons/fa";
-import {
-  Box,
-  ActionIcon,
-  useMantineColorScheme,
-  TextInput,
-} from "@mantine/core";
+import { Box, useMantineColorScheme, Group } from "@mantine/core";
+
 import { PostProps } from "../features/types";
 import Post from "../features/post/components/Post";
-import { signIn, signOut, useSession } from "next-auth/react";
 import { Session } from "next-auth";
 
 const Blog: React.FC<{
@@ -20,8 +18,6 @@ const Blog: React.FC<{
   data: { filterPosts: PostProps[] };
 }> = (props) => {
   const { colorScheme } = useMantineColorScheme();
-  const dark = colorScheme === "dark";
-  const { data: session } = useSession();
 
   const [text, setText] = useState("");
   const [searchString, setSearchString] = useState<string | null>("");
@@ -37,14 +33,6 @@ const Blog: React.FC<{
     setSearchString(text);
   };
 
-  const handleSignOut = async () => {
-    await signOut();
-  };
-
-  const handleSignIn = async () => {
-    await signIn();
-  };
-
   if (loading) return null;
   if (error) return <p>Oh no... {error.message}</p>;
 
@@ -53,11 +41,10 @@ const Blog: React.FC<{
       <Layout>
         <div className="page">
           <main>
-            <Box mx="auto">
+            <Group position="center" mt="xl">
               <form onSubmit={handleFormSubmit} className="search-box">
-                <TextInput
+                <StyledTextInput
                   mt="sm"
-                  color={dark ? "orange" : "blue"}
                   rightSection={<FaSearch type="submit" />}
                   placeholder="キーワードで検索"
                   min={0}
@@ -66,29 +53,7 @@ const Blog: React.FC<{
                   onChange={(e) => setText(e.target.value)}
                 />
               </form>
-
-              <ButtonContainer>
-                {session ? (
-                  <>
-                    <Button className="button" onClick={handleSignOut}>
-                      ログアウト
-                    </Button>
-                    <Button
-                      className="button"
-                      onClick={() => Router.push("/create")}
-                    >
-                      投稿する
-                    </Button>
-                  </>
-                ) : (
-                  <>
-                    <Button className="button" onClick={handleSignIn}>
-                      ログイン
-                    </Button>
-                  </>
-                )}
-              </ButtonContainer>
-            </Box>
+            </Group>
             <div className="items-container">
               {data &&
                 data.filterPosts.map((post: PostProps) => (

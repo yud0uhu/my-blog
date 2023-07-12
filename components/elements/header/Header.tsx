@@ -1,10 +1,13 @@
 import { ActionIcon } from "@mantine/core";
+import { signIn, signOut, useSession } from "next-auth/react";
+import Router from "next/router";
 import { useEffect, useState } from "react";
 import { FaMoon, FaSun } from "react-icons/fa";
-import { ButtonContainer } from "../../layout";
+import { ButtonContainer, Button } from "../../layout";
 import { GlobalStyle } from "./styles/HeaderStyles";
 
 const Header: React.FC = () => {
+  const { data: session } = useSession();
   const [colorScheme, setColorScheme] = useState("light");
   useEffect(() => {
     document.documentElement.style.setProperty(
@@ -23,6 +26,10 @@ const Header: React.FC = () => {
       "--input-color",
       colorScheme === "light" ? "black" : "white"
     );
+    document.documentElement.style.setProperty(
+      "--textarea-background-color",
+      colorScheme === "light" ? "white" : "#0E1117"
+    );
   }, [colorScheme]);
   const handleColorSchemeChange = () => {
     const newColorScheme = colorScheme === "light" ? "dark" : "light";
@@ -32,6 +39,15 @@ const Header: React.FC = () => {
       newColorScheme === "light" ? "#f6f8fa" : "#02040A"
     );
   };
+
+  const handleSignOut = async () => {
+    await signOut();
+  };
+
+  const handleSignIn = async () => {
+    await signIn();
+  };
+
   return (
     <>
       <GlobalStyle />
@@ -49,6 +65,25 @@ const Header: React.FC = () => {
             <FaMoon size="1.1rem" />
           )}
         </ActionIcon>
+
+        <ButtonContainer>
+          {session ? (
+            <>
+              <Button className="button" onClick={handleSignOut}>
+                ログアウト
+              </Button>
+              <Button className="button" onClick={() => Router.push("/create")}>
+                投稿する
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button className="button" onClick={handleSignIn}>
+                ログイン
+              </Button>
+            </>
+          )}
+        </ButtonContainer>
       </div>
     </>
   );

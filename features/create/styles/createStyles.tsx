@@ -27,6 +27,10 @@ export const Input = styled.input`
 `;
 
 export const TextArea = styled.textarea`
+  :root {
+    --textarea-background-color: white;
+  }
+  background-color: var(--textarea-background-color);
   width: 100%;
   padding: 1.5rem;
   margin: 0.5rem 0;

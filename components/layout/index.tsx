@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../elements/header/Header";
 import Footer from "../elements/footer/Footer";
 import styled, { createGlobalStyle } from "styled-components";
+import { TextInput } from "@mantine/core";
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -120,15 +121,18 @@ const ItemWrapper = styled.div`
   }
 
   .search-box {
-    height: 28px;
-    width: 10em;
-    top: 0px;
-    position: fixed;
-    inset: 0;
     margin: 0 auto;
     font-weight: bold;
-    z-index: 999;
     border: none;
+  }
+`;
+
+export const StyledTextInput = styled(TextInput)`
+  :root {
+    --textarea-background-color: white;
+  }
+  & .mantine-TextInput-input {
+    background-color: var(----textarea-background-color);
   }
 `;
 
