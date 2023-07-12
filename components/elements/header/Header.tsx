@@ -82,7 +82,7 @@ const Header: React.FC = () => {
             )}
           </ActionIcon>
 
-          {session ? (
+          {!session ? (
             <>
               <MenuIcon
                 src="https://github.com/yud0uhu.png"
@@ -90,8 +90,15 @@ const Header: React.FC = () => {
                 onClick={handleMenuToggle}
               />
               <MenuContainer isOpen={isOpen}>
-                <p onClick={handleSignOut}>ログアウト</p>
-                <p onClick={() => Router.push("/create")}>投稿する</p>
+                <MenuItem onClick={handleSignOut} className="menu-item">
+                  ログアウト
+                </MenuItem>
+                <MenuItem
+                  onClick={() => Router.push("/create")}
+                  className="menu-item"
+                >
+                  投稿する
+                </MenuItem>
               </MenuContainer>
             </>
           ) : (

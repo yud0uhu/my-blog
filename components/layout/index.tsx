@@ -73,22 +73,35 @@ export const MenuIcon = styled.img`
   cursor: pointer;
 `;
 
-export const MenuItem = styled(StyledButton)`
-  width: 100%;
-  margin-bottom: 10px;
+export const MenuItem = styled.p`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin: 0px;
+  padding: 10px;
 `;
 
 export const MenuContainer = styled.div<{ isOpen?: boolean }>`
-  width: 100%,
+  width: 100px;
   position: absolute;
-  top: 60px;
-  right: 10px;
+  top: 40px;
+  right: 0;
   background-color: #fff;
   border-radius: 4px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  z-index: 998;
-  padding: 10px;
-  display: ${(props) => (props.isOpen ? "block" : "none")};
+  display: ${(props) => (props.isOpen ? "flex" : "none")};
+  flex-direction: column;
+  align-items: flex-start;
+
+  .menu-item {
+    width: 100%;
+    cursor: pointer;
+    display: inline-block;
+  }
+
+  .menu-item:hover {
+    background-color: #f6f8fa;
+  }
 `;
 
 const Container = styled.div`
