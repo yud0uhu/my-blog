@@ -1,9 +1,7 @@
 import styled from "styled-components";
 
 export const PostContainer = styled.div`
-  div {
-    padding: 2rem;
-  }
+  padding: 2rem;
 `;
 
 export const StyledPost = styled.div`

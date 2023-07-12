@@ -9,7 +9,7 @@ export const Container = styled.div`
   height: 100vh;
 `;
 
-export const Button = styled.button`
+export const LoginButton = styled.button`
   padding: 10px 20px;
   margin: 10px;
   font-size: 16px;
@@ -22,22 +22,4 @@ export const Button = styled.button`
   &:hover {
     background-color: #555;
   }
-`;
-
-export const StyledButton = styled(Button)`
-  ${(props) =>
-    css`
-      padding: 10px 20px;
-      margin: 10px;
-      font-size: 16px;
-      background-color: #333;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-
-      &:hover {
-        background-color: #555;
-      }
-    `}
 `;

@@ -4,13 +4,16 @@ import { text_to_token } from "../../../markdown-parser/pkg/markdown_parser";
 import { useMutation } from "@apollo/client";
 import {
   BackLink,
-  Button,
-  Page,
-  TextArea,
+  StyledCreate,
+  StyledTextArea,
   Input,
 } from "../styles/createStyles";
 import { CreateDraftMutation } from "../query";
 import { FaArrowLeft } from "react-icons/fa";
+import Layout, {
+  StyledButton,
+  ButtonContainer,
+} from "../../../components/layout";
 
 function Create() {
   const [title, setTitle] = useState("");
@@ -37,12 +40,15 @@ function Create() {
   };
 
   return (
-    <Page>
+    <StyledCreate>
       <form onSubmit={handleSubmit}>
-        <Button disabled={!content || !title}>保存する</Button>
         <BackLink href="#" onClick={() => Router.push("/")}>
           <FaArrowLeft />
         </BackLink>
+
+        <ButtonContainer>
+          <StyledButton disabled={!content || !title}>保存する</StyledButton>
+        </ButtonContainer>
         <Input
           type="title"
           autoFocus
@@ -50,7 +56,7 @@ function Create() {
           placeholder="Title"
           value={title}
         />
-        <TextArea
+        <StyledTextArea
           cols={50}
           onChange={(e) => convertContent(e.target.value)}
           placeholder="Write in Content"
@@ -62,7 +68,7 @@ function Create() {
           <div dangerouslySetInnerHTML={{ __html: markdownContent }} />
         )}
       </form>
-    </Page>
+    </StyledCreate>
   );
 }
 

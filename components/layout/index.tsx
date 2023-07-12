@@ -35,17 +35,7 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-export const ButtonContainer = styled.div`
-  position: fixed;
-  top: 0;
-  right: 0;
-  margin: 10px 10px;
-  display: flex;
-  gap: 10px;
-  z-index: 999;
-`;
-
-export const Button = styled.button`
+export const StyledButton = styled.button`
   padding: 5px 20px;
   margin: 0 10px;
   font-size: 16px;
@@ -66,10 +56,45 @@ export const Button = styled.button`
   }
 `;
 
+export const ButtonContainer = styled.div`
+  position: fixed;
+  top: 0;
+  right: 0;
+  margin: 10px 10px;
+  display: flex;
+  gap: 10px;
+  z-index: 999;
+`;
+
+export const MenuIcon = styled.img`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+`;
+
+export const MenuItem = styled(StyledButton)`
+  width: 100%;
+  margin-bottom: 10px;
+`;
+
+export const MenuContainer = styled.div<{ isOpen?: boolean }>`
+  position: absolute;
+  top: 60px;
+  right: 10px;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 998;
+  padding: 10px;
+  display: ${(props) => (props.isOpen ? "block" : "none")};
+`;
+
 const Container = styled.div`
   height: 100vh;
   display: flex;
   flex-direction: column;
+  text-align: center;
 `;
 
 const LayoutWrapper = styled.div`
@@ -132,7 +157,7 @@ export const StyledTextInput = styled(TextInput)`
     --textarea-background-color: white;
   }
   & .mantine-TextInput-input {
-    background-color: var(----textarea-background-color);
+    background-color: var(--textarea-background-color);
   }
 `;
 

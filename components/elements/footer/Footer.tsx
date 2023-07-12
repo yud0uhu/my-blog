@@ -4,7 +4,7 @@ const Footer: React.FC = () => {
   return (
     <>
       <FooterStyle>
-        <div className="footer">©︎ 2023 - yud0uhu.work </div>
+        <div>©︎ 2023 - yud0uhu.work </div>
       </FooterStyle>
     </>
   );

@@ -1,8 +1,4 @@
-import Layout, {
-  Button,
-  ButtonContainer,
-  StyledTextInput,
-} from "../components/layout";
+import Layout, { StyledTextInput } from "../components/layout";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/client";
 import { FormEvent, useEffect, useState } from "react";
