@@ -79,6 +79,7 @@ export const MenuItem = styled(StyledButton)`
 `;
 
 export const MenuContainer = styled.div<{ isOpen?: boolean }>`
+  width: 100%,
   position: absolute;
   top: 60px;
   right: 10px;
