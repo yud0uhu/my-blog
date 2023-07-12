@@ -82,7 +82,7 @@ const Header: React.FC = () => {
             )}
           </ActionIcon>
 
-          {!session ? (
+          {session ? (
             <>
               <MenuIcon
                 src="https://github.com/yud0uhu.png"
