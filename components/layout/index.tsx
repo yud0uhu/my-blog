@@ -37,7 +37,9 @@ const GlobalStyle = createGlobalStyle`
 
 export const StyledButton = styled.button`
   padding: 5px 20px;
-  margin: 0 50px;
+  margin: 2.5 2.5px;
+  right: 50px;
+  position: relative;
   font-size: 16px;
   background-color: #333;
   color: #fff;
