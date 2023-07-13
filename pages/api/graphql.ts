@@ -40,7 +40,8 @@ builder.prismaObject("Post", {
     createdAt: t.string({
       resolve: (parent) => {
         const createdAtDate = new Date(parent.createdAt).toLocaleString(
-          "en-US"
+          "en-US",
+          { timeZone: "Asia/Tokyo" }
         );
         // const createdAt =
         //   Math.abs(createdAtDate.getUTCFullYear()).toString() +
