@@ -39,15 +39,19 @@ const Header: React.FC = () => {
       "--textarea-background-color:",
       colorScheme === "light" ? "white" : "#0E1117"
     );
+    document.documentElement.style.setProperty(
+      "--background-color",
+      colorScheme === "light" ? "#f6f8fa" : "#02040A"
+    );
   }, [colorScheme]);
   const handleColorSchemeChange = () => {
     const newColorScheme = colorScheme === "light" ? "dark" : "light";
     setColorScheme(newColorScheme);
     localStorage.setItem("theme", newColorScheme);
-    document.documentElement.style.setProperty(
-      "--background-color",
-      newColorScheme === "light" ? "#f6f8fa" : "#02040A"
-    );
+    // document.documentElement.style.setProperty(
+    //   "--background-color",
+    //   newColorScheme === "light" ? "#f6f8fa" : "#02040A"
+    // );
   };
 
   const handleSignOut = async () => {

@@ -28,11 +28,9 @@ export const Input = styled.input`
 `;
 
 export const StyledTextArea = styled(Textarea)`
-  :root {
-    --textarea-background-color: white;
-  }
   & .mantine-Textarea-input {
-    background-color: var(--textarea-background-color);
+    background-color: var(--items-background-color);
+    color: var(--input-color);
     width: 100%;
     padding: 1.5rem;
     margin: 0.5rem 0;
