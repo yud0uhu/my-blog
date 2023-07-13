@@ -47,7 +47,9 @@ function Create() {
         </BackLink>
 
         <ButtonContainer>
-          <StyledButton disabled={!content || !title}>保存する</StyledButton>
+          <StyledButton style={{ right: "50px" }} disabled={!content || !title}>
+            保存する
+          </StyledButton>
         </ButtonContainer>
         <Input
           type="title"
