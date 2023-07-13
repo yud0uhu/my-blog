@@ -39,7 +39,9 @@ builder.prismaObject("Post", {
     tags: t.relation("tags"),
     createdAt: t.string({
       resolve: (parent) => {
-        const createdAtDate = new Date(parent.createdAt).toLocaleString();
+        const createdAtDate = new Date(parent.createdAt).toLocaleString(
+          "en-US"
+        );
         // const createdAt =
         //   Math.abs(createdAtDate.getUTCFullYear()).toString() +
         //   "-" +
