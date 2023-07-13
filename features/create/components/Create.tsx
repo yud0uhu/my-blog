@@ -46,10 +46,8 @@ function Create() {
           <FaArrowLeft />
         </BackLink>
 
-        <ButtonContainer>
-          <StyledButton style={{ right: "50px" }} disabled={!content || !title}>
-            保存する
-          </StyledButton>
+        <ButtonContainer style={{ right: "50px" }}>
+          <StyledButton disabled={!content || !title}>保存する</StyledButton>
         </ButtonContainer>
         <Input
           type="title"
