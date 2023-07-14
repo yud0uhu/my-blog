@@ -23,8 +23,6 @@ const NotFoundPage = () => {
 
       <div
         style={{
-          width: "300px",
-          height: "300px",
           position: "relative",
           overflow: "hidden",
         }}
@@ -38,14 +36,17 @@ const NotFoundPage = () => {
             objectFit: "cover",
           }}
         />
-        <StyledButton
-          onClick={() => {
-            router.push("/");
-          }}
-        >
-          トップに戻る
-        </StyledButton>
       </div>
+      <StyledButton
+        onClick={() => {
+          router.push("/");
+        }}
+        style={{
+          padding: "10px",
+        }}
+      >
+        トップに戻る
+      </StyledButton>
     </div>
   );
 };
