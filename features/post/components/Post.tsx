@@ -26,6 +26,7 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
       <div onClick={() => Router.push("/post/[id]", `/post/${id}`)}>
         <h2>{post.title}</h2>
         <small>{post.createdAt}</small>
+        {/* <h2>Session:{JSON.stringify(session)}</h2> */}
       </div>
       {session && <StyledButton onClick={handleDelete}>削除する</StyledButton>}
     </PostContainer>
