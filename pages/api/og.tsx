@@ -1,14 +1,11 @@
 import { ImageResponse } from "@vercel/og";
-import { NextPageContext } from "next";
-import { Session } from "next-auth";
-import { getSession } from "next-auth/react";
 import Image from "next/image";
 import { NextRequest } from "next/server";
 
 export const config = {
   runtime: "experimental-edge",
 };
-export default async function handler(req: NextRequest, session: Session) {
+export default async function handler(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
 
@@ -17,7 +14,7 @@ export default async function handler(req: NextRequest, session: Session) {
     const title = hasTitle
       ? searchParams.get("title")?.slice(0, 100)
       : "yud0uhu.work";
-    const userName = session?.user?.name ? session.user.name : "yud0uhu";
+    const userName = "yud0uhu";
 
     return new ImageResponse(
       (
@@ -108,13 +105,3 @@ export default async function handler(req: NextRequest, session: Session) {
     });
   }
 }
-
-export const getServerSideProps = async (context: NextPageContext) => {
-  const session = await getSession(context);
-
-  return {
-    props: {
-      session,
-    },
-  };
-};
