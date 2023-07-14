@@ -11,4 +11,15 @@ module.exports = {
       (isServer ? "../" : "") + "static/wasm/[modulehash].wasm";
     return config;
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "github.com",
+        port: "",
+        pathname: "/yud0uhu/my-blog/blob/main/**",
+      },
+    ],
+    minimumCacheTTL: 60,
+  },
 };
