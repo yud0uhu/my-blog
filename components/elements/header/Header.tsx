@@ -48,10 +48,6 @@ const Header: React.FC = () => {
     const newColorScheme = colorScheme === "light" ? "dark" : "light";
     setColorScheme(newColorScheme);
     localStorage.setItem("theme", newColorScheme);
-    // document.documentElement.style.setProperty(
-    //   "--background-color",
-    //   newColorScheme === "light" ? "#f6f8fa" : "#02040A"
-    // );
   };
 
   const handleSignOut = async () => {
@@ -89,7 +85,7 @@ const Header: React.FC = () => {
           {session ? (
             <>
               <MenuIcon
-                src="https://github.com/yud0uhu.png"
+                src={`https://github.com/${session.user.name}.png`}
                 alt="Menu"
                 onClick={handleMenuToggle}
               />
