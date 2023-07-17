@@ -1,20 +1,16 @@
 import Layout, { StyledTextInput } from "../components/layout";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/client";
-import { FormEvent, useEffect, useState } from "react";
-import { FaSearch, FaSun, FaMoon } from "react-icons/fa";
-import { Box, useMantineColorScheme, Group } from "@mantine/core";
+import { FormEvent, useState } from "react";
+import { FaSearch } from "react-icons/fa";
+import { Group } from "@mantine/core";
 
 import { PostProps } from "../features/types";
 import Post from "../features/post/components/Post";
-import { Session } from "next-auth";
 
 const Blog: React.FC<{
-  session: Session;
   data: { filterPosts: PostProps[] };
-}> = (props) => {
-  const { colorScheme } = useMantineColorScheme();
-
+}> = () => {
   const [text, setText] = useState("");
   const [searchString, setSearchString] = useState<string | null>("");
 
