@@ -2,6 +2,19 @@
  * @type {import('next').NextConfig}
  */
 module.exports = {
+  async headers() {
+    return [
+      {
+        source: "/(.*)",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+    ];
+  },
   webpack: (config, { isServer }) => {
     config.experiments = {
       asyncWebAssembly: true,
