@@ -20,7 +20,8 @@ const Blog: React.FC<{
 
   const { loading, error, data } = useQuery(filterPosts, {
     variables: { searchString },
-    pollInterval: 500,
+    // pollInterval: 500,
+    fetchPolicy: "cache-and-network",
   });
 
   const handleFormSubmit = (event: FormEvent) => {
