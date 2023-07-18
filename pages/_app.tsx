@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const title = "yud0uhu.work";
 
   return (
-    <>
+    <div className="app">
       <Seo
         description={"0yu @ yud0uhu"}
         imageUrl={`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/og?title=${title}&userName=${userName}`}
@@ -42,7 +42,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
           </ColorSchemeProvider>
         </ApolloProvider>
       </SessionProvider>
-    </>
+    </div>
   );
 }
 
