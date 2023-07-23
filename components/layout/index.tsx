@@ -46,7 +46,7 @@ export const StyledButton = styled.button`
   border-radius: 4px;
   z-index: 999;
   border-radius: 10px;
-  box-shadow: 0 10px 20px rgb(240, 235, 235, 0.3);
+  /* box-shadow: 0 10px 20px rgb(240, 235, 235, 0.3); */
   border: 0.125rem solid #0000;
   color: white;
   font-weight: bold;
