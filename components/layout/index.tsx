@@ -14,7 +14,8 @@ const GlobalStyle = createGlobalStyle`
   }
 
   :root {
-    --background-color: #f6f8fa; 
+    --background-color: #f6f8fa;
+    --menu-item-color: white;
     --post-text-color: black;
     --items-background-color: white;
   }
@@ -80,6 +81,7 @@ export const MenuItem = styled.p`
   cursor: pointer;
   margin: 0px;
   padding: 10px;
+  color: var(--post-text-color);
 `;
 
 export const MenuContainer = styled.div<{ isOpen?: boolean }>`
@@ -87,7 +89,7 @@ export const MenuContainer = styled.div<{ isOpen?: boolean }>`
   position: absolute;
   top: 40px;
   right: 0;
-  background-color: #fff;
+  background-color: var(--menu-item-color);
   border-radius: 4px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   display: ${(props) => (props.isOpen ? "flex" : "none")};
@@ -101,7 +103,7 @@ export const MenuContainer = styled.div<{ isOpen?: boolean }>`
   }
 
   .menu-item:hover {
-    background-color: #f6f8fa;
+    background-color: var(--background-color);
   }
 `;
 

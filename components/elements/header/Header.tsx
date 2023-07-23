@@ -43,6 +43,10 @@ const Header: React.FC = () => {
       "--background-color",
       colorScheme === "light" ? "#f6f8fa" : "#02040A"
     );
+    document.documentElement.style.setProperty(
+      "--menu-item-color",
+      colorScheme === "light" ? "white" : "#0E1117"
+    );
   }, [colorScheme]);
   const handleColorSchemeChange = () => {
     const newColorScheme = colorScheme === "light" ? "dark" : "light";
