@@ -1,6 +1,6 @@
 import { ApolloProvider } from "@apollo/client";
 import client from "../lib/apollo-client";
-import type { AppProps } from "next/app";
+import type { AppProps, NextWebVitalsMetric } from "next/app";
 import { SessionProvider } from "next-auth/react";
 import {
   ColorScheme,
@@ -45,5 +45,9 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
     </div>
   );
 }
+
+// export function reportWebVitals(metric: NextWebVitalsMetric) {
+//   console.log(metric);
+// }
 
 export default MyApp;

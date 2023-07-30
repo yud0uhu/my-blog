@@ -1,5 +1,5 @@
 import { ActionIcon } from "@mantine/core";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { getSession, signIn, signOut, useSession } from "next-auth/react";
 import Router from "next/router";
 import { useEffect, useState } from "react";
 import { FaMoon, FaSun } from "react-icons/fa";
@@ -11,51 +11,29 @@ import {
   MenuContainer,
 } from "../../layout";
 import { GlobalStyle } from "./styles/HeaderStyles";
+import { setHeaderStyles } from "./styles/HeaderStyles";
 
 const Header: React.FC = () => {
-  const { data: session } = useSession();
+  const { data: session } = useSession({ required: false });
+
   const [colorScheme, setColorScheme] = useState("light");
   useEffect(() => {
     const localStorageTheme = localStorage.getItem("theme");
     setColorScheme(localStorageTheme || "light");
 
-    document.documentElement.style.setProperty(
-      "--header-background-color",
-      colorScheme === "light" ? "white" : "dark"
-    );
-    document.documentElement.style.setProperty(
-      "--post-text-color",
-      colorScheme === "light" ? "black" : "white"
-    );
-    document.documentElement.style.setProperty(
-      "--items-background-color",
-      colorScheme === "light" ? "white" : "#0E1117"
-    );
-    document.documentElement.style.setProperty(
-      "--input-color",
-      colorScheme === "light" ? "black" : "white"
-    );
-    document.documentElement.style.setProperty(
-      "--textarea-background-color:",
-      colorScheme === "light" ? "white" : "#0E1117"
-    );
-    document.documentElement.style.setProperty(
-      "--background-color",
-      colorScheme === "light" ? "#f6f8fa" : "#02040A"
-    );
-    document.documentElement.style.setProperty(
-      "--menu-item-color",
-      colorScheme === "light" ? "white" : "#0E1117"
-    );
+    setHeaderStyles(colorScheme);
   }, [colorScheme]);
+
+  useEffect(() => {
+    if (!session) {
+      Router.push("/login");
+    }
+  }, [session]);
+
   const handleColorSchemeChange = () => {
     const newColorScheme = colorScheme === "light" ? "dark" : "light";
     setColorScheme(newColorScheme);
     localStorage.setItem("theme", newColorScheme);
-    // document.documentElement.style.setProperty(
-    //   "--background-color",
-    //   newColorScheme === "light" ? "#f6f8fa" : "#02040A"
-    // );
   };
 
   const handleSignOut = async () => {
