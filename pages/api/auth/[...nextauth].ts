@@ -21,7 +21,7 @@ export const authOptions: NextAuthOptions = {
   // セッション保存先
   session: { strategy: "jwt" },
   pages: {
-    signIn: "/login",
+    signIn: "/auth/signin",
   },
   // callbacks: {
   //   async session({ session, token }) {

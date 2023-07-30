@@ -10,8 +10,8 @@ import {
   useSession,
 } from "next-auth/react";
 import { useRouter } from "next/router";
-import { StyledButton } from "../../components/layout";
-import { Container } from "../../features/login/styles";
+import { StyledButton } from "../../../../components/layout";
+import { Container } from "../../../../features/signin/styles";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const providers = await getProviders();
