@@ -11,7 +11,7 @@ if (!NEXT_PUBLIC_SECRET)
   throw new Error("You must provide NEXT_PUBLIC_SECRET env var.");
 
 export const authOptions: NextAuthOptions = {
-  secret: NEXT_PUBLIC_SECRET,
+  secret: "4bRXpaP8Vi01ldHky/F1XW7QyXkYtBKcAil2tVBaZg0=",
   providers: [
     GithubProvider({
       clientId: GITHUB_CLIENT_ID || "",
