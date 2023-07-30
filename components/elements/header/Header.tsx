@@ -65,7 +65,7 @@ const Header: React.FC = () => {
           {session ? (
             <>
               <MenuIcon
-                src={`https://github.com/${sessino.user}.png`}
+                src={`https://github.com/${session.user}.png`}
                 alt="Menu"
                 onClick={handleMenuToggle}
               />
