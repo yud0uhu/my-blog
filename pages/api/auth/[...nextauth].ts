@@ -20,18 +20,21 @@ export const authOptions: NextAuthOptions = {
   ],
   // セッション保存先
   session: { strategy: "jwt" },
-  callbacks: {
-    async session({ session, token }) {
-      session.user.accessToken = token.accessToken;
-      return session;
-    },
-    async jwt({ token, account }) {
-      if (account) {
-        token.accessToken = account.access_token;
-      }
-      return token;
-    },
+  pages: {
+    signIn: "/login",
   },
+  // callbacks: {
+  //   async session({ session, token }) {
+  //     session.user.accessToken = token.accessToken;
+  //     return session;
+  //   },
+  //   async jwt({ token, account }) {
+  //     if (account) {
+  //       token.accessToken = account.access_token;
+  //     }
+  //     return token;
+  //   },
+  // },
 };
 
 export default NextAuth(authOptions);
