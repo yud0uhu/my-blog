@@ -14,7 +14,7 @@ import { GlobalStyle } from "./styles/HeaderStyles";
 import { setHeaderStyles } from "./styles/HeaderStyles";
 
 const Header: React.FC = () => {
-  const { data: session } = useSession({ required: false });
+  const { data: session } = useSession({ required: true });
 
   const [colorScheme, setColorScheme] = useState("light");
   useEffect(() => {
@@ -23,12 +23,6 @@ const Header: React.FC = () => {
 
     setHeaderStyles(colorScheme);
   }, [colorScheme]);
-
-  useEffect(() => {
-    if (!session) {
-      Router.push("/login");
-    }
-  }, [session]);
 
   const handleColorSchemeChange = () => {
     const newColorScheme = colorScheme === "light" ? "dark" : "light";
@@ -71,7 +65,7 @@ const Header: React.FC = () => {
           {session ? (
             <>
               <MenuIcon
-                src="https://github.com/yud0uhu.png"
+                src={`https://github.com/${sessino.user}.png`}
                 alt="Menu"
                 onClick={handleMenuToggle}
               />
