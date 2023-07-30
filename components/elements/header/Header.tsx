@@ -14,7 +14,7 @@ import { GlobalStyle } from "./styles/HeaderStyles";
 import { setHeaderStyles } from "./styles/HeaderStyles";
 
 const Header: React.FC = () => {
-  const { data: session } = useSession({ required: true });
+  const { data: session } = useSession({ required: false });
 
   const [colorScheme, setColorScheme] = useState("light");
   useEffect(() => {
