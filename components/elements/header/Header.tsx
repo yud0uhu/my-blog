@@ -1,8 +1,12 @@
 import { ActionIcon } from "@mantine/core";
+import { getServerSession } from "next-auth";
 import { getSession, signIn, signOut, useSession } from "next-auth/react";
+import Link from "next/link";
 import Router from "next/router";
+import { GetServerSidePropsContext } from "next/types";
 import { useEffect, useState } from "react";
 import { FaMoon, FaSun } from "react-icons/fa";
+import { authOptions } from "../../../pages/api/auth/[...nextauth]";
 import {
   ButtonContainer,
   StyledButton,
@@ -13,9 +17,8 @@ import {
 import { GlobalStyle } from "./styles/HeaderStyles";
 import { setHeaderStyles } from "./styles/HeaderStyles";
 
-const Header: React.FC = () => {
-  const { data: session } = useSession({ required: true });
-
+export default function ServerSidePage() {
+  const { data: session } = useSession();
   const [colorScheme, setColorScheme] = useState("light");
   useEffect(() => {
     const localStorageTheme = localStorage.getItem("theme");
@@ -30,13 +33,6 @@ const Header: React.FC = () => {
     localStorage.setItem("theme", newColorScheme);
   };
 
-  const handleSignOut = async () => {
-    await signOut();
-  };
-
-  const handleSignIn = async () => {
-    await signIn();
-  };
   const [isOpen, setIsOpen] = useState(false);
 
   const handleMenuToggle = () => {
@@ -44,7 +40,7 @@ const Header: React.FC = () => {
   };
 
   return (
-    <>
+    <header>
       <GlobalStyle />
       <div className="header">
         <ButtonContainer>
@@ -61,16 +57,36 @@ const Header: React.FC = () => {
               <FaMoon size="1.1rem" />
             )}
           </ActionIcon>
-
-          {session ? (
+          {!session?.user && (
+            <StyledButton
+              onClick={(e) => {
+                e.preventDefault();
+                signIn();
+              }}
+            >
+              ログイン
+            </StyledButton>
+          )}
+          {session && (
             <>
               <MenuIcon
-                src={`https://github.com/${session.user}.png`}
+                src={`https://github.com/${session.user?.name}.png`}
                 alt="Menu"
                 onClick={handleMenuToggle}
               />
+              <span>
+                <small>Signed in as</small>
+                <br />
+                <strong>{session?.user?.name}</strong>
+              </span>
               <MenuContainer isOpen={isOpen}>
-                <MenuItem onClick={handleSignOut} className="menu-item">
+                <MenuItem
+                  className="menu-item"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    signOut();
+                  }}
+                >
                   ログアウト
                 </MenuItem>
                 <MenuItem
@@ -81,12 +97,21 @@ const Header: React.FC = () => {
                 </MenuItem>
               </MenuContainer>
             </>
-          ) : (
-            <StyledButton onClick={handleSignIn}>ログイン</StyledButton>
           )}
         </ButtonContainer>
       </div>
-    </>
+    </header>
   );
-};
-export default Header;
+}
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const session = await getSession(context);
+  if (!session) {
+    return { props: {} };
+  }
+  return {
+    props: {
+      session: await getServerSession(context.req, context.res, authOptions),
+    },
+  };
+}
