@@ -1,11 +1,6 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 
-if (!process.env.GITHUB_ID)
-  throw new Error("You must provide GITHUB_ID env var.");
-if (!process.env.GITHUB_SECRET)
-  throw new Error("You must provide GITHUB_SECRET env var.");
-
 /**
  * Docs: https://next-auth.js.org/deployment
  */
