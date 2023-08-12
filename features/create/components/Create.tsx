@@ -10,10 +10,10 @@ import {
 } from "../styles/createStyles";
 import { CreateDraftMutation } from "../query";
 import { FaArrowLeft } from "react-icons/fa";
-import Layout, {
+import {
   StyledButton,
   ButtonContainer,
-} from "../../../components/layout";
+} from "../../../components/layout/styles";
 
 function Create() {
   const [title, setTitle] = useState("");

@@ -5,7 +5,7 @@ import { PostProps } from "../../types";
 import { useSession } from "next-auth/react";
 import { useMutation } from "@apollo/client";
 import { DeleteMutation } from "../query";
-import { StyledButton } from "../../../components/layout";
+import { StyledButton } from "../../../components/layout/styles";
 
 const Post: React.FC<{ post: PostProps }> = ({ post }) => {
   const id = post.id;
@@ -21,12 +21,14 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
     // 削除後、画面更新する
     Router.push("/");
   };
+  const handlePostClick = () => {
+    Router.push("/post/[id]", `/post/${id}`, { shallow: true });
+  };
   return (
-    <PostContainer>
-      <div onClick={() => Router.push("/post/[id]", `/post/${id}`)}>
+    <PostContainer onClick={handlePostClick}>
+      <div>
         <h2>{post.title}</h2>
         <small>{post.createdAt}</small>
-        {/* <h2>Session:{JSON.stringify(session)}</h2> */}
       </div>
       {session && <StyledButton onClick={handleDelete}>削除する</StyledButton>}
     </PostContainer>

@@ -13,9 +13,16 @@ import {
   MenuIcon,
   MenuItem,
   MenuContainer,
-} from "../../layout";
+} from "../../layout/styles";
 import { GlobalStyle } from "./styles/HeaderStyles";
 import { setHeaderStyles } from "./styles/HeaderStyles";
+import { Cherry_Bomb_One, Sawarabi_Gothic } from "next/font/google";
+
+const sawarabi_gothic = Sawarabi_Gothic({
+  variable: "--font-sawarabi_gothic",
+  subsets: ["latin"],
+  weight: "400",
+});
 
 export default function ServerSidePage() {
   const { data: session } = useSession();
@@ -40,9 +47,9 @@ export default function ServerSidePage() {
   };
 
   return (
-    <header>
+    <>
       <GlobalStyle />
-      <div className="header">
+      <div className="header" style={sawarabi_gothic.style}>
         <ButtonContainer>
           <ActionIcon
             className="icon"
@@ -100,7 +107,7 @@ export default function ServerSidePage() {
           )}
         </ButtonContainer>
       </div>
-    </header>
+    </>
   );
 }
 
