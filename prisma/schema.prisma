@@ -7,34 +7,34 @@ generator pothos {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("POSTGRESQL_DATABASE_URL")
+  provider          = "postgresql"
+  url               = env("POSTGRESQL_DATABASE_URL")
   shadowDatabaseUrl = env("VERCEL_POSTGRESQL_DATABASE_URL")
 }
 
 // モデルの定義
 model User {
-  id    Int     @id @default(autoincrement())
+  id    String  @id @default(cuid())
   name  String?
   posts Post[]
 }
 
 model Post {
-  authorId  Int?
+  authorId  String?
   content   String?
-  id        Int      @id @default(autoincrement())
   published Boolean  @default(false)
   title     String
   author    User?    @relation(fields: [authorId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   viewCount Int      @default(0)
-  tags      Tag?     @relation(references: [id], fields: [tagId])
-  tagId     Int?
+  id        String   @id @default(cuid())
+  tags      Tag[]
 }
 
 model Tag {
-  id    Int    @id @default(autoincrement())
-  label String
-  posts Post[]
+  id     String  @id @default(cuid())
+  label  String
+  postId String? @map("post_id")
+  post   Post?   @relation(fields: [postId], references: [id])
 }
