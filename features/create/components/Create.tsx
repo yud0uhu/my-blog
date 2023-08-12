@@ -15,6 +15,7 @@ import {
   ButtonContainer,
 } from '../../../components/layout/styles'
 import { Session } from 'next-auth'
+import { Switch } from '@mantine/core'
 interface CreateProps {
   session: Session | null
 }
@@ -22,24 +23,46 @@ function Create({ session }: CreateProps) {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [markdownContent, setMarkdownContent] = useState('')
+  const [autoSaveEnabled, setAutoSaveEnabled] = useState(true)
+
+  useEffect(() => {
+    if (!autoSaveEnabled) {
+      return
+    }
+
+    const autoSave = setTimeout(() => {
+      saveDraft()
+    }, 60000)
+
+    return () => {
+      clearTimeout(autoSave)
+    }
+  }, [title, content, autoSaveEnabled])
 
   const convertContent = (content: string) => {
-    console.log(content)
     setContent(content)
     setMarkdownContent(text_to_token(content))
   }
 
   const [createDraft] = useMutation(CreateDraftMutation)
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+  const saveDraft = async () => {
     await createDraft({
       variables: {
         title,
         content,
       },
     })
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    await saveDraft()
     Router.push('/drafts')
+  }
+
+  const handleAutoSaveToggle = () => {
+    setAutoSaveEnabled(!autoSaveEnabled)
   }
 
   return (
@@ -51,7 +74,19 @@ function Create({ session }: CreateProps) {
 
         <ButtonContainer style={{ right: '150px' }}>
           {session && (
-            <StyledButton disabled={!content || !title}>保存する</StyledButton>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <StyledButton disabled={!content || !title}>
+                保存する
+              </StyledButton>
+
+              <Switch
+                label="Auto Save"
+                size="lg"
+                checked={autoSaveEnabled}
+                onChange={handleAutoSaveToggle}
+                style={{ marginLeft: '1rem' }}
+              />
+            </div>
           )}
         </ButtonContainer>
         <Input
