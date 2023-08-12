@@ -1,9 +1,8 @@
-import styled, { keyframes } from 'styled-components'
+import styled from "styled-components";
 
 export const PostContainer = styled.div`
   padding: 2rem;
-  cursor: pointer;
-`
+`;
 
 export const StyledPost = styled.div`
   padding: 3rem;
@@ -34,7 +33,7 @@ export const StyledPost = styled.div`
     border: 0;
     margin-left: 1rem;
   }
-`
+`;
 
 export const StyledTitle = styled.h2<{ unpublished?: boolean }>`
   ${({ unpublished }) =>
@@ -44,4 +43,4 @@ export const StyledTitle = styled.h2<{ unpublished?: boolean }>`
       content: "編集中...";
     }
   `}
-`
+`;

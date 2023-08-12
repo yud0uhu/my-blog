@@ -1,12 +1,12 @@
-import styled from '@emotion/styled'
-import { Textarea } from '@mantine/core'
+import styled from "@emotion/styled";
+import { Textarea } from "@mantine/core";
 
 export const StyledCreate = styled.div`
   padding: 3rem;
   display: flex;
   justify-content: center;
   align-items: center;
-`
+`;
 
 export const Input = styled.input`
   :root {
@@ -25,11 +25,10 @@ export const Input = styled.input`
   &:focus {
     outline: #0000;
   }
-`
+`;
 
 export const StyledTextArea = styled(Textarea)`
   & .mantine-Textarea-input {
-    min-height: 300px;
     background-color: var(--items-background-color);
     color: var(--input-color);
     width: 100%;
@@ -45,7 +44,7 @@ export const StyledTextArea = styled(Textarea)`
     height: 400px;
     resize: none;
   }
-`
+`;
 
 // export const StyledButton = styled.button`
 //   height: 35px;
@@ -72,4 +71,4 @@ export const BackLink = styled.a`
   border: 0;
   margin-left: 1rem;
   color: black;
-`
+`;

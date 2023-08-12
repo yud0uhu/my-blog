@@ -1,12 +1,12 @@
-import { FooterStyle } from './styles/FooterStyle'
+import { FooterStyle } from "./styles/FooterStyle";
 
 const Footer: React.FC = () => {
   return (
     <>
       <FooterStyle>
-        <div>©︎ 2023 - Copyright yud0uhu.work, All Rights Reserved. </div>
+        <div>©︎ 2023 - yud0uhu.work </div>
       </FooterStyle>
     </>
-  )
-}
-export default Footer
+  );
+};
+export default Footer;
