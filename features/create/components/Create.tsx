@@ -8,7 +8,7 @@ import {
   StyledTextArea,
   Input,
 } from '../styles/createStyles'
-import { CreateDraftMutation } from '../query'
+import { CreateDraftsMutation } from '../query'
 import { FaArrowLeft } from 'react-icons/fa'
 import {
   StyledButton,
@@ -29,7 +29,7 @@ function Create({ session }: CreateProps) {
     setMarkdownContent(text_to_token(content))
   }
 
-  const [createDraft] = useMutation(CreateDraftMutation)
+  const [createDraft] = useMutation(CreateDraftsMutation)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
