@@ -10,6 +10,7 @@ import {
 import { useState } from "react";
 import Seo from "../lib/seo";
 
+import { AnimatePresence } from "framer-motion";
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const [colorScheme, setColorScheme] = useState<ColorScheme>("light");
   const toggleColorScheme = (value?: ColorScheme) =>
@@ -18,31 +19,33 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const title = "yud0uhu.work";
 
   return (
-    <div className="app">
-      <Seo
-        description={"0yu @ yud0uhu"}
-        imageUrl={`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/og?title=${title}&userName=${userName}`}
-        title={title}
-        url={`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/`}
-      />
-      <SessionProvider session={session}>
-        <ApolloProvider client={client}>
-          <ColorSchemeProvider
-            colorScheme={colorScheme}
-            toggleColorScheme={toggleColorScheme}
-          >
-            <MantineProvider
-              theme={{ colorScheme }}
-              withGlobalStyles
-              withCSSVariables
-              withNormalizeCSS
+    <AnimatePresence mode="wait" onExitComplete={() => window.scrollTo(0, 0)}>
+      <div className="app">
+        <Seo
+          description={"0yu @ yud0uhu"}
+          imageUrl={`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/og?title=${title}&userName=${userName}`}
+          title={title}
+          url={`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/`}
+        />
+        <SessionProvider session={session}>
+          <ApolloProvider client={client}>
+            <ColorSchemeProvider
+              colorScheme={colorScheme}
+              toggleColorScheme={toggleColorScheme}
             >
-              <Component {...pageProps} />
-            </MantineProvider>
-          </ColorSchemeProvider>
-        </ApolloProvider>
-      </SessionProvider>
-    </div>
+              <MantineProvider
+                theme={{ colorScheme }}
+                withGlobalStyles
+                withCSSVariables
+                withNormalizeCSS
+              >
+                <Component {...pageProps} />
+              </MantineProvider>
+            </ColorSchemeProvider>
+          </ApolloProvider>
+        </SessionProvider>
+      </div>
+    </AnimatePresence>
   );
 }
 
