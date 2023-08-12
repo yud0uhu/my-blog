@@ -51,9 +51,9 @@ export const FilterPostsByTag = gql`
   }
 `
 
-export const FilterPostsBySearch = gql`
-  query FilterPostsBySearch($searchString: String!) {
-    filterPostsBySearch(searchString: $searchString, published: true) {
+export const filterPosts = gql`
+  query filterPosts($searchString: String!) {
+    filterPosts(searchString: $searchString, published: true) {
       id
       title
       content

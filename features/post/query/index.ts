@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client'
 
 export const PostQuery = gql`
   query PostQuery($id: ID!) {
@@ -8,9 +8,13 @@ export const PostQuery = gql`
       content
       published
       createdAt
+      tags {
+        id
+        label
+      }
     }
   }
-`;
+`
 
 export const PublishMutation = gql`
   mutation PublishMutation($id: ID!) {
@@ -21,7 +25,7 @@ export const PublishMutation = gql`
       published
     }
   }
-`;
+`
 
 export const DeleteMutation = gql`
   mutation DeleteMutation($id: ID!) {
@@ -32,4 +36,4 @@ export const DeleteMutation = gql`
       published
     }
   }
-`;
+`

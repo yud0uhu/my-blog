@@ -11,6 +11,7 @@ import {
 import { StyledPost, StyledTitle } from '../../features/post/styles/PostStyles'
 import { FaArrowLeft } from 'react-icons/fa'
 import { motion } from 'framer-motion'
+import { Badge } from '@mantine/core'
 
 const Post = () => {
   const id = useRouter().query.id
@@ -40,6 +41,13 @@ const Post = () => {
           <div>
             <StyledTitle unpublished={unpublished}>{title}</StyledTitle>
             <small>{data.post.createdAt}</small>
+            <div>
+              {data.post.tags.map((tag) => (
+                <Badge key={tag.id} size="lg">
+                  {tag.label}
+                </Badge>
+              ))}
+            </div>
             <ReactMarkdown>{data.post.content}</ReactMarkdown>
             {unpublished && (
               <button

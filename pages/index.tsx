@@ -12,7 +12,7 @@ import { GetServerSidePropsContext } from 'next/types'
 import { authOptions } from './api/auth/[...nextauth]'
 import LogoSVG from '../components/elements/logo/LogoSVG'
 import { StyledTextInput } from '../components/layout/styles'
-import { FilterPostsBySearch } from '../features/create/query'
+import { filterPosts } from '../features/create/query'
 
 const Blog: React.FC<{
   data: { filterPosts: PostProps[] }
@@ -22,7 +22,7 @@ const Blog: React.FC<{
 
   const [expanded, setExpanded] = useState(false)
   const [colorScheme, setColorScheme] = useState('light')
-  const { loading, error, data } = useQuery(FilterPostsBySearch, {
+  const { loading, error, data } = useQuery(filterPosts, {
     variables: { searchString },
     // pollInterval: 500,
     fetchPolicy: 'cache-and-network',
