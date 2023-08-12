@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import Router from "next/router";
-import { StyledButton } from "../../components/layout";
+import { StyledButton } from "../../components/layout/styles";
 import router from "next/router";
 import Image from "next/image";
 
