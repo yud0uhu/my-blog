@@ -19,7 +19,6 @@ const Post = () => {
   })
 
   const [publish] = useMutation(PublishMutation)
-  const [deletePost] = useMutation(DeleteMutation)
 
   if (loading) return <p>Loading...</p>
   if (error) return <p>Oh no... {error.message}</p>

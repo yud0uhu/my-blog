@@ -10,6 +10,7 @@ import {
 } from './styles'
 type LayoutProps = {
   children: React.ReactNode
+  backgroundColor?: string
 }
 
 const Layout: React.FC<LayoutProps> = (props) => {

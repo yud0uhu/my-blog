@@ -9,7 +9,6 @@ import {
 } from '@mantine/core'
 import { useState } from 'react'
 import Seo from '../lib/seo'
-
 import { AnimatePresence } from 'framer-motion'
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const [colorScheme, setColorScheme] = useState<ColorScheme>('light')

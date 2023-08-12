@@ -1,4 +1,8 @@
-import styled, { createGlobalStyle } from 'styled-components'
+import styled, {
+  createGlobalStyle,
+  DefaultTheme,
+  ThemeProps,
+} from 'styled-components'
 import { TextInput } from '@mantine/core'
 import { Cherry_Bomb_One, Sawarabi_Gothic } from 'next/font/google'
 
@@ -13,33 +17,55 @@ export const SawarabiGothic = Sawarabi_Gothic({
   subsets: ['latin'],
   weight: '400',
 })
+type GlobalStyleProps = {
+  backgroundColor?: string
+  headerBackgroundColor?: string
+} & ThemeProps<DefaultTheme>
+export const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
+  .header {
+    background-color: ${(props) => props.headerBackgroundColor || 'white'};
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    width: 100%;
+    height: 60px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+  }
 
-export const GlobalStyle = createGlobalStyle`
-    html {
-      box-sizing: border-box;
-    }
-  
-    *, *:before, *:after {
-      box-sizing: inherit;
-    }
-  
-    body {
-      color: var(--post-text-color);
-      margin: 0;
-      padding: 0;
-      font-size: 16px;
-      /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; */
-      /* background-color: rgb(240, 235, 235); */
-      background-color: var(--background-color); /* CSS変数を参照して背景色を適用 */
-      background-blend-mode: lighten;
-    }
-  
-    input, textarea {
-      font-size: 16px;
-    }
-  `
+  .icon {
+    top: 15px;
+    left: 15px;
+    position: fixed;
+  }
+
+  html {
+    box-sizing: border-box;
+  }
+
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+
+  body {
+    color: var(--post-text-color);
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; */
+  background-color: ${(props) =>
+    props.backgroundColor || '#eae3e8'}; /* CSS変数を参照して背景色を適用 */
+    background-blend-mode: lighten;
+  }
+
+  input, textarea {
+    font-size: 16px;
+  }
+`
 
 export const StyledButton = styled.button`
+  right: 0px;
   padding: 5px 20px;
   margin: 2.5 2.5px;
   position: relative;
