@@ -1,7 +1,8 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 export const PostContainer = styled.div`
   padding: 2rem;
+  cursor: pointer;
 `;
 
 export const StyledPost = styled.div`

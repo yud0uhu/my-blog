@@ -10,6 +10,7 @@ import {
 } from "../../features/post/query";
 import { StyledPost, StyledTitle } from "../../features/post/styles/PostStyles";
 import { FaArrowLeft } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 const Post = () => {
   const id = useRouter().query.id;
@@ -27,7 +28,11 @@ const Post = () => {
   const unpublished = !data.post.published;
 
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
       <Layout>
         <StyledPost>
           <a className="back" href="#" onClick={() => Router.push("/")}>
@@ -54,7 +59,7 @@ const Post = () => {
           </div>
         </StyledPost>
       </Layout>
-    </>
+    </motion.div>
   );
 };
 
