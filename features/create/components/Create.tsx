@@ -14,8 +14,11 @@ import {
   StyledButton,
   ButtonContainer,
 } from '../../../components/layout/styles'
-
-function Create() {
+import { Session } from 'next-auth'
+interface CreateProps {
+  session: Session | null
+}
+function Create({ session }: CreateProps) {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [markdownContent, setMarkdownContent] = useState('')
@@ -46,8 +49,10 @@ function Create() {
           <FaArrowLeft />
         </BackLink>
 
-        <ButtonContainer style={{ right: '50px' }}>
-          <StyledButton disabled={!content || !title}>保存する</StyledButton>
+        <ButtonContainer style={{ right: '150px' }}>
+          {session && (
+            <StyledButton disabled={!content || !title}>保存する</StyledButton>
+          )}
         </ButtonContainer>
         <Input
           type="title"
@@ -65,7 +70,10 @@ function Create() {
         />
         <h1>Preview</h1>
         {markdownContent && (
-          <div dangerouslySetInnerHTML={{ __html: markdownContent }} />
+          <div
+            className="text-align:right"
+            dangerouslySetInnerHTML={{ __html: markdownContent }}
+          />
         )}
       </form>
     </StyledCreate>

@@ -29,6 +29,7 @@ export const Input = styled.input`
 
 export const StyledTextArea = styled(Textarea)`
   & .mantine-Textarea-input {
+    min-height: 300px;
     background-color: var(--items-background-color);
     color: var(--input-color);
     width: 100%;

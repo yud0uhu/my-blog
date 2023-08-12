@@ -1,7 +1,6 @@
 import { ActionIcon } from '@mantine/core'
 import { getServerSession } from 'next-auth'
 import { getSession, signIn, signOut, useSession } from 'next-auth/react'
-import Link from 'next/link'
 import Router from 'next/router'
 import { GetServerSidePropsContext } from 'next/types'
 import { useEffect, useState } from 'react'
@@ -13,16 +12,10 @@ import {
   MenuIcon,
   MenuItem,
   MenuContainer,
+  SawarabiGothic,
+  GlobalStyle,
 } from '../../layout/styles'
-import { GlobalStyle } from './styles/HeaderStyles'
 import { setHeaderStyles } from './styles/HeaderStyles'
-import { Cherry_Bomb_One, Sawarabi_Gothic } from 'next/font/google'
-
-const sawarabi_gothic = Sawarabi_Gothic({
-  variable: '--font-sawarabi_gothic',
-  subsets: ['latin'],
-  weight: '400',
-})
 
 export default function ServerSidePage() {
   const { data: session } = useSession()
@@ -48,8 +41,11 @@ export default function ServerSidePage() {
 
   return (
     <>
-      <GlobalStyle />
-      <div className="header" style={sawarabi_gothic.style}>
+      <GlobalStyle
+        headerBackgroundColor={colorScheme === 'dark' ? '#2D283B' : 'white'}
+        backgroundColor={colorScheme === 'dark' ? 'black' : '#eae3e8'}
+      />
+      <div className="header" style={SawarabiGothic.style}>
         <ButtonContainer>
           <ActionIcon
             className="icon"

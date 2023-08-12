@@ -43,7 +43,7 @@ const Blog: React.FC<{
   if (error) return <p>Oh no... {error.message}</p>
 
   return (
-    <Layout>
+    <Layout backgroundColor={colorScheme === 'dark' ? '#ACA4CE' : 'white'}>
       <div className="logo-container">
         <FaSearch
           style={{
