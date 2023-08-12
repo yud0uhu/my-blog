@@ -46,7 +46,7 @@ function Create() {
           <FaArrowLeft />
         </BackLink>
 
-        <ButtonContainer style={{ right: '50px' }}>
+        <ButtonContainer style={{ top: '60px' }}>
           <StyledButton disabled={!content || !title}>保存する</StyledButton>
         </ButtonContainer>
         <Input
@@ -65,7 +65,10 @@ function Create() {
         />
         <h1>Preview</h1>
         {markdownContent && (
-          <div dangerouslySetInnerHTML={{ __html: markdownContent }} />
+          <div
+            className="text-align:right"
+            dangerouslySetInnerHTML={{ __html: markdownContent }}
+          />
         )}
       </form>
     </StyledCreate>

@@ -32,6 +32,7 @@ export const StyledTextArea = styled(Textarea)`
     background-color: var(--items-background-color);
     color: var(--input-color);
     width: 100%;
+    height: 500px;
     padding: 1.5rem;
     margin: 0.5rem 0;
     border: 0.125rem solid #0000;
