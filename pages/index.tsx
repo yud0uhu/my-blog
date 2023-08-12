@@ -44,19 +44,12 @@ const Blog: React.FC<{
 
   return (
     <Layout>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'flex-start',
-          alignItems: 'center',
-          margin: '16px 32px 0px 32px',
-        }}
-      >
+      <div className="logo-container">
         <FaSearch
           style={{
-            margin: '16px',
+            marginBottom: '8px',
             color: borderColor,
-            fontSize: '30px',
+            fontSize: '24px',
             cursor: 'pointer',
           }}
           onClick={toggleExpand}

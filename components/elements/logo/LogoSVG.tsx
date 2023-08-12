@@ -17,7 +17,7 @@ const LogoSVG: React.FC<LogoSvgType> = ({ color }) => {
   }, [])
 
   return (
-    <svg width="400" height="120" xmlns="http://www.w3.org/2000/svg">
+    <svg height="120" xmlns="http://www.w3.org/2000/svg">
       <style>
         {`
           @import url('https://fonts.googleapis.com/css2?family=Cherry+Bomb&display=swap');

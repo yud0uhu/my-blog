@@ -164,6 +164,20 @@ export const ItemWrapper = styled.div`
     margin-bottom: 30px;
   }
 
+  .logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 8px auto;
+  }
+
+  .search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 32px auto;
+  }
+
   .search-box {
     margin: 0 auto;
     font-weight: bold;
