@@ -1,18 +1,18 @@
-import styled, { createGlobalStyle } from "styled-components";
-import { TextInput } from "@mantine/core";
-import { Cherry_Bomb_One, Sawarabi_Gothic } from "next/font/google";
+import styled, { createGlobalStyle } from 'styled-components'
+import { TextInput } from '@mantine/core'
+import { Cherry_Bomb_One, Sawarabi_Gothic } from 'next/font/google'
 
 export const CherryBombOne = Cherry_Bomb_One({
-  variable: "--font-cherry_bomb_one",
-  subsets: ["latin"],
-  weight: "400",
-});
+  variable: '--font-cherry_bomb_one',
+  subsets: ['latin'],
+  weight: '400',
+})
 
 export const SawarabiGothic = Sawarabi_Gothic({
-  variable: "--font-sawarabi_gothic",
-  subsets: ["latin"],
-  weight: "400",
-});
+  variable: '--font-sawarabi_gothic',
+  subsets: ['latin'],
+  weight: '400',
+})
 
 export const GlobalStyle = createGlobalStyle`
     html {
@@ -37,7 +37,7 @@ export const GlobalStyle = createGlobalStyle`
     input, textarea {
       font-size: 16px;
     }
-  `;
+  `
 
 export const StyledButton = styled.button`
   padding: 5px 20px;
@@ -51,7 +51,6 @@ export const StyledButton = styled.button`
   z-index: 999;
   border-radius: 10px;
   border: 0.125rem solid var(--button-color);
-  color: var(--button-text-color);
   font-weight: bold;
   cursor: pointer;
 
@@ -59,7 +58,7 @@ export const StyledButton = styled.button`
     background-color: var(--button-hover-color);
     border: 0.125rem solid var(--button-hover-color);
   }
-`;
+`
 
 export const ButtonContainer = styled.div`
   position: fixed;
@@ -69,14 +68,14 @@ export const ButtonContainer = styled.div`
   display: flex;
   gap: 10px;
   z-index: 999;
-`;
+`
 
 export const MenuIcon = styled.img`
   width: 40px;
   height: 40px;
   border-radius: 50%;
   cursor: pointer;
-`;
+`
 
 export const MenuItem = styled.p`
   display: flex;
@@ -85,7 +84,7 @@ export const MenuItem = styled.p`
   margin: 0px;
   padding: 10px;
   color: var(--post-text-color);
-`;
+`
 
 export const MenuContainer = styled.div<{ isOpen?: boolean }>`
   width: 100px;
@@ -95,7 +94,7 @@ export const MenuContainer = styled.div<{ isOpen?: boolean }>`
   background-color: var(--menu-item-color);
   border-radius: 4px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  display: ${(props) => (props.isOpen ? "flex" : "none")};
+  display: ${(props) => (props.isOpen ? 'flex' : 'none')};
   flex-direction: column;
   align-items: flex-start;
 
@@ -108,14 +107,14 @@ export const MenuContainer = styled.div<{ isOpen?: boolean }>`
   .menu-item:hover {
     background-color: var(--background-color);
   }
-`;
+`
 
 export const Container = styled.div`
   height: 100vh;
   display: flex;
   flex-direction: column;
   text-align: center;
-`;
+`
 
 export const LayoutWrapper = styled.div`
   flex: 1;
@@ -124,7 +123,7 @@ export const LayoutWrapper = styled.div`
   align-items: center;
   padding: 0 2rem;
   margin-top: 70px;
-`;
+`
 
 export const ItemWrapper = styled.div`
   display: flex;
@@ -170,7 +169,7 @@ export const ItemWrapper = styled.div`
     font-weight: bold;
     border: none;
   }
-`;
+`
 
 export const StyledTextInput = styled(TextInput)`
   :root {
@@ -179,4 +178,4 @@ export const StyledTextInput = styled(TextInput)`
   & .mantine-TextInput-input {
     background-color: var(--textarea-background-color);
   }
-`;
+`
