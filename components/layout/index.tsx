@@ -1,16 +1,16 @@
-import React from "react";
-import Header from "../elements/header/Header";
-import Footer from "../elements/footer/Footer";
+import React from 'react'
+import Header from '../elements/header/Header'
+import Footer from '../elements/footer/Footer'
 import {
   Container,
   GlobalStyle,
   ItemWrapper,
   LayoutWrapper,
   SawarabiGothic,
-} from "./styles";
+} from './styles'
 type LayoutProps = {
-  children: React.ReactNode;
-};
+  children: React.ReactNode
+}
 
 const Layout: React.FC<LayoutProps> = (props) => {
   return (
@@ -28,7 +28,7 @@ const Layout: React.FC<LayoutProps> = (props) => {
         <Footer />
       </footer>
     </Container>
-  );
-};
+  )
+}
 
-export default Layout;
+export default Layout

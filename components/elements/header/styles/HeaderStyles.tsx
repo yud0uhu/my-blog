@@ -1,4 +1,4 @@
-import styled, { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from 'styled-components'
 
 export const GlobalStyle = createGlobalStyle`
 
@@ -19,47 +19,47 @@ export const GlobalStyle = createGlobalStyle`
   left: 15px;
   position: fixed;
 }
-`;
+`
 
 export const setHeaderStyles = (colorScheme: string) => {
   document.documentElement.style.setProperty(
-    "--header-background-color",
-    colorScheme === "light" ? "white" : "#2D283B"
-  );
+    '--header-background-color',
+    colorScheme === 'light' ? 'white' : '#2D283B'
+  )
   document.documentElement.style.setProperty(
-    "--post-text-color",
-    colorScheme === "light" ? "#45432B" : "#ACA4CE"
-  );
+    '--post-text-color',
+    colorScheme === 'light' ? '#45432B' : '#ACA4CE'
+  )
   document.documentElement.style.setProperty(
-    "--items-background-color",
-    colorScheme === "light" ? "white" : "#2D283B"
-  );
+    '--items-background-color',
+    colorScheme === 'light' ? 'white' : '#2D283B'
+  )
   document.documentElement.style.setProperty(
-    "--input-color",
-    colorScheme === "light" ? "#45432B" : "#ACA4CE"
-  );
+    '--input-color',
+    colorScheme === 'light' ? '#45432B' : '#ACA4CE'
+  )
   document.documentElement.style.setProperty(
-    "--textarea-background-color",
-    colorScheme === "light" ? "white" : "#2D283B"
-  );
+    '--textarea-background-color',
+    colorScheme === 'light' ? 'white' : '#2D283B'
+  )
   document.documentElement.style.setProperty(
-    "--background-color",
-    colorScheme === "light" ? "#eae3e8" : "#02040A"
-  );
+    '--background-color',
+    colorScheme === 'light' ? '#eae3e8' : '#02040A'
+  )
   document.documentElement.style.setProperty(
-    "--menu-item-color",
-    colorScheme === "light" ? "#ACA4CE" : "#2D283B"
-  );
+    '--menu-item-color',
+    colorScheme === 'light' ? '#ACA4CE' : '#2D283B'
+  )
   document.documentElement.style.setProperty(
-    "--button-color",
-    colorScheme === "light" ? "#955764" : "#8e99c0"
-  );
+    '--button-color',
+    colorScheme === 'light' ? '#955764' : '#8e99c0'
+  )
   document.documentElement.style.setProperty(
-    "--button-hover-color",
-    colorScheme === "light" ? "#a1a14e" : "#737ba7"
-  );
+    '--button-hover-color',
+    colorScheme === 'light' ? '#a1a14e' : '#737ba7'
+  )
   document.documentElement.style.setProperty(
-    "--button-text-color",
-    colorScheme === "light" ? "#eae3e8" : "#2d283b"
-  );
-};
+    '--button-text-color',
+    colorScheme === 'light' ? '#eae3e8' : '#2d283b'
+  )
+}

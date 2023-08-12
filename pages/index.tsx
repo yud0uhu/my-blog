@@ -1,63 +1,63 @@
-import Layout from "../components/layout";
-import gql from "graphql-tag";
-import { useQuery } from "@apollo/client";
-import { FormEvent, useState } from "react";
-import { FaSearch } from "react-icons/fa";
-import { Group } from "@mantine/core";
+import Layout from '../components/layout'
+import gql from 'graphql-tag'
+import { useQuery } from '@apollo/client'
+import { FormEvent, useState } from 'react'
+import { FaSearch } from 'react-icons/fa'
+import { Group } from '@mantine/core'
 
-import { PostProps } from "../features/types";
-import Post from "../features/post/components/Post";
-import { getServerSession } from "next-auth/next";
-import { GetServerSidePropsContext } from "next/types";
-import { authOptions } from "./api/auth/[...nextauth]";
-import LogoSVG from "../components/elements/logo/LogoSVG";
-import { StyledTextInput } from "../components/layout/styles";
+import { PostProps } from '../features/types'
+import Post from '../features/post/components/Post'
+import { getServerSession } from 'next-auth/next'
+import { GetServerSidePropsContext } from 'next/types'
+import { authOptions } from './api/auth/[...nextauth]'
+import LogoSVG from '../components/elements/logo/LogoSVG'
+import { StyledTextInput } from '../components/layout/styles'
 
 const Blog: React.FC<{
-  data: { filterPosts: PostProps[] };
+  data: { filterPosts: PostProps[] }
 }> = () => {
-  const [text, setText] = useState("");
-  const [searchString, setSearchString] = useState<string | null>("");
+  const [text, setText] = useState('')
+  const [searchString, setSearchString] = useState<string | null>('')
 
-  const [expanded, setExpanded] = useState(false);
-  const [colorScheme, setColorScheme] = useState("light");
+  const [expanded, setExpanded] = useState(false)
+  const [colorScheme, setColorScheme] = useState('light')
   const { loading, error, data } = useQuery(filterPosts, {
     variables: { searchString },
     // pollInterval: 500,
-    fetchPolicy: "cache-and-network",
-  });
+    fetchPolicy: 'cache-and-network',
+  })
 
   const handleFormSubmit = (event: FormEvent) => {
-    event.preventDefault();
-    console.log(searchString);
-    setSearchString(text);
-  };
+    event.preventDefault()
+    console.log(searchString)
+    setSearchString(text)
+  }
 
-  const borderColor = colorScheme === "dark" ? "#ACA4CE" : "#2d283b";
+  const borderColor = colorScheme === 'dark' ? '#ACA4CE' : '#2d283b'
 
   const toggleExpand = () => {
-    setExpanded(!expanded);
-  };
+    setExpanded(!expanded)
+  }
 
-  if (loading) return null;
-  if (error) return <p>Oh no... {error.message}</p>;
+  if (loading) return null
+  if (error) return <p>Oh no... {error.message}</p>
 
   return (
     <Layout>
       <div
         style={{
-          display: "flex",
-          justifyContent: "flex-start",
-          alignItems: "center",
-          margin: "16px 32px 0px 32px",
+          display: 'flex',
+          justifyContent: 'flex-start',
+          alignItems: 'center',
+          margin: '16px 32px 0px 32px',
         }}
       >
         <FaSearch
           style={{
-            margin: "16px",
+            margin: '16px',
             color: borderColor,
-            fontSize: "30px",
-            cursor: "pointer",
+            fontSize: '30px',
+            cursor: 'pointer',
           }}
           onClick={toggleExpand}
         />
@@ -67,7 +67,7 @@ const Blog: React.FC<{
         <Group
           position="center"
           mt="xl"
-          style={{ justifyContent: "flex-start" }}
+          style={{ justifyContent: 'flex-start' }}
         >
           <form onSubmit={handleFormSubmit} className="search-box">
             <StyledTextInput
@@ -82,7 +82,7 @@ const Blog: React.FC<{
               min={0}
               max={99}
               style={{
-                width: "340px",
+                width: '340px',
                 color: borderColor,
               }}
               value={text}
@@ -101,8 +101,8 @@ const Blog: React.FC<{
           ))}
       </div>
     </Layout>
-  );
-};
+  )
+}
 
 const filterPosts = gql`
   query filterPosts($searchString: String!) {
@@ -114,13 +114,13 @@ const filterPosts = gql`
       createdAt
     }
   }
-`;
-export default Blog;
+`
+export default Blog
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   return {
     props: {
       session: await getServerSession(context.req, context.res, authOptions),
     },
-  };
+  }
 }

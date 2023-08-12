@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react'
 
 interface LogoSvgType {
-  color: string;
+  color: string
 }
 const LogoSVG: React.FC<LogoSvgType> = ({ color }) => {
-  const [animationDone, setAnimationDone] = useState(false);
+  const [animationDone, setAnimationDone] = useState(false)
 
   useEffect(() => {
     const animationTimeout = setTimeout(() => {
-      setAnimationDone(true);
-    }, 4000);
+      setAnimationDone(true)
+    }, 4000)
 
     return () => {
-      clearTimeout(animationTimeout);
-    };
-  }, []);
+      clearTimeout(animationTimeout)
+    }
+  }, [])
 
   return (
     <svg width="400" height="120" xmlns="http://www.w3.org/2000/svg">
@@ -52,14 +52,14 @@ const LogoSVG: React.FC<LogoSvgType> = ({ color }) => {
         fill={color}
         style={{
           animation: animationDone
-            ? "none"
-            : "fall 2s ease infinite, bounce 2s ease-in-out infinite",
+            ? 'none'
+            : 'fall 2s ease infinite, bounce 2s ease-in-out infinite',
         }}
       >
         yud0uhu.work
       </text>
     </svg>
-  );
-};
+  )
+}
 
-export default LogoSVG;
+export default LogoSVG
