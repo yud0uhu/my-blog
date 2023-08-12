@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client'
+import { gql } from "@apollo/client";
 
 export const CreateDraftMutation = gql`
   mutation CreateDraftMutation($title: String!, $content: String!) {
@@ -8,4 +8,4 @@ export const CreateDraftMutation = gql`
       published
     }
   }
-`
+`;

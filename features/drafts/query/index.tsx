@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client'
+import { gql } from "@apollo/client";
 
 export const DraftsQuery = gql`
   query DraftsQuery {
@@ -9,4 +9,4 @@ export const DraftsQuery = gql`
       published
     }
   }
-`
+`;

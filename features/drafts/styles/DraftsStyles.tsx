@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
 export const BackLink = styled.div`
   position: fixed;
@@ -8,4 +8,4 @@ export const BackLink = styled.div`
   border: 0;
   margin-left: 1rem;
   color: black;
-`
+`;

@@ -1,27 +1,18 @@
-import NextAuth, { NextAuthOptions } from 'next-auth'
-import GithubProvider from 'next-auth/providers/github'
+import NextAuth, { NextAuthOptions } from "next-auth";
+import GithubProvider from "next-auth/providers/github";
 
-/**
- * Docs: https://next-auth.js.org/deployment
- */
 export const authOptions: NextAuthOptions = {
-  secret: process.env.NEXT_PUBLIC_SECRET || '',
+  secret: "4bRXpaP8Vi01ldHky/F1XW7QyXkYtBKcAil2tVBaZg0=",
+  // Configure one or more authentication providers
   providers: [
     GithubProvider({
-      clientId: process.env.GITHUB_ID || '',
-      clientSecret: process.env.GITHUB_SECRET || '',
+      clientId: "4a77e0d2424aa3e623e0",
+      clientSecret: "c15befdd5cfdda48a9cf24f82ce70876ed9622ac",
     }),
+    // ...add more providers here
   ],
-  session: {
-    strategy: 'jwt',
-    maxAge: 30 * 24 * 60 * 60,
-  },
-  callbacks: {
-    async jwt({ token }) {
-      token.userRole = 'admin'
-      return token
-    },
-  },
-}
+  // セッション保存先
+  session: { strategy: "jwt" },
+};
 
-export default NextAuth(authOptions)
+export default NextAuth(authOptions);

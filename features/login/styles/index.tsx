@@ -1,4 +1,5 @@
-import styled from '@emotion/styled'
+import { css } from "@emotion/react";
+import styled from "@emotion/styled";
 
 export const Container = styled.div`
   display: flex;
@@ -6,7 +7,7 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
   height: 100vh;
-`
+`;
 
 export const LoginButton = styled.button`
   padding: 10px 20px;
@@ -21,4 +22,4 @@ export const LoginButton = styled.button`
   &:hover {
     background-color: #555;
   }
-`
+`;
