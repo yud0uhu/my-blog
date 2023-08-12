@@ -1,7 +1,6 @@
 import { ActionIcon } from '@mantine/core'
 import { getServerSession } from 'next-auth'
 import { getSession, signIn, signOut, useSession } from 'next-auth/react'
-import Link from 'next/link'
 import Router from 'next/router'
 import { GetServerSidePropsContext } from 'next/types'
 import { useEffect, useState } from 'react'
