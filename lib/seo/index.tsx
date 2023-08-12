@@ -1,14 +1,14 @@
-import Head from "next/head";
+import Head from 'next/head'
 
 type SeoProps = {
-  title: string;
-  description: string;
-  url: string;
-  imageUrl: string;
-};
+  title: string
+  description: string
+  url: string
+  imageUrl: string
+}
 
 const Seo = (props: SeoProps) => {
-  const { title, description, url, imageUrl } = props;
+  const { title, description, url, imageUrl } = props
   return (
     <Head>
       <title>{title}</title>
@@ -20,6 +20,6 @@ const Seo = (props: SeoProps) => {
       <meta property="og:site_name" content={title} />
       <meta property="og:image" content={imageUrl} />
     </Head>
-  );
-};
-export default Seo;
+  )
+}
+export default Seo

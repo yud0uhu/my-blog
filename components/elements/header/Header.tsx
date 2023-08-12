@@ -1,57 +1,64 @@
-import { ActionIcon } from "@mantine/core";
-import { getServerSession } from "next-auth";
-import { getSession, signIn, signOut, useSession } from "next-auth/react";
-import Link from "next/link";
-import Router from "next/router";
-import { GetServerSidePropsContext } from "next/types";
-import { useEffect, useState } from "react";
-import { FaMoon, FaSun } from "react-icons/fa";
-import { authOptions } from "../../../pages/api/auth/[...nextauth]";
+import { ActionIcon } from '@mantine/core'
+import { getServerSession } from 'next-auth'
+import { getSession, signIn, signOut, useSession } from 'next-auth/react'
+import Link from 'next/link'
+import Router from 'next/router'
+import { GetServerSidePropsContext } from 'next/types'
+import { useEffect, useState } from 'react'
+import { FaMoon, FaSun } from 'react-icons/fa'
+import { authOptions } from '../../../pages/api/auth/[...nextauth]'
 import {
   ButtonContainer,
   StyledButton,
   MenuIcon,
   MenuItem,
   MenuContainer,
-} from "../../layout";
-import { GlobalStyle } from "./styles/HeaderStyles";
-import { setHeaderStyles } from "./styles/HeaderStyles";
+} from '../../layout/styles'
+import { GlobalStyle } from './styles/HeaderStyles'
+import { setHeaderStyles } from './styles/HeaderStyles'
+import { Cherry_Bomb_One, Sawarabi_Gothic } from 'next/font/google'
+
+const sawarabi_gothic = Sawarabi_Gothic({
+  variable: '--font-sawarabi_gothic',
+  subsets: ['latin'],
+  weight: '400',
+})
 
 export default function ServerSidePage() {
-  const { data: session } = useSession();
-  const [colorScheme, setColorScheme] = useState("light");
+  const { data: session } = useSession()
+  const [colorScheme, setColorScheme] = useState('light')
   useEffect(() => {
-    const localStorageTheme = localStorage.getItem("theme");
-    setColorScheme(localStorageTheme || "light");
+    const localStorageTheme = localStorage.getItem('theme')
+    setColorScheme(localStorageTheme || 'light')
 
-    setHeaderStyles(colorScheme);
-  }, [colorScheme]);
+    setHeaderStyles(colorScheme)
+  }, [colorScheme])
 
   const handleColorSchemeChange = () => {
-    const newColorScheme = colorScheme === "light" ? "dark" : "light";
-    setColorScheme(newColorScheme);
-    localStorage.setItem("theme", newColorScheme);
-  };
+    const newColorScheme = colorScheme === 'light' ? 'dark' : 'light'
+    setColorScheme(newColorScheme)
+    localStorage.setItem('theme', newColorScheme)
+  }
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
 
   const handleMenuToggle = () => {
-    setIsOpen(!isOpen);
-  };
+    setIsOpen(!isOpen)
+  }
 
   return (
-    <header>
+    <>
       <GlobalStyle />
-      <div className="header">
+      <div className="header" style={sawarabi_gothic.style}>
         <ButtonContainer>
           <ActionIcon
             className="icon"
             variant="outline"
-            color={colorScheme === "dark" ? "yellow" : "blue"}
+            color={colorScheme === 'dark' ? 'yellow' : 'blue'}
             onClick={() => handleColorSchemeChange()}
             title="Toggle color scheme"
           >
-            {colorScheme === "dark" ? (
+            {colorScheme === 'dark' ? (
               <FaSun size="1.1rem" />
             ) : (
               <FaMoon size="1.1rem" />
@@ -60,8 +67,8 @@ export default function ServerSidePage() {
           {!session?.user && (
             <StyledButton
               onClick={(e) => {
-                e.preventDefault();
-                signIn();
+                e.preventDefault()
+                signIn()
               }}
             >
               ログイン
@@ -83,14 +90,14 @@ export default function ServerSidePage() {
                 <MenuItem
                   className="menu-item"
                   onClick={(e) => {
-                    e.preventDefault();
-                    signOut();
+                    e.preventDefault()
+                    signOut()
                   }}
                 >
                   ログアウト
                 </MenuItem>
                 <MenuItem
-                  onClick={() => Router.push("/create")}
+                  onClick={() => Router.push('/create')}
                   className="menu-item"
                 >
                   投稿する
@@ -100,18 +107,18 @@ export default function ServerSidePage() {
           )}
         </ButtonContainer>
       </div>
-    </header>
-  );
+    </>
+  )
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const session = await getSession(context);
+  const session = await getSession(context)
   if (!session) {
-    return { props: {} };
+    return { props: {} }
   }
   return {
     props: {
       session: await getServerSession(context.req, context.res, authOptions),
     },
-  };
+  }
 }
