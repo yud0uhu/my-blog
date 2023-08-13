@@ -17,13 +17,10 @@ export const SawarabiGothic = Sawarabi_Gothic({
   subsets: ['latin'],
   weight: '400',
 })
-type GlobalStyleProps = {
-  backgroundColor?: string
-  headerBackgroundColor?: string
-} & ThemeProps<DefaultTheme>
-export const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
+
+export const GlobalStyle = createGlobalStyle`
   .header {
-    background-color: ${(props) => props.headerBackgroundColor || 'white'};
+    background-color: var(--header-background-color);
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     width: 100%;
     height: 60px;
@@ -54,8 +51,7 @@ export const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
     padding: 0;
     font-size: 16px;
     /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; */
-  background-color: ${(props) =>
-    props.backgroundColor || '#eae3e8'}; /* CSS変数を参照して背景色を適用 */
+    background-color: var(--background-color); /* CSS変数を参照して背景色を適用 */
     background-blend-mode: lighten;
   }
 
@@ -89,6 +85,11 @@ export const StyledButton = styled.button`
   &:hover {
     background-color: var(--button-hover-color);
     border: 0.125rem solid var(--button-hover-color);
+  }
+
+  &:disabled {
+    background-color: gray;
+    border: 0.125rem solid gray;
   }
 `
 
@@ -137,7 +138,7 @@ export const MenuContainer = styled.div<{ isOpen?: boolean }>`
   }
 
   .menu-item:hover {
-    background-color: var(--background-color);
+    background-color: var(--menu-hover-color);
   }
 `
 

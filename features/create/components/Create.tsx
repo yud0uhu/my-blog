@@ -17,6 +17,7 @@ import {
   StyledTextInput,
 } from '../../../components/layout/styles'
 import { Session } from 'next-auth'
+import { Switch } from '@mantine/core'
 interface CreateProps {
   session: Session | null
 }
@@ -24,20 +25,33 @@ function Create({ session }: CreateProps) {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [markdownContent, setMarkdownContent] = useState('')
+  const [autoSaveEnabled, setAutoSaveEnabled] = useState(true)
+
+  useEffect(() => {
+    if (!autoSaveEnabled) {
+      return
+    }
+
+    const autoSave = setTimeout(() => {
+      saveDraft()
+    }, 60000)
+
+    return () => {
+      clearTimeout(autoSave)
+    }
+  }, [title, content, autoSaveEnabled])
 
   const [tags, setTags] = useState<string[]>([])
   const [tagInput, setTagInput] = useState('')
 
   const convertContent = (content: string) => {
-    console.log(content)
     setContent(content)
     setMarkdownContent(text_to_token(content))
   }
 
   const [createDraft] = useMutation(CreateDraftsMutation)
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+  const saveDraft = async () => {
     await createDraft({
       variables: {
         title,
@@ -45,6 +59,11 @@ function Create({ session }: CreateProps) {
         tags: tags.map((label) => ({ label })),
       },
     })
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    await saveDraft()
     Router.push('/drafts')
   }
 
@@ -61,6 +80,8 @@ function Create({ session }: CreateProps) {
 
   const handleTagClick = (tag: string) => {
     setTags(tags.filter((t) => t !== tag))
+  const handleAutoSaveToggle = () => {
+    setAutoSaveEnabled(!autoSaveEnabled)
   }
 
   return (
@@ -71,7 +92,21 @@ function Create({ session }: CreateProps) {
         </BackLink>
 
         <ButtonContainer style={{ right: '150px' }}>
-          <StyledButton disabled={!content || !title}>保存する</StyledButton>
+          {session && (
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <StyledButton disabled={!content || !title}>
+                保存する
+              </StyledButton>
+
+              <Switch
+                label="Auto Save"
+                size="lg"
+                checked={autoSaveEnabled}
+                onChange={handleAutoSaveToggle}
+                style={{ marginLeft: '1rem' }}
+              />
+            </div>
+          )}
         </ButtonContainer>
 
         <div>

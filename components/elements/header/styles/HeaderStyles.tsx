@@ -25,7 +25,7 @@ export const setHeaderStyles = (colorScheme: string) => {
   )
   document.documentElement.style.setProperty(
     '--menu-item-color',
-    colorScheme === 'light' ? '#ACA4CE' : '#2D283B'
+    colorScheme === 'light' ? 'white' : '#2D283B'
   )
   document.documentElement.style.setProperty(
     '--button-color',
@@ -38,5 +38,9 @@ export const setHeaderStyles = (colorScheme: string) => {
   document.documentElement.style.setProperty(
     '--button-text-color',
     colorScheme === 'light' ? '#eae3e8' : '#2d283b'
+  )
+  document.documentElement.style.setProperty(
+    '--menu-hover-color',
+    colorScheme === 'light' ? '#eae3e8' : 'black'
   )
 }

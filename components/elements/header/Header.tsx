@@ -41,10 +41,7 @@ export default function ServerSidePage() {
 
   return (
     <>
-      <GlobalStyle
-        headerBackgroundColor={colorScheme === 'dark' ? '#2D283B' : 'white'}
-        backgroundColor={colorScheme === 'dark' ? 'black' : '#eae3e8'}
-      />
+      <GlobalStyle />
       <div className="header" style={SawarabiGothic.style}>
         <ButtonContainer>
           <ActionIcon
