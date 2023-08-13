@@ -21,7 +21,7 @@ import { Switch } from '@mantine/core'
 interface CreateProps {
   session: Session | null
 }
-function Create({ session }: CreateProps) {
+function Create() {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [markdownContent, setMarkdownContent] = useState('')
@@ -80,88 +80,84 @@ function Create({ session }: CreateProps) {
 
   const handleTagClick = (tag: string) => {
     setTags(tags.filter((t) => t !== tag))
-    const handleAutoSaveToggle = () => {
-      setAutoSaveEnabled(!autoSaveEnabled)
-    }
+  }
+  const handleAutoSaveToggle = () => {
+    setAutoSaveEnabled(!autoSaveEnabled)
+  }
 
-    return (
-      <StyledCreate>
-        <form onSubmit={handleSubmit}>
-          <BackLink href="#" onClick={() => Router.push('/')}>
-            <FaArrowLeft />
-          </BackLink>
+  return (
+    <StyledCreate>
+      <form onSubmit={handleSubmit}>
+        <BackLink href="#" onClick={() => Router.push('/')}>
+          <FaArrowLeft />
+        </BackLink>
 
-          <ButtonContainer style={{ right: '150px' }}>
-            {session && (
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                <StyledButton disabled={!content || !title}>
-                  保存する
-                </StyledButton>
+        <ButtonContainer style={{ right: '150px' }}>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <StyledButton disabled={!content || !title}>保存する</StyledButton>
 
-                <Switch
-                  label="Auto Save"
-                  size="lg"
-                  checked={autoSaveEnabled}
-                  onChange={handleAutoSaveToggle}
-                  style={{ marginLeft: '1rem' }}
-                />
-              </div>
-            )}
-          </ButtonContainer>
-
-          <div>
-            <StyledTextInput
-              icon={<FaTags />}
-              placeholder="関連するキーワードを追加する"
-              value={tagInput}
-              onChange={handleTagInput}
-              type="title"
-              autoFocus
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  e.preventDefault()
-                  handleTagAdd()
-                }
-              }}
+            <Switch
+              label="Auto Save"
+              size="lg"
+              checked={autoSaveEnabled}
+              onChange={handleAutoSaveToggle}
+              style={{ marginLeft: '1rem' }}
             />
-            {tags.map((tag, index) => (
-              <Badge key={index} size="lg" variant="outline">
-                {tag}
-                <button
-                  className="tag-remove-button"
-                  onClick={() => handleTagClick(tag)}
-                >
-                  <FaTimes />
-                </button>
-              </Badge>
-            ))}
           </div>
+        </ButtonContainer>
 
-          <StyledInput
+        <div>
+          <StyledTextInput
+            icon={<FaTags />}
+            placeholder="関連するキーワードを追加する"
+            value={tagInput}
+            onChange={handleTagInput}
             type="title"
             autoFocus
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="Title"
-            value={title}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault()
+                handleTagAdd()
+              }
+            }}
           />
-          <StyledTextArea
-            cols={50}
-            onChange={(e) => convertContent(e.target.value)}
-            placeholder="Write in Content"
-            rows={8}
-            value={content}
+          {tags.map((tag, index) => (
+            <Badge key={index} size="lg" variant="outline">
+              {tag}
+              <button
+                className="tag-remove-button"
+                onClick={() => handleTagClick(tag)}
+              >
+                <FaTimes />
+              </button>
+            </Badge>
+          ))}
+        </div>
+
+        <StyledInput
+          type="title"
+          autoFocus
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="Title"
+          value={title}
+        />
+        <StyledTextArea
+          cols={50}
+          onChange={(e) => convertContent(e.target.value)}
+          placeholder="Write in Content"
+          rows={8}
+          value={content}
+        />
+        <h1>Preview</h1>
+        {markdownContent && (
+          <div
+            className="text-align:right"
+            dangerouslySetInnerHTML={{ __html: markdownContent }}
           />
-          <h1>Preview</h1>
-          {markdownContent && (
-            <div
-              className="text-align:right"
-              dangerouslySetInnerHTML={{ __html: markdownContent }}
-            />
-          )}
-        </form>
-      </StyledCreate>
-    )
-  }
+        )}
+      </form>
+    </StyledCreate>
+  )
 }
 
 export default Create
