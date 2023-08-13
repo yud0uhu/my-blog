@@ -6,6 +6,8 @@ import { useSession } from 'next-auth/react'
 import { useMutation } from '@apollo/client'
 import { DeleteMutation } from '../query'
 import { StyledButton } from '../../../components/layout/styles'
+import { Badge } from '@mantine/core'
+import { FaTrashAlt } from 'react-icons/fa'
 
 const Post: React.FC<{ post: PostProps }> = ({ post }) => {
   const id = post.id
@@ -29,8 +31,19 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
       <div>
         <h2>{post.title}</h2>
         <small>{post.createdAt}</small>
+        <div>
+          {post.tags.map((tag, index) => (
+            <Badge key={index} size="lg" variant="outline">
+              {tag.label}
+            </Badge>
+          ))}
+        </div>
       </div>
-      {session && <StyledButton onClick={handleDelete}>削除する</StyledButton>}
+      {session && (
+        <StyledButton onClick={handleDelete}>
+          <FaTrashAlt />
+        </StyledButton>
+      )}
     </PostContainer>
   )
 }

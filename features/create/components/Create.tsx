@@ -6,13 +6,15 @@ import {
   BackLink,
   StyledCreate,
   StyledTextArea,
-  Input,
+  StyledInput,
 } from '../styles/createStyles'
-import { CreateDraftMutation } from '../query'
-import { FaArrowLeft } from 'react-icons/fa'
+import { Input as MantineInput, Badge, TextInput } from '@mantine/core'
+import { CreateDraftsMutation } from '../query'
+import { FaArrowLeft, FaTags, FaTimes } from 'react-icons/fa'
 import {
   StyledButton,
   ButtonContainer,
+  StyledTextInput,
 } from '../../../components/layout/styles'
 import { Session } from 'next-auth'
 import { Switch } from '@mantine/core'
@@ -39,18 +41,22 @@ function Create({ session }: CreateProps) {
     }
   }, [title, content, autoSaveEnabled])
 
+  const [tags, setTags] = useState<string[]>([])
+  const [tagInput, setTagInput] = useState('')
+
   const convertContent = (content: string) => {
     setContent(content)
     setMarkdownContent(text_to_token(content))
   }
 
-  const [createDraft] = useMutation(CreateDraftMutation)
+  const [createDraft] = useMutation(CreateDraftsMutation)
 
   const saveDraft = async () => {
     await createDraft({
       variables: {
         title,
         content,
+        tags: tags.map((label) => ({ label })),
       },
     })
   }
@@ -61,6 +67,19 @@ function Create({ session }: CreateProps) {
     Router.push('/drafts')
   }
 
+  const handleTagInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTagInput(e.target.value)
+  }
+
+  const handleTagAdd = () => {
+    if (tagInput.trim() !== '') {
+      setTags([...tags, tagInput.trim()])
+      setTagInput('')
+    }
+  }
+
+  const handleTagClick = (tag: string) => {
+    setTags(tags.filter((t) => t !== tag))
   const handleAutoSaveToggle = () => {
     setAutoSaveEnabled(!autoSaveEnabled)
   }
@@ -89,7 +108,36 @@ function Create({ session }: CreateProps) {
             </div>
           )}
         </ButtonContainer>
-        <Input
+
+        <div>
+          <StyledTextInput
+            icon={<FaTags />}
+            placeholder="関連するキーワードを追加する"
+            value={tagInput}
+            onChange={handleTagInput}
+            type="title"
+            autoFocus
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault()
+                handleTagAdd()
+              }
+            }}
+          />
+          {tags.map((tag, index) => (
+            <Badge key={index} size="lg" variant="outline">
+              {tag}
+              <button
+                className="tag-remove-button"
+                onClick={() => handleTagClick(tag)}
+              >
+                <FaTimes />
+              </button>
+            </Badge>
+          ))}
+        </div>
+
+        <StyledInput
           type="title"
           autoFocus
           onChange={(e) => setTitle(e.target.value)}

@@ -12,6 +12,7 @@ import { GetServerSidePropsContext } from 'next/types'
 import { authOptions } from './api/auth/[...nextauth]'
 import LogoSVG from '../components/elements/logo/LogoSVG'
 import { StyledTextInput } from '../components/layout/styles'
+import { filterPosts } from '../features/create/query'
 
 const Blog: React.FC<{
   data: { filterPosts: PostProps[] }
@@ -97,17 +98,6 @@ const Blog: React.FC<{
   )
 }
 
-const filterPosts = gql`
-  query filterPosts($searchString: String!) {
-    filterPosts(searchString: $searchString, published: true) {
-      id
-      title
-      content
-      published
-      createdAt
-    }
-  }
-`
 export default Blog
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
