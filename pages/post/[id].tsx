@@ -42,7 +42,7 @@ const Post = () => {
             <StyledTitle unpublished={unpublished}>{title}</StyledTitle>
             <small>{data.post.createdAt}</small>
             <div>
-              {data.post.tags.map((tag) => (
+              {data.post.tags.map((tag: { id: string; label: string }) => (
                 <Badge key={tag.id} size="lg" variant="outline">
                   {tag.label}
                 </Badge>
