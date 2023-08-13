@@ -8,17 +8,15 @@ export const StyledCreate = styled.div`
   align-items: center;
 `
 
-export const Input = styled.input`
-  :root {
-    --input-color: white;
-  }
+export const StyledInput = styled.input`
+  margin: 0.5rem 0;
+  border: 0.125rem solid #0000;
+  max-width: 700px;
   color: var(--input-color);
   width: 100%;
   padding: 1.5rem;
-  margin: 0.5rem 0;
   background: #0000;
   transition: 0.25s ease-in-out;
-  border: none;
   font-size: 1.4rem;
   font-weight: bold;
 
@@ -37,12 +35,12 @@ export const StyledTextArea = styled(Textarea)`
     margin: 0.5rem 0;
     border: 0.125rem solid #0000;
     border-radius: 20px;
-    box-shadow: 0 10px 20px rgba(240, 235, 235, 0.3);
+    box-shadow: 20px rgba(240, 235, 235, 0.3);
+    max-width: 700px;
   }
 
-  &:focus {
-    outline: #0000;
-    height: 400px;
+  & .mantine-Textarea-input:focus {
+    outline: 0.125rem solid #aca4ce;
     resize: none;
   }
 `

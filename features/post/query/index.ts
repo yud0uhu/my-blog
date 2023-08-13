@@ -23,6 +23,11 @@ export const PublishMutation = gql`
       title
       content
       published
+      createdAt
+      tags {
+        id
+        label
+      }
     }
   }
 `
@@ -34,6 +39,11 @@ export const DeleteMutation = gql`
       title
       content
       published
+      createdAt
+      tags {
+        id
+        label
+      }
     }
   }
 `

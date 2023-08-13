@@ -43,7 +43,7 @@ const Post = () => {
             <small>{data.post.createdAt}</small>
             <div>
               {data.post.tags.map((tag) => (
-                <Badge key={tag.id} size="lg">
+                <Badge key={tag.id} size="lg" variant="outline">
                   {tag.label}
                 </Badge>
               ))}

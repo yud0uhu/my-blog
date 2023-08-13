@@ -3,6 +3,18 @@ import styled, { keyframes } from 'styled-components'
 export const PostContainer = styled.div`
   padding: 2rem;
   cursor: pointer;
+
+  .delete-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 16px;
+    opacity: 0.5;
+    padding: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
 `
 
 export const StyledPost = styled.div`

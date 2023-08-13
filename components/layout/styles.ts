@@ -62,6 +62,12 @@ export const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
   input, textarea {
     font-size: 16px;
   }
+
+  .tag-remove-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
 `
 
 export const StyledButton = styled.button`
@@ -212,10 +218,13 @@ export const ItemWrapper = styled.div`
 `
 
 export const StyledTextInput = styled(TextInput)`
-  :root {
-    --textarea-background-color: white;
-  }
   & .mantine-TextInput-input {
+    margin: 0px 0px 10px 0px;
+    border-width: 0rem;
     background-color: var(--textarea-background-color);
+    width: 660px;
+  }
+  & .mantine-TextInput-input:focus {
+    outline: 0.125rem solid #aca4ce;
   }
 `
