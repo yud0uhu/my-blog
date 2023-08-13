@@ -4,13 +4,7 @@ import styled, {
   ThemeProps,
 } from 'styled-components'
 import { TextInput } from '@mantine/core'
-import { Cherry_Bomb_One, Sawarabi_Gothic } from 'next/font/google'
-
-export const CherryBombOne = Cherry_Bomb_One({
-  variable: '--font-cherry_bomb_one',
-  subsets: ['latin'],
-  weight: '400',
-})
+import { Sawarabi_Gothic } from 'next/font/google'
 
 export const SawarabiGothic = Sawarabi_Gothic({
   variable: '--font-sawarabi_gothic',
