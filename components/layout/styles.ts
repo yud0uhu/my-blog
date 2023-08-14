@@ -211,6 +211,11 @@ export const ItemWrapper = styled.div`
     border: none;
   }
 `
+export const StyledContainer = styled.div`
+  max-width: 660px;
+  width: 100%;
+  margin: 0 auto;
+`
 
 export const StyledTextInput = styled(TextInput)`
   & .mantine-TextInput-input {

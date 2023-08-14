@@ -11,9 +11,8 @@ export const StyledCreate = styled.div`
 export const StyledInput = styled.input`
   margin: 0.5rem 0;
   border: 0.125rem solid #0000;
-  max-width: 700px;
-  color: var(--input-color);
   width: 100%;
+  color: var(--input-color);
   padding: 1.5rem;
   background: #0000;
   transition: 0.25s ease-in-out;

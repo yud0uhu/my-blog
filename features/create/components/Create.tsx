@@ -15,6 +15,7 @@ import {
   StyledButton,
   ButtonContainer,
   StyledTextInput,
+  StyledContainer,
 } from '../../../components/layout/styles'
 import { Session } from 'next-auth'
 import { Switch } from '@mantine/core'
@@ -106,7 +107,7 @@ function Create() {
           </div>
         </ButtonContainer>
 
-        <div style={{ width: '660px' }}>
+        <StyledContainer>
           <StyledTextInput
             icon={<FaTags />}
             placeholder="関連するキーワードを追加する"
@@ -132,29 +133,30 @@ function Create() {
               </button>
             </Badge>
           ))}
-        </div>
 
-        <StyledInput
-          type="title"
-          autoFocus
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="Title"
-          value={title}
-        />
-        <StyledTextArea
-          cols={50}
-          onChange={(e) => convertContent(e.target.value)}
-          placeholder="Write in Content"
-          rows={8}
-          value={content}
-        />
-        <h1>Preview</h1>
-        {markdownContent && (
-          <div
-            className="text-align:right"
-            dangerouslySetInnerHTML={{ __html: markdownContent }}
+          <StyledInput
+            type="title"
+            autoFocus
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Title"
+            value={title}
           />
-        )}
+          <StyledTextArea
+            size="xl"
+            cols={50}
+            onChange={(e) => convertContent(e.target.value)}
+            placeholder="Write in Content"
+            rows={8}
+            value={content}
+          />
+          <h1>Preview</h1>
+          {markdownContent && (
+            <div
+              className="text-align:right"
+              dangerouslySetInnerHTML={{ __html: markdownContent }}
+            />
+          )}
+        </StyledContainer>
       </form>
     </StyledCreate>
   )
