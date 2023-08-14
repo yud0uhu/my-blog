@@ -106,7 +106,7 @@ function Create() {
           </div>
         </ButtonContainer>
 
-        <div>
+        <div style={{ width: '660px' }}>
           <StyledTextInput
             icon={<FaTags />}
             placeholder="関連するキーワードを追加する"

@@ -217,7 +217,7 @@ export const StyledTextInput = styled(TextInput)`
     margin: 0px 0px 10px 0px;
     border-width: 0rem;
     background-color: var(--textarea-background-color);
-    width: 660px;
+    width: 100%;
   }
   & .mantine-TextInput-input:focus {
     outline: 0.125rem solid #aca4ce;
