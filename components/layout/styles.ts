@@ -12,7 +12,7 @@ export const SawarabiGothic = Sawarabi_Gothic({
   weight: '400',
 })
 
-export const GlobalStyle = createGlobalStyle`
+export const GlobalStyle = createGlobalStyle<{ backgroundColor?: string }>`
   .header {
     background-color: var(--header-background-color);
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
@@ -39,16 +39,20 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: inherit;
   }
 
+  
   body {
     color: var(--post-text-color);
     margin: 0;
     padding: 0;
     font-size: 16px;
     /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; */
-    background-color: var(--background-color); /* CSS変数を参照して背景色を適用 */
+    background-color: 
+  ${(props) =>
+    props.backgroundColor === 'light'
+      ? '#eae3e8'
+      : '#02040A'}; /* CSS変数を参照して背景色を適用 */
     background-blend-mode: lighten;
   }
-
   input, textarea {
     font-size: 16px;
   }

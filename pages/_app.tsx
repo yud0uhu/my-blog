@@ -7,11 +7,12 @@ import {
   ColorSchemeProvider,
   MantineProvider,
 } from '@mantine/core'
-import { useState } from 'react'
 import Seo from '../lib/seo'
 import { AnimatePresence } from 'framer-motion'
+import { useAtom } from 'jotai'
+import { colorSchemeAtom } from '../components/layout/stylesAtoms'
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
-  const [colorScheme, setColorScheme] = useState<ColorScheme>('light')
+  const [colorScheme, setColorScheme] = useAtom(colorSchemeAtom)
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'))
   const userName = 'yud0uhu'

@@ -20,10 +20,6 @@ export const setHeaderStyles = (colorScheme: string) => {
     colorScheme === 'light' ? 'white' : '#2D283B'
   )
   document.documentElement.style.setProperty(
-    '--background-color',
-    colorScheme === 'light' ? '#eae3e8' : '#02040A'
-  )
-  document.documentElement.style.setProperty(
     '--menu-item-color',
     colorScheme === 'light' ? 'white' : '#2D283B'
   )

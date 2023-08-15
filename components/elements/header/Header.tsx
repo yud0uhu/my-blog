@@ -1,4 +1,5 @@
 import { ActionIcon } from '@mantine/core'
+import { useAtom } from 'jotai'
 import { getServerSession } from 'next-auth'
 import { getSession, signIn, signOut, useSession } from 'next-auth/react'
 import Router from 'next/router'
@@ -15,15 +16,15 @@ import {
   SawarabiGothic,
   GlobalStyle,
 } from '../../layout/styles'
+import { colorSchemeAtom } from '../../layout/stylesAtoms'
 import { setHeaderStyles } from './styles/HeaderStyles'
 
 export default function ServerSidePage() {
   const { data: session } = useSession()
-  const [colorScheme, setColorScheme] = useState('light')
-  useEffect(() => {
-    const localStorageTheme = localStorage.getItem('theme')
-    setColorScheme(localStorageTheme || 'light')
 
+  const [colorScheme, setColorScheme] = useAtom(colorSchemeAtom)
+
+  useEffect(() => {
     setHeaderStyles(colorScheme)
   }, [colorScheme])
 
@@ -41,7 +42,7 @@ export default function ServerSidePage() {
 
   return (
     <>
-      <GlobalStyle />
+      <GlobalStyle backgroundColor={colorScheme} />
       <div className="header" style={SawarabiGothic.style}>
         <ButtonContainer>
           <ActionIcon

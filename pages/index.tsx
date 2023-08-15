@@ -13,6 +13,8 @@ import { authOptions } from './api/auth/[...nextauth]'
 import LogoSVG from '../components/elements/logo/LogoSVG'
 import { StyledTextInput } from '../components/layout/styles'
 import { filterPosts } from '../features/create/query'
+import { useAtom } from 'jotai'
+import { colorSchemeAtom } from '../components/layout/stylesAtoms'
 
 const Blog: React.FC<{
   data: { filterPosts: PostProps[] }
@@ -21,7 +23,7 @@ const Blog: React.FC<{
   const [searchString, setSearchString] = useState<string | null>('')
 
   const [expanded, setExpanded] = useState(false)
-  const [colorScheme, setColorScheme] = useState('light')
+  const [colorScheme, setColorScheme] = useAtom(colorSchemeAtom)
   const { loading, error, data } = useQuery(filterPosts, {
     variables: { searchString },
     // pollInterval: 500,
@@ -44,7 +46,7 @@ const Blog: React.FC<{
   if (error) return <p>Oh no... {error.message}</p>
 
   return (
-    <Layout backgroundColor={colorScheme === 'dark' ? '#ACA4CE' : 'white'}>
+    <Layout>
       <div className="logo-container">
         <FaSearch
           style={{
