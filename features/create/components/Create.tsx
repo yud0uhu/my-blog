@@ -2,26 +2,20 @@ import React, { useEffect, useState } from 'react'
 import Router from 'next/router'
 import { text_to_token } from '../../../markdown-parser/pkg/markdown_parser'
 import { useMutation } from '@apollo/client'
-import {
-  BackLink,
-  StyledCreate,
-  StyledTextArea,
-  StyledInput,
-} from '../styles/createStyles'
+import { BackLink, StyledCreate } from '../styles/createStyles'
 import { Input as MantineInput, Badge, TextInput } from '@mantine/core'
 import { CreateDraftsMutation } from '../query'
 import { FaArrowLeft, FaTags, FaTimes } from 'react-icons/fa'
 import {
   StyledButton,
   ButtonContainer,
-  StyledTextInput,
   StyledContainer,
 } from '../../../components/layout/styles'
 import { Session } from 'next-auth'
 import { Switch } from '@mantine/core'
-interface CreateProps {
-  session: Session | null
-}
+import ContentEditor from './content-editor/ContentEditor'
+import TagInput from './tag-input/TagInput'
+
 function Create() {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
@@ -108,54 +102,18 @@ function Create() {
         </ButtonContainer>
 
         <StyledContainer>
-          <StyledTextInput
-            icon={<FaTags />}
-            placeholder="関連するキーワードを追加する"
-            value={tagInput}
-            onChange={handleTagInput}
-            type="title"
-            autoFocus
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                e.preventDefault()
-                handleTagAdd()
-              }
-            }}
+          <TagInput
+            tags={tags}
+            onTagAdd={handleTagAdd}
+            onTagRemove={handleTagClick}
           />
-          {tags.map((tag, index) => (
-            <Badge key={index} size="lg" variant="outline">
-              {tag}
-              <button
-                className="tag-remove-button"
-                onClick={() => handleTagClick(tag)}
-              >
-                <FaTimes />
-              </button>
-            </Badge>
-          ))}
-
-          <StyledInput
-            type="title"
-            autoFocus
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="Title"
-            value={title}
+          <ContentEditor
+            title={title}
+            content={content}
+            onTitleChange={setTitle}
+            onContentChange={convertContent}
+            markdownContent={markdownContent}
           />
-          <StyledTextArea
-            size="xl"
-            cols={50}
-            onChange={(e) => convertContent(e.target.value)}
-            placeholder="Write in Content"
-            rows={8}
-            value={content}
-          />
-          <h1>Preview</h1>
-          {markdownContent && (
-            <div
-              className="text-align:right"
-              dangerouslySetInnerHTML={{ __html: markdownContent }}
-            />
-          )}
         </StyledContainer>
       </form>
     </StyledCreate>
