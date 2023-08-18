@@ -7,6 +7,10 @@ export const DraftsQuery = gql`
       title
       content
       published
+      tags {
+        id
+        label
+      }
     }
   }
 `
