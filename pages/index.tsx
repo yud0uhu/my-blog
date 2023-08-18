@@ -72,50 +72,49 @@ const Blog: React.FC<{
           mt="xl"
           style={{ justifyContent: 'flex-start' }}
         >
-          <form onSubmit={handleFormSubmit} className="search-box">
-            <StyledTextInput
-              variant="filled"
-              radius="xl"
-              size="md"
-              withAsterisk
-              mt="sm"
-              mr="xl"
-              rightSection={<FaSearch type="submit" />}
-              placeholder="キーワードで検索"
-              min={0}
-              max={99}
-              style={{
-                width: '340px',
-                color: borderColor,
-              }}
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-            />
-          </form>
+          <div>
+            <form onSubmit={handleFormSubmit} className="search-box">
+              <StyledTextInput
+                variant="filled"
+                radius="xl"
+                size="md"
+                withAsterisk
+                mt="sm"
+                mr="xl"
+                rightSection={<FaSearch type="submit" />}
+                placeholder="キーワードで検索"
+                min={0}
+                max={99}
+                style={{
+                  width: '340px',
+                  color: borderColor,
+                }}
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+              />
+            </form>
+            {/* タグ一覧を表示 */}
+            <TagBadgesContainer>
+              {data &&
+                data.filterPosts.map((post: PostProps) => (
+                  <div
+                    key={post.id}
+                    className={`tag ${
+                      selectedTag === post.tags[0]?.label ? 'selected' : ''
+                    }`}
+                    onClick={() => handleTagClick(post.tags[0]?.label)}
+                  >
+                    {post.tags.map((tag, index) => (
+                      <Badge key={index} size="lg" variant="outline">
+                        {tag.label}
+                      </Badge>
+                    ))}
+                  </div>
+                ))}
+            </TagBadgesContainer>
+          </div>
         </Group>
       )}
-
-      {/* タグ一覧を表示 */}
-      <div className="tags-container">
-        <TagBadgesContainer>
-          {data &&
-            data.filterPosts.map((post: PostProps) => (
-              <div
-                key={post.id}
-                className={`tag ${
-                  selectedTag === post.tags[0]?.label ? 'selected' : ''
-                }`}
-                onClick={() => handleTagClick(post.tags[0]?.label)}
-              >
-                {post.tags.map((tag, index) => (
-                  <Badge key={index} size="lg" variant="outline">
-                    {tag.label}
-                  </Badge>
-                ))}
-              </div>
-            ))}
-        </TagBadgesContainer>
-      </div>
       {/* タグが選択されている場合、対応する投稿を表示 */}
       {selectedTag ? (
         <div className="items-container">
