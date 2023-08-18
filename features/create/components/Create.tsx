@@ -51,7 +51,7 @@ function Create() {
       variables: {
         title,
         content,
-        tags: tags.map((label) => ({ label })),
+        tags,
       },
     })
   }
