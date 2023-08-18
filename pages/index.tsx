@@ -3,7 +3,7 @@ import gql from 'graphql-tag'
 import { useQuery } from '@apollo/client'
 import { FormEvent, useState } from 'react'
 import { FaSearch } from 'react-icons/fa'
-import { Group } from '@mantine/core'
+import { Badge, Group } from '@mantine/core'
 
 import { PostProps } from '../features/types'
 import Post from '../features/post/components/Post'
@@ -11,7 +11,10 @@ import { getServerSession } from 'next-auth/next'
 import { GetServerSidePropsContext } from 'next/types'
 import { authOptions } from './api/auth/[...nextauth]'
 import LogoSVG from '../components/elements/logo/LogoSVG'
-import { StyledTextInput } from '../components/layout/styles'
+import {
+  StyledTextInput,
+  TagBadgesContainer,
+} from '../components/layout/styles'
 import { filterPosts } from '../features/create/query'
 
 const Blog: React.FC<{
@@ -35,6 +38,12 @@ const Blog: React.FC<{
   }
 
   const borderColor = colorScheme === 'dark' ? '#ACA4CE' : '#2d283b'
+
+  const [selectedTag, setSelectedTag] = useState<string | null>(null) // 選択されたタグを管理
+
+  const handleTagClick = (tagLabel: string) => {
+    setSelectedTag(tagLabel)
+  }
 
   const toggleExpand = () => {
     setExpanded(!expanded)
@@ -63,37 +72,74 @@ const Blog: React.FC<{
           mt="xl"
           style={{ justifyContent: 'flex-start' }}
         >
-          <form onSubmit={handleFormSubmit} className="search-box">
-            <StyledTextInput
-              variant="filled"
-              radius="xl"
-              size="md"
-              withAsterisk
-              mt="sm"
-              mr="xl"
-              rightSection={<FaSearch type="submit" />}
-              placeholder="キーワードで検索"
-              min={0}
-              max={99}
-              style={{
-                width: '340px',
-                color: borderColor,
-              }}
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-            />
-          </form>
+          <div>
+            <form onSubmit={handleFormSubmit} className="search-box">
+              <StyledTextInput
+                variant="filled"
+                radius="xl"
+                size="md"
+                withAsterisk
+                mt="sm"
+                mr="xl"
+                rightSection={<FaSearch type="submit" />}
+                placeholder="キーワードで検索"
+                min={0}
+                max={99}
+                style={{
+                  width: '340px',
+                  color: borderColor,
+                }}
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+              />
+            </form>
+            {/* タグ一覧を表示 */}
+            <TagBadgesContainer>
+              {data &&
+                data.filterPosts.map((post: PostProps) => (
+                  <div
+                    key={post.id}
+                    className={`tag ${
+                      selectedTag === post.tags[0]?.label ? 'selected' : ''
+                    }`}
+                    onClick={() => handleTagClick(post.tags[0]?.label)}
+                  >
+                    {post.tags.map((tag, index) => (
+                      <Badge key={index} size="lg" variant="outline">
+                        {tag.label}
+                      </Badge>
+                    ))}
+                  </div>
+                ))}
+            </TagBadgesContainer>
+          </div>
         </Group>
       )}
-
-      <div className="items-container">
-        {data &&
-          data.filterPosts.map((post: PostProps) => (
-            <div key={post.id} className="post">
-              <Post post={post} />
-            </div>
-          ))}
-      </div>
+      {/* タグが選択されている場合、対応する投稿を表示 */}
+      {selectedTag ? (
+        <div className="items-container">
+          {data &&
+            data.filterPosts.map(
+              (post: PostProps) =>
+                // 選択されたタグに一致する投稿のみ表示
+                post.tags[0]?.label === selectedTag && (
+                  <div key={post.id} className="post">
+                    <Post post={post} />
+                  </div>
+                )
+            )}
+        </div>
+      ) : (
+        // タグが選択されていない場合、すべての投稿を表示
+        <div className="items-container">
+          {data &&
+            data.filterPosts.map((post: PostProps) => (
+              <div key={post.id} className="post">
+                <Post post={post} />
+              </div>
+            ))}
+        </div>
+      )}
     </Layout>
   )
 }

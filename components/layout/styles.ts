@@ -58,6 +58,7 @@ export const GlobalStyle = createGlobalStyle`
   border: none;
   cursor: pointer;
 }
+
 `
 
 export const StyledButton = styled.button`
@@ -227,4 +228,9 @@ export const StyledTextInput = styled(TextInput)`
   & .mantine-TextInput-input:focus {
     outline: 0.125rem solid #aca4ce;
   }
+`
+
+export const TagBadgesContainer = styled.div`
+  display: flex;
+  gap: 8px;
 `
