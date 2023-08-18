@@ -62,13 +62,9 @@ function Create() {
     Router.push('/drafts')
   }
 
-  const handleTagInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTagInput(e.target.value)
-  }
-
-  const handleTagAdd = () => {
-    if (tagInput.trim() !== '') {
-      setTags([...tags, tagInput.trim()])
+  const handleTagAdd = (tag: string) => {
+    if (tag.trim() !== '') {
+      setTags([...tags, tag.trim()])
       setTagInput('')
     }
   }

@@ -4,13 +4,13 @@ import { FaTags, FaTimes } from 'react-icons/fa'
 import { StyledTextInput } from '../../../../components/layout/styles'
 
 interface TagInputProps {
+  tags: string[]
   onTagAdd: (tag: string) => void
   onTagRemove: (tag: string) => void
 }
 
-const TagInput: React.FC<TagInputProps> = ({ onTagAdd, onTagRemove }) => {
+const TagInput: React.FC<TagInputProps> = ({ tags, onTagAdd, onTagRemove }) => {
   const [tagInput, setTagInput] = useState('')
-  const [tags, setTags] = useState<string[]>([])
 
   const handleTagInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTagInput(e.target.value)
@@ -22,7 +22,6 @@ const TagInput: React.FC<TagInputProps> = ({ onTagAdd, onTagRemove }) => {
       const trimmedTagInput = tagInput.trim()
       if (trimmedTagInput !== '') {
         onTagAdd(trimmedTagInput)
-        setTags([...tags, trimmedTagInput]) // タグを追加したらtagsステートも更新する
         console.log(trimmedTagInput)
         setTagInput('')
       }
