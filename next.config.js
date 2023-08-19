@@ -41,8 +41,8 @@ module.exports = {
           format: {
             comments: false,
           },
-          // 使用していないCSSファイルの削除
-          ignore: ['/a950528aa4c9e8db.css/'],
+          // 使用していないCSSファイルの除外
+          exclude: ['/a950528aa4c9e8db.css/'],
         },
         extractComments: false,
       }),
