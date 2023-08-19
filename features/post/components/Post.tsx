@@ -40,7 +40,7 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
         </div>
       </div>
       {session && (
-        <StyledButton onClick={handleDelete}>
+        <StyledButton onClick={handleDelete} aria-label="投稿を削除する">
           <FaTrashAlt />
         </StyledButton>
       )}
