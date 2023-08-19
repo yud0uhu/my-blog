@@ -42,7 +42,8 @@ module.exports = {
             comments: false,
           },
         },
-        extractComments: false,
+        exclude: /\/_next\/static\/css\/a950528aa4c9e8db\.css/, // 不要なCSSファイルの除外
+        extractComments: false, // コメントを削除
       }),
     ]
 
