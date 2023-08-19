@@ -41,10 +41,8 @@ module.exports = {
           format: {
             comments: false,
           },
-          // 使用していないCSSファイルの除外
-          exclude: ['/a950528aa4c9e8db.css/'],
         },
-        extractComments: false,
+        exclude: /\/_next\/static\/css\/a950528aa4c9e8db\.css/, // 不要なCSSファイルの除外
       }),
     ]
 
