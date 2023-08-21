@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Router, { useRouter } from 'next/router'
 import { useMutation, useQuery } from '@apollo/client'
 import ReactMarkdown from 'react-markdown'
@@ -12,23 +12,9 @@ import { StyledPost, StyledTitle } from '../../features/post/styles/PostStyles'
 import { FaArrowLeft } from 'react-icons/fa'
 import { motion } from 'framer-motion'
 import { Badge } from '@mantine/core'
-import fetchPostData, {
-  FetchPostDataResult,
-} from '../../services/fetchPostData'
 
 const Post = () => {
-  const router = useRouter()
-  const id = router.query.id
-
-  const [postData, setPostData] = useState<FetchPostDataResult | null>(null)
-
-  useEffect(() => {
-    if (id) {
-      const fetchedData = fetchPostData(id)
-      setPostData(fetchedData)
-    }
-  }, [id])
-
+  const id = useRouter().query.id
   const { data, loading, error } = useQuery(PostQuery, {
     variables: { id },
   })
