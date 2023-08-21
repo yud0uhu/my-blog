@@ -12,11 +12,10 @@ function Seo({ title, description, imageUrl, url }: SeoProps) {
     <Head>
       <title>{title}</title>
       <meta name="description" content={description} />
-      <meta name="twitter:card" content="summary_large_image" />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
+      <meta property="og:image" content={imageUrl} />
       <meta property="og:url" content={url} />
-      <meta property="og:site_name" content={title} />
     </Head>
   )
 }
