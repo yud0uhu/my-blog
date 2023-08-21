@@ -7,25 +7,32 @@ import {
   ColorSchemeProvider,
   MantineProvider,
 } from '@mantine/core'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Seo from '../lib/seo'
 import { AnimatePresence } from 'framer-motion'
+import fetchPostData, { FetchPostDataResult } from '../services/fetchPostData'
+
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const [colorScheme, setColorScheme] = useState<ColorScheme>('light')
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'))
+
   const userName = 'yud0uhu'
   const title = 'yud0uhu.work'
+
+  const [postData, setPostData] = useState<FetchPostDataResult | null>(null)
 
   return (
     <AnimatePresence mode="wait" onExitComplete={() => window.scrollTo(0, 0)}>
       <div className="app">
-        <Seo
-          description={'0yu @ yud0uhu'}
-          imageUrl={`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/og?title=${title}&userName=${userName}`}
-          title={title}
-          url={`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/`}
-        />
+        {postData && postData.post && (
+          <Seo
+            description={`${postData.post.title} @ ${userName}`}
+            imageUrl={`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/og?title=${postData.post.title}&userName=${userName}`}
+            title={postData.post.title}
+            url={`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/`}
+          />
+        )}
         <SessionProvider session={session}>
           <ApolloProvider client={client}>
             <ColorSchemeProvider
