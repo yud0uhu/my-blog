@@ -10,29 +10,24 @@ export interface FetchPostDataResult {
   }
 }
 
-const fetchPostData = (id: any): FetchPostDataResult => {
-  try {
-    const { data, loading, error } = useQuery(PostQuery, {
-      variables: { id },
-    })
+const useFetchPostData = (id: string | string[] | undefined) => {
+  const { data, loading, error } = useQuery(PostQuery, {
+    variables: { id },
+  })
 
-    if (loading) {
-      return { loading: true }
-    }
+  if (loading) {
+    return { loading: true }
+  }
 
-    // if (error) {
-    //   return { error: error.message }
-    // }
-
-    const post = data.post
-
-    return { loading: false, post }
-  } catch (error) {
+  if (error) {
     return {
       loading: false,
       error: 'An error occurred while fetching post data.',
     }
   }
-}
 
-export default fetchPostData
+  const post = data.post
+
+  return { loading: false, post }
+}
+export default useFetchPostData

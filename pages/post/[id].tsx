@@ -15,31 +15,21 @@ import { Badge } from '@mantine/core'
 import fetchPostData, {
   FetchPostDataResult,
 } from '../../services/fetchPostData'
+import useFetchPostData from '../../services/fetchPostData'
 
 const Post = () => {
   const router = useRouter()
-  const id = router.query.id
+  const id = router.query.id as string
 
-  const [postData, setPostData] = useState<FetchPostDataResult | null>(null)
-
-  useEffect(() => {
-    if (id) {
-      const fetchedData = fetchPostData(id)
-      setPostData(fetchedData)
-    }
-  }, [id])
-
-  const { data, loading, error } = useQuery(PostQuery, {
-    variables: { id },
-  })
+  const { loading, error, post } = useFetchPostData(id)
 
   const [publish] = useMutation(PublishMutation)
 
   if (loading) return <p>Loading...</p>
-  if (error) return <p>Oh no... {error.message}</p>
+  if (error) return <p>Oh no... {error}</p>
 
-  const title = data.post.title
-  const unpublished = !data.post.published
+  const title = post.title
+  const unpublished = post.published === false
 
   return (
     <motion.div
@@ -54,15 +44,15 @@ const Post = () => {
           </a>
           <div>
             <StyledTitle unpublished={unpublished}>{title}</StyledTitle>
-            <small>{data.post.createdAt}</small>
+            <small>{post.createdAt}</small>
             <div>
-              {data.post.tags.map((tag: { id: string; label: string }) => (
+              {post.tags.map((tag: { id: string; label: string }) => (
                 <Badge key={tag.id} size="lg" variant="outline">
                   {tag.label}
                 </Badge>
               ))}
             </div>
-            <ReactMarkdown>{data.post.content}</ReactMarkdown>
+            <ReactMarkdown>{post.content}</ReactMarkdown>
             {unpublished && (
               <button
                 onClick={async (e) => {
