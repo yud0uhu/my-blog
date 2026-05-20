@@ -2,6 +2,7 @@ import { createYoga } from 'graphql-yoga'
 import SchemaBuilder from '@pothos/core'
 
 import type PrismaTypes from '@pothos/plugin-prisma/generated'
+import { getDatamodel } from '@pothos/plugin-prisma/generated'
 
 import { NextApiRequest, NextApiResponse } from 'next'
 import prisma from '../../lib/prisma'
@@ -14,6 +15,7 @@ const builder = new SchemaBuilder<{
   plugins: [PrismaPlugin],
   prisma: {
     client: prisma,
+    dmmf: getDatamodel(),
   },
 })
 
