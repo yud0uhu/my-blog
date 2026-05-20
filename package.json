@@ -49,6 +49,9 @@
     "react-markdown": "^8.0.6",
     "vercel": "^31.2.3"
   },
+  "engines": {
+    "node": "22.x"
+  },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
   },
